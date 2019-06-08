@@ -59,5 +59,33 @@ shapiro.test(ri)
 ```
 El p valor es alto , por lo tanto se cumple el supuesto de normalidad y podemos concluir que los errores siguen una distribucion normal
 
+```{r}
+library(car)
+ncvTest(mode)
 
+```
+
+Cumple el supuesto de homogenidad de varianza
+
+Aplicamos Box y Cox
+
+```{r}
+library(MASS)
+boxcox((fuerza+9)~form+lin+lot+ope)
+```
+Box y Cox no se aplica para valores negativos
+
+```{r}
+fuerzat<-((fuerza+9)^(1/3)-1)/(1/3)
+mod1<-lm(fuerzat~form+ope+lin+lot)
+par(mfrow=c(2,2))
+plot(mod1)
+
+```
+
+```{r}
+rit<-rstandard(mod1)
+shapiro.test(rit)
+
+```
 
