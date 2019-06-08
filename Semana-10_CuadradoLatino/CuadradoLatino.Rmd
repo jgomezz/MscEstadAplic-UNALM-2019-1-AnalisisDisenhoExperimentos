@@ -29,6 +29,9 @@ print(lsd) # field book.
 
 4.	Modelo Aditivo Linea
 
+Estimacion de los efectos
+
+
 \[  Y_{(i),jk}  \]
 
 $ $ es el efecto de la media general.
@@ -56,7 +59,68 @@ yp <- mean(rend)
 yp
 ```
 ```{r}
-ypi <- tapply(rend~trat)
+attach(abono)
+ypi <- tapply(rend,trat, mean)
+ypi
 
 ```
+
+```{r}
+ti <- ypi-yp
+ti
+```
+El rendimiento promedio obtenido por las parcelas al cual se aplicaron el fertilizante nutrigeneado urea superan al promedio obtenido ......................... en 101.8125
+
+
+
+```{r}
+# Calculo del efecto del bloque por fila
+fila <- abono[,2]
+ypj <- tapply(rend,fila, mean)
+bj <- ypj-yp
+bj
+
+```
+Interpretacion:El rendimiento promedio obtenido con el refrigeranete de amoniaco al   ....
+
+El rend. promedio obtenido de las observaciones en el 2bloque fila supera al rendimiento promedio del experimiento en 60.3125 kg por parcela
+
+El rend. promedio obtenido de las observaciones que se encuentran en el  3 bloque fila es inferior al rendimiento promedio obtenido en el experimento en -79.9375 en  kg de caña por parcela.
+
+
+```{r}
+# Calculo del efecto del bloque por columna
+col <- abono[,3]
+ypk <- tapply(rend,col, mean)
+gk <- ypk-yp
+gk
+```
+
+
+El rendimiento del bloque fila 2 supera el promedio en 
+
+
+En el caso de fila
+si es positivo es mayor a la media
+si es negativo es inferior a la media
+\[
+\begin{itemize}
+\item El rend. promedio obtenido de las observaciones que se encuentran en el  2 bloque columna supera al rendimiento promedio del experimiento en 43.8125  kg de caña por parcela.
+\item El rend. promedio obtenido de las observaciones que se encuentran en el  2 bloque columna superan  al rendimiento promedio obtenido en el experimento en 43.8125   kg  por parcela.
+\end{itemize}
+\]
+
+```{r}
+mod <- lm (rend ~ trat+fila+col )
+eij <- residuals(mod)
+eij
+```
+
+Analisis de Varianza
+
+la varianza mira la variabilidad
+
+
+
+
 
