@@ -3,6 +3,8 @@ title: "R Notebook"
 output: html_notebook
 ---
 
+Experimento Factorial
+---------------------
 
 ```{r}
 install.packages("DoE.base")
@@ -13,6 +15,78 @@ library(DoE.base)
 ```
 
 ```{r}
+# Un experimento factorial para 4 bloques y 2 factores
+# A tiene 2 niveles
+# B tiene 3 niveles
 fac.design(nlevels=c(2,3),replications=4)  
+```
+
+Estimación de los Efectos
+-------------------------
+```{r}
+abono1<-read.table("abono1.txt",header=T)
+head(abono1)
+```
+
+```{r}
+bloques<-as.factor(abono1$bloques)
+rend<-abono1$rend
+dosis<-as.factor(abono1$dosis)
+abono<-as.factor(abono1$abono)
+mod<-lm(rend~bloques+abono+dosis+abono*dosis)
+par(mfrow=c(2,2))
+plot(mod)
+
+```
+
+Grafico 1: Cumple el modelo de supuesto de aditivo lineal
+Grafico 2: Cumple el supuesto de normalidad
+Grafico 3: Los valores varian hasta 2.4, y de 2.4 a 2.8 se mantiene constante, para luego decrecer, pero la tendencia no es fuerte, lo que no afecta el supuesto de homogenidad de varianza
+Grafico 4: No hay valores extremos , no sobrepasan el valor -2 y +2
+
+Se va a realizar la prueba
+
+```{r}
+ri<-rstandard(mod)
+ shapiro.test(ri)
+
+```
+La prueba no resulta significativa, no se ha encontrado suficiente evidencia estadistica planteada, por lo tanto no se rechaza el supuesto de normalidad.
+
+```{r}
+library(car)
+ncvTest(mod)
+
+```
+
+El p.valor es casi 1, se acepta el supuesto de homoegenidad de varianza
+
+```{r}
+#ypi <- tapply(rend, tipo)
+yp <- mean(rend)
+ypi <- tapply(rend, tipo, mean )
+alfai <- ypi-yp
+alfai
+```
+
+```{r}
+ypj <- tapply(rend, dosis, mean )
+betaj <- ypj-yp
+betaj
+
+```
+
+
+```{r}
+eij <- residuals(mod)
+eij
+```
+
+Calcular el promedio es un poco complicado, 
+
+```{r}
+anva<-anova(mod)
+anva
+
 ```
 
