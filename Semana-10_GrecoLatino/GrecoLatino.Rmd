@@ -102,8 +102,9 @@ anva<-aov(mod1)
 
 ```
 
-A un nivel de significancia se ha enconvtrado evidencia estadistica para rechazar la hipotesis planteada. Se ha encontrado evidencia alta significativa entre 2  ............
+#A un nivel de significancia se ha enconvtrado evidencia estadistica para rechazar la hipotesis #planteada. Se ha encontrado evidencia alta significativa entre 2  ............
 
+La prueba resulta altamente significativamente , se puede afirmar que existe evidencia de la diferencias de al menos 2 medias de fuerza obtenida de ambas muestras.
 
 TUKEY
 -----
