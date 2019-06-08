@@ -88,4 +88,47 @@ rit<-rstandard(mod1)
 shapiro.test(rit)
 
 ```
+No afecta la normalidad, los errores se distribuyen normalidad, por lo tanto se aceptar el supuesto de normalidad.
+
+```{r}
+ncvTest(mod1)
+```
+
+A nivel de significancia de 10% se encontrado que los errores tienes varianza constante, por lo tanto se acepta el supeusto de homogenidad de varianza.
+
+```{r}
+anva<-aov(mod1)
+ summary(anva)
+
+```
+
+A un nivel de significancia se ha enconvtrado evidencia estadistica para rechazar la hipotesis planteada. Se ha encontrado evidencia alta significativa entre 2  ............
+
+
+TUKEY
+-----
+```{r}
+TukeyHSD(anva, "form", ordered = TRUE)
+```
+Se ha obntenidio diferencias significativa entre la media de la forumla explosiva transformada a y b
+Se ha obntenidio diferencias significativa entre la media de la forumla explosiva transformada d y b
+Se ha obntenidio diferencias significativa entre la media de la forumla explosiva transformada d y c
+
+DUNNETT
+-------
+
+```{r}
+library(multcomp)
+compdunett<-glht(anva,linfct=mcp(form="Dunnett"))
+summary(compdunett)
+
+```
+
+Se ha encontrado diferencia altamente signficativa entre la media de la fuerza explosiva transformada objetida de la formula b y a
+
+Se ha encontrado diferencia  signficativa entre la media de la fuerza explosiva transformada objetida de la formula c y a
+
+Entre las demas no se ha encontrado diferencia significativa al 10%
+
+
 
