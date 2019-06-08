@@ -35,3 +35,29 @@ Se rechaza la hipotesis planteada.
 La prueba resulto altamente significativa
 
 Se ha encontrado una diferencia altamentes significativa entre al menos 2 medias de la fuerza explosiva elaborado por 2 formulas diferentes
+
+```{r}
+par(mfrow=c(2,2))
+plot(mode)
+
+```
+
+24 y 21 son los puntos mas alejados
+
+Grafico 1: El modelo lineal se aleja de la linea roja del medio 
+Es posible que no se cumpla el modelo aditivo lineal
+
+Grafico 2: Se ve que se cumpla
+
+Grafico 3: se podria ver que no podria cumplirse el supuesto de varianza
+
+
+```{r}
+ri<-rstandard(mode)
+shapiro.test(ri)
+
+```
+El p valor es alto , por lo tanto se cumple el supuesto de normalidad y podemos concluir que los errores siguen una distribucion normal
+
+
+
