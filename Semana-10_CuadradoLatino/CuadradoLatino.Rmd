@@ -41,6 +41,22 @@ t es el número de tratamientos que es igual al número de filas y de columnas.
 
 
 ```{r}
+abono <- read.table("abono.txt", header = TRUE)
+head(abono)
+
+```
+
+```{r}
+abono$fila <-factor(abono$fila)
+abono$col <-factor(abono$col) 
+abono$trat <-factor(abono$trat) 
+#rend - abono$rend
+rend <- abono[,1]
+yp <- mean(rend)
+yp
+```
+```{r}
+ypi <- tapply(rend~trat)
 
 ```
 
