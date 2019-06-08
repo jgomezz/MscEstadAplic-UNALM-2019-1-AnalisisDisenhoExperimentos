@@ -1,0 +1,46 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+
+```{r}
+round(100*runif(1))
+```
+
+```{r}
+library(agricolae)
+tratamiento<-c("A","B","C","D")
+outdesign <-design.lsd(tratamiento,serie=2,seed=33)
+lsd <- outdesign$book
+print(lsd) # field book.
+
+```
+```{r}
+round(100*runif(1))
+```
+
+```{r}
+outdesign <-design.lsd(tratamiento,serie=2,seed=29)
+lsd <- outdesign$book
+print(lsd) # field book.
+
+```
+
+4.	Modelo Aditivo Linea
+
+\[  Y_{(i),jk}  \]
+
+$ $ es el efecto de la media general.
+(i) es el efecto del i-ésimo tratamiento.
+j es el efecto de la j-ésima fila.
+k es el efecto de la k-ésima columna.
+(i)jk es el efecto del error experimental en con el i-ésimo tratamiento, j-ésima fila, k-ésima columna.
+t es el número de tratamientos que es igual al número de filas y de columnas.
+
+
+
+```{r}
+
+```
+
