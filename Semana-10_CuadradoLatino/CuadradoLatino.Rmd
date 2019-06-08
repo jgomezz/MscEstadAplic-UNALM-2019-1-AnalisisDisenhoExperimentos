@@ -119,6 +119,34 @@ eij
 Analisis de Varianza
 
 la varianza mira la variabilidad
+```{r}
+anva <- aov(mod)
+summary(anva)
+```
+
+El valor de F calculado es significativa , al menos un tipo de abono nitrogeneado tiene un efecto significativo sobre el cultivo de caña de azucar.
+
+Se rechaza la hipotesis planteada porque se ha encontrado diferencia significativa.
+
+Eficiencia Relativa
+-------------------
+
+
+
+Prueba de Comparacion
+---------------------
+
+
+```{r}
+library(multcomp)
+amod<-aov(rend~.,data=abono)
+comptrat<-glht(amod,linfct=mcp(trat="Tukey"))
+summary(comptrat)
+
+```
+
+Se recomienda que se haga un experimento mas significativo
+
 
 
 
