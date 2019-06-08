@@ -167,7 +167,7 @@ ncvTest(mod)
 ```
 No se cumple la homogeneidad de varianza
 
-"Se puede aceptar que se cumple todos los supuestos."
+"Se puede aceptar que se cumple todos los supuestos." 
 
 
 
