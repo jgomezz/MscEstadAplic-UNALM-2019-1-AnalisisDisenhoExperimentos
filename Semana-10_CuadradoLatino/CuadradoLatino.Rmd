@@ -159,7 +159,7 @@ plot(mod)
 ri <- rstandard(mod)
 shapiro.test(ri)
 ```
-Se cumple el supuesto de normalidad
+Se cumple el supuesto deg  normalidad
 
 ```{r}
 library(car)

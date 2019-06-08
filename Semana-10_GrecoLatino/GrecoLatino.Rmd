@@ -1,0 +1,37 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+Greco Latino
+------------
+
+No se hace prueba de bloque
+
+Se debe calcular el factor de eficiencia
+
+Ejemplo: Supóngase que en un experimento se desea comparar 5 fórmulas para la dinamita sobre la fuerza explosiva observada. Cada fórmula se prepara usando un lote suficientemente grande para que sólo se haga 5 mezclas. Más aun las mezclas  las preparan varios operadores, pudiendo existir una diferencia sustancial en la habilidad y experiencia entre ellos. Además, existe otro factor adicional que afecta en la elaboración de la dinamita, línea de montaje. Teniendo en cuenta estos factores, se realizó un experimento bajo el diseño Cuadrados Greco-Latino,  con 5 fórmulas (A, B, C, D y E), 5 lotes de materias primas (1, 2, 3, 4 y 5), 5 operadores (1, 2, 3, 4 y 5)  y 5 líneas de montajes $(\alpha, \beta ) $ . los resultados codificados de la fuerza explosiva se muestra a continuación
+
+
+```{r}
+dina<-read.table("dinamita.txt",header=T)
+head(dina)
+
+```
+
+```{r}
+fuerza<-as.vector(dina[,1])
+form<-dina[,2]
+lin<-dina[,3]
+lot<-as.factor(dina[,4])
+ope<-as.factor(dina[,5])
+mode<-lm(fuerza~form+lin+lot+ope)
+anva<-aov(mode)
+summary(anva)
+
+```
+Se rechaza la hipotesis planteada.
+
+La prueba resulto altamente significativa
+
+Se ha encontrado una diferencia altamentes significativa entre al menos 2 medias de la fuerza explosiva elaborado por 2 formulas diferentes
