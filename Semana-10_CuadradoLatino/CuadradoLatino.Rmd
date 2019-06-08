@@ -145,7 +145,29 @@ summary(comptrat)
 
 ```
 
-Se recomienda que se haga un experimento mas significativo
+Se recomienda que se haga un experimento mas significativo, por el tema de las diferencias entre los tratamientos
+
+```{r}
+par(mfrow=c(2,2))
+plot(mod)
+```
+
+
+
+
+```{r}
+ri <- rstandard(mod)
+shapiro.test(ri)
+```
+Se cumple el supuesto de normalidad
+
+```{r}
+library(car)
+ncvTest(mod)
+```
+No se cumple la homogeneidad de varianza
+
+"Se puede aceptar que se cumple todos los supuestos."
 
 
 
