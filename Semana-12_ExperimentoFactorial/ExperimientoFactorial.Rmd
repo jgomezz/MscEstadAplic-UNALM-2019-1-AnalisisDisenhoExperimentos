@@ -1,0 +1,19 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+
+
+```{r}
+#install.packages("DoE.base")
+
+library(DoE.base)
+
+```
+
+```{r}
+fac.design(nlevels=c(2,3),replications=4)
+
+```
+
