@@ -171,3 +171,14 @@ abonod3<-abono1[abono1$dosis=="b3",]
  data.frame(Fuente,GdL,SC,CM,FC,pvalue)
 ```
 
+```{r}
+ anva3<-aov(mod)
+ tHSD <- TukeyHSD(anva3)
+ 
+# 1er componente : Tipo de abono 
+# 2do componente : Dosis del abono
+
+ print(tHSD)
+
+```
+Se observa los efectos
