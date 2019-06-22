@@ -1,5 +1,5 @@
 ---
-title: "R Notebook"
+title: "Analisis Factorial"
 output: html_notebook
 ---
 
@@ -16,4 +16,28 @@ library(DoE.base)
 fac.design(nlevels=c(2,3),replications=4)
 
 ```
+# Analisis Factorial 
+
+```{r}
+abono1<-read.table("abono1.txt",header=T)
+str(abono1)
+
+```
+
+```{r}
+bloques<-as.factor(abono1$bloques)
+rend<-abono1$rend
+dosis<-as.factor(abono1$dosis)
+tipo<-as.factor(abono1$abono)
+
+```
+
+
+```{r}
+mod<-lm(rend~bloques+tipo+dosis+tipo*dosis)
+par(mfrow=c(2,2))
+plot(mod)
+
+```
+
 
