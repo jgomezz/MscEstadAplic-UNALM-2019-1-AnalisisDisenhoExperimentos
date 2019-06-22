@@ -40,4 +40,14 @@ plot(mod)
 
 ```
 
+```{r}
+ri<-rstandard(mod)
+shapiro.test(ri)
+
+```
+Cumple el supueso de normalidad porque se rechaza la hipotesis planteada
+
+```{r}
+
+```
 
