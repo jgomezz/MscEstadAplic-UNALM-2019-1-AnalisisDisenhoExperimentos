@@ -40,6 +40,11 @@ plot(mod)
 
 ```
 
+# Hipotesis
+
+H0 : La distribucion de los erores siguen la distribucion normal
+H1 : La distribucion de los erores es diferente a la distribucion normal
+
 ```{r}
 ri<-rstandard(mod)
 shapiro.test(ri)
