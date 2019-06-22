@@ -1858,15 +1858,225 @@ W = 0.95513, p-value = 0.3486</code></pre>
 <!-- rnb-output-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
-<p>Cumple el supueso de normalidad porque se rechaza la hipotesis planteada</p>
+<p>Cumple el supueso de normalidad porque se rechaza la hipotesis planteada Se acepta H0</p>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuXG5saWJyYXJ5KGNhcilcbmBgYCJ9 -->
+<pre class="r"><code>
+library(car)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiTG9hZGluZyByZXF1aXJlZCBwYWNrYWdlOiBjYXJEYXRhXG5SZWdpc3RlcmVkIFMzIG1ldGhvZCBvdmVyd3JpdHRlbiBieSAnZGF0YS50YWJsZSc6XG4gIG1ldGhvZCAgICAgICAgICAgZnJvbVxuICBwcmludC5kYXRhLnRhYmxlICAgICBcbiJ9 -->
+<pre><code>Loading required package: carData
+Registered S3 method overwritten by &#39;data.table&#39;:
+  method           from
+  print.data.table     </code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubmN2VGVzdChtb2QpXG5gYGAifQ== -->
+<pre class="r"><code>ncvTest(mod)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiTm9uLWNvbnN0YW50IFZhcmlhbmNlIFNjb3JlIFRlc3QgXG5WYXJpYW5jZSBmb3JtdWxhOiB+IGZpdHRlZC52YWx1ZXMgXG5DaGlzcXVhcmUgPSAwLjAyNDkxOTI4LCBEZiA9IDEsIHAgPSAwLjg3NDU3XG4ifQ== -->
+<pre><code>Non-constant Variance Score Test 
+Variance formula: ~ fitted.values 
+Chisquare = 0.02491928, Df = 1, p = 0.87457</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<p>Se acepta el supuesto de homogeneidad de varianza</p>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuYW52YTwtYW5vdmEobW9kKVxuYW52YVxuYGBgIn0= -->
+<pre class="r"><code>anva&lt;-anova(mod)
+anva</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiQW5hbHlzaXMgb2YgVmFyaWFuY2UgVGFibGVcblxuUmVzcG9uc2U6IHJlbmRcbiAgICAgICAgICAgRGYgIFN1bSBTcSBNZWFuIFNxIEYgdmFsdWUgICAgUHIoPkYpICAgIFxuYmxvcXVlcyAgICAgMyAwLjgwNDU4IDAuMjY4MTkgIDUuMDQxOCAwLjAxMjk4MzMgKiAgXG50aXBvICAgICAgICAxIDEuMDAwNDIgMS4wMDA0MiAxOC44MDY4IDAuMDAwNTg2OSAqKipcbmRvc2lzICAgICAgIDIgMi45MTAwMCAxLjQ1NTAwIDI3LjM1MjUgOS45MTNlLTA2ICoqKlxudGlwbzpkb3NpcyAgMiAwLjU2MzMzIDAuMjgxNjcgIDUuMjk1MCAwLjAxODIwMzIgKiAgXG5SZXNpZHVhbHMgIDE1IDAuNzk3OTIgMC4wNTMxOSAgICAgICAgICAgICAgICAgICAgICBcbi0tLVxuU2lnbmlmLiBjb2RlczogIDAg4oCYKioq4oCZIDAuMDAxIOKAmCoq4oCZIDAuMDEg4oCYKuKAmSAwLjA1IOKAmC7igJkgMC4xIOKAmCDigJkgMVxuIn0= -->
+<pre><code>Analysis of Variance Table
+
+Response: rend
+           Df  Sum Sq Mean Sq F value    Pr(&gt;F)    
+bloques     3 0.80458 0.26819  5.0418 0.0129833 *  
+tipo        1 1.00042 1.00042 18.8068 0.0005869 ***
+dosis       2 2.91000 1.45500 27.3525 9.913e-06 ***
+tipo:dosis  2 0.56333 0.28167  5.2950 0.0182032 *  
+Residuals  15 0.79792 0.05319                      
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<div id="analisis-de-efecto-simple" class="section level2">
+<h2>Analisis de Efecto Simple</h2>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuU0NlPC1hbnZhJFwiU3VtIFNxXCJcblNDRTwtU0NlWzVdICBcblNDRVxuYGBgIn0= -->
+<pre class="r"><code>SCe&lt;-anva$&quot;Sum Sq&quot;
+SCE&lt;-SCe[5]  
+SCE</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiWzFdIDAuNzk3OTE2N1xuIn0= -->
+<pre><code>[1] 0.7979167</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuQ01lPC1hbnZhJFwiTWVhbiBTcVwiXG5DTUU8LUNNZVs1XVxuXG5gYGAifQ== -->
+<pre class="r"><code>CMe&lt;-anva$&quot;Mean Sq&quot;
+CME&lt;-CMe[5]
+</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuYWJvbm8xPC1kYXRhLmZyYW1lKHJlbmQsIGRvc2lzLCB0aXBvLGJsb3F1ZXMpXG5hYm9ub2QxPC1hYm9ubzFbYWJvbm8xJGRvc2lzPT1cImIxXCIsXSAgI0pBTEEgTE9TIERBUk9TIERFTEEgIFRBQkxBIFFVRSBUSUVORSBDT01PIERPU0lTIGIxXG5hYm9ub2QyPC1hYm9ubzFbYWJvbm8xJGRvc2lzPT1cImIyXCIsXSAgI1VOIFBFUVVFw5FPIFNVQkVUXG5hYm9ub2QzPC1hYm9ubzFbYWJvbm8xJGRvc2lzPT1cImIzXCIsXVxuXG4jUExBTlRFTyBMT1MgTU9ERUxPUyBDT04gTEEgREFUQSBRVUUgSkFMw4kgQVJSSUJBXG5cbiBtb2RkMTwtbG0ocmVuZH5ibG9xdWVzK3RpcG8sYWJvbm9kMSlcbiBtb2RkMjwtbG0ocmVuZH5ibG9xdWVzK3RpcG8sYWJvbm9kMilcbiBtb2RkMzwtbG0ocmVuZH5ibG9xdWVzK3RpcG8sYWJvbm9kMylcblxuI0FIT1JBLCBBTkFMSVNJUyBERSBWUklBTlpBIERFTCBPUyBNT0RFTE9TXG4gYW52YWQxPC1hbm92YShtb2RkMSlcbiBhbnZhZDI8LWFub3ZhKG1vZGQyKVxuIGFudmFkMzwtYW5vdmEobW9kZDMpXG5cbmBgYCJ9 -->
+<pre class="r"><code>abono1&lt;-data.frame(rend, dosis, tipo,bloques)
+abonod1&lt;-abono1[abono1$dosis==&quot;b1&quot;,]  #JALA LOS DAROS DELA  TABLA QUE TIENE COMO DOSIS b1
+abonod2&lt;-abono1[abono1$dosis==&quot;b2&quot;,]  #UN PEQUEÑO SUBET
+abonod3&lt;-abono1[abono1$dosis==&quot;b3&quot;,]
+
+#PLANTEO LOS MODELOS CON LA DATA QUE JALÉ ARRIBA
+
+ modd1&lt;-lm(rend~bloques+tipo,abonod1)
+ modd2&lt;-lm(rend~bloques+tipo,abonod2)
+ modd3&lt;-lm(rend~bloques+tipo,abonod3)
+
+#AHORA, ANALISIS DE VRIANZA DEL OS MODELOS
+ anvad1&lt;-anova(modd1)
+ anvad2&lt;-anova(modd2)
+ anvad3&lt;-anova(modd3)
+</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+</div>
+<div id="analisis-de-la-dosis-d1" class="section level2">
+<h2>Analisis de la dosis d1</h2>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuIGFudmFkMVxuYGBgIn0= -->
+<pre class="r"><code> anvad1</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiQW5hbHlzaXMgb2YgVmFyaWFuY2UgVGFibGVcblxuUmVzcG9uc2U6IHJlbmRcbiAgICAgICAgICBEZiAgU3VtIFNxICBNZWFuIFNxIEYgdmFsdWUgUHIoPkYpXG5ibG9xdWVzICAgIDMgMC4yMzM3NSAwLjA3NzkxNyAgNC4zNDg4IDAuMTI5M1xudGlwbyAgICAgICAxIDAuMDAxMjUgMC4wMDEyNTAgIDAuMDY5OCAwLjgwODhcblJlc2lkdWFscyAgMyAwLjA1Mzc1IDAuMDE3OTE3ICAgICAgICAgICAgICAgXG4ifQ== -->
+<pre><code>Analysis of Variance Table
+
+Response: rend
+          Df  Sum Sq  Mean Sq F value Pr(&gt;F)
+bloques    3 0.23375 0.077917  4.3488 0.1293
+tipo       1 0.00125 0.001250  0.0698 0.8088
+Residuals  3 0.05375 0.017917               </code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+</div>
+<div id="analisis-de-la-dosis-d2" class="section level2">
+<h2>Analisis de la dosis d2</h2>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuIGFudmFkMlxuYGBgIn0= -->
+<pre class="r"><code> anvad2</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiQW5hbHlzaXMgb2YgVmFyaWFuY2UgVGFibGVcblxuUmVzcG9uc2U6IHJlbmRcbiAgICAgICAgICBEZiAgU3VtIFNxIE1lYW4gU3EgRiB2YWx1ZSAgIFByKD5GKSAgIFxuYmxvcXVlcyAgICAzIDAuOTQzNzUgMC4zMTQ1OCAgMTEuMjY5IDAuMDM4NTI1ICogXG50aXBvICAgICAgIDEgMS4yMDEyNSAxLjIwMTI1ICA0My4wMzAgMC4wMDcyMDUgKipcblJlc2lkdWFscyAgMyAwLjA4Mzc1IDAuMDI3OTIgICAgICAgICAgICAgICAgICAgIFxuLS0tXG5TaWduaWYuIGNvZGVzOiAgMCDigJgqKirigJkgMC4wMDEg4oCYKirigJkgMC4wMSDigJgq4oCZIDAuMDUg4oCYLuKAmSAwLjEg4oCYIOKAmSAxXG4ifQ== -->
+<pre><code>Analysis of Variance Table
+
+Response: rend
+          Df  Sum Sq Mean Sq F value   Pr(&gt;F)   
+bloques    3 0.94375 0.31458  11.269 0.038525 * 
+tipo       1 1.20125 1.20125  43.030 0.007205 **
+Residuals  3 0.08375 0.02792                    
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuIFNDYjE8LWFudmFkMSRcIlN1bSBTcVwiICMgSkFMTyBTVU1BIERFIENVQURSQURPIERFIEFOVkExIFxuIFNDYjI8LWFudmFkMiRcIlN1bSBTcVwiXG4gU0NiMzwtYW52YWQzJFwiU3VtIFNxXCJcblxuIFNDQWIxPC1TQ2IxWzJdXG4gU0NBYjI8LVNDYjJbMl1cbiBTQ0FiMzwtU0NiM1syXVxuIFxuIENNYjE8LWFudmFkMSRcIk1lYW4gU3FcIlxuIENNYjI8LWFudmFkMiRcIk1lYW4gU3FcIlxuIENNYjM8LWFudmFkMyRcIk1lYW4gU3FcIlxuXG4gQ01BYjE8LUNNYjFbMl1cbiBDTUFiMjwtQ01iMlsyXVxuIENNQWIzPC1DTWIzWzJdXG5cbiBhYm9ub3QxPC1hYm9ubzFbYWJvbm8xJHRpcG89PVwiYTFcIixdXG4gYWJvbm90MjwtYWJvbm8xW2Fib25vMSR0aXBvPT1cImEyXCIsXVxuXG4gbW9kdDE8LWxtKHJlbmR+YmxvcXVlcytkb3NpcyxkYXRhPWFib25vdDEpXG4gbW9kdDI8LWxtKHJlbmR+YmxvcXVlcytkb3NpcyxkYXRhPWFib25vdDIpXG5cbiBhbnZhdDE8LWFub3ZhKG1vZHQxKVxuIGFudmF0MjwtYW5vdmEobW9kdDIpXG5cbiBTQ2ExPC1hbnZhdDEkXCJTdW0gU3FcIlxuIFNDYTI8LWFudmF0MiRcIlN1bSBTcVwiXG4gU0NCYTE8LVNDYTFbMl1cbiBTQ0JhMjwtU0NhMlsyXSBcblxuIENNYTE8LWFudmF0MSRcIk1lYW4gU3FcIlxuIENNYTI8LWFudmF0MiRcIk1lYW4gU3FcIlxuIENNQmExPC1DTWExWzJdXG4gQ01CYTI8LUNNYTJbMl1cblxuYGBgIn0= -->
+<pre class="r"><code> SCb1&lt;-anvad1$&quot;Sum Sq&quot; # JALO SUMA DE CUADRADO DE ANVA1 
+ SCb2&lt;-anvad2$&quot;Sum Sq&quot;
+ SCb3&lt;-anvad3$&quot;Sum Sq&quot;
+
+ SCAb1&lt;-SCb1[2]
+ SCAb2&lt;-SCb2[2]
+ SCAb3&lt;-SCb3[2]
+ 
+ CMb1&lt;-anvad1$&quot;Mean Sq&quot;
+ CMb2&lt;-anvad2$&quot;Mean Sq&quot;
+ CMb3&lt;-anvad3$&quot;Mean Sq&quot;
+
+ CMAb1&lt;-CMb1[2]
+ CMAb2&lt;-CMb2[2]
+ CMAb3&lt;-CMb3[2]
+
+ abonot1&lt;-abono1[abono1$tipo==&quot;a1&quot;,]
+ abonot2&lt;-abono1[abono1$tipo==&quot;a2&quot;,]
+
+ modt1&lt;-lm(rend~bloques+dosis,data=abonot1)
+ modt2&lt;-lm(rend~bloques+dosis,data=abonot2)
+
+ anvat1&lt;-anova(modt1)
+ anvat2&lt;-anova(modt2)
+
+ SCa1&lt;-anvat1$&quot;Sum Sq&quot;
+ SCa2&lt;-anvat2$&quot;Sum Sq&quot;
+ SCBa1&lt;-SCa1[2]
+ SCBa2&lt;-SCa2[2] 
+
+ CMa1&lt;-anvat1$&quot;Mean Sq&quot;
+ CMa2&lt;-anvat2$&quot;Mean Sq&quot;
+ CMBa1&lt;-CMa1[2]
+ CMBa2&lt;-CMa2[2]
+</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuI0hBTExBIExPUyBHUkFET1MgREUgTElCRVJUQURcbiBHTDwtYW52YSREZlxuIEdMXG5gYGAifQ== -->
+<pre class="r"><code>#HALLA LOS GRADOS DE LIBERTAD
+ GL&lt;-anva$Df
+ GL</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiWzFdICAzICAxICAyICAyIDE1XG4ifQ== -->
+<pre><code>[1]  3  1  2  2 15</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuIEdkTDwtYyhyZXAoR0xbMl0sMykscmVwKEdMWzNdLDIpLEdMWzVdKVxuIFNDPC1jKFNDQWIxLFNDQWIyLFNDQWIzLFNDQmExLFNDQmEyLFNDRSlcbiBDTTwtYyhDTUFiMSxDTUFiMixDTUFiMyxDTUJhMSxDTUJhMixDTUUpXG4gRmMxPC1yb3VuZChDTVsxOjVdL0NNWzZdLDQpXG4gRkM8LWMoRmMxLFwiXCIpXG4gRnVlbnRlPC1jKFwiQShiMSlcIixcIkEoYjIpXCIsXCJBKGIzKVwiLFwiQihhMSlcIixcIkIoYTIpXCIsXCJSZXNpZHVvc1wiKSBcblxuIHB2YWx1ZTE8LTEtcGYoRmMxLEdkTFsxOjVdLEdkTFs2XSlcbiBwdmFsdWUxXG5gYGAifQ== -->
+<pre class="r"><code> GdL&lt;-c(rep(GL[2],3),rep(GL[3],2),GL[5])
+ SC&lt;-c(SCAb1,SCAb2,SCAb3,SCBa1,SCBa2,SCE)
+ CM&lt;-c(CMAb1,CMAb2,CMAb3,CMBa1,CMBa2,CME)
+ Fc1&lt;-round(CM[1:5]/CM[6],4)
+ FC&lt;-c(Fc1,&quot;&quot;)
+ Fuente&lt;-c(&quot;A(b1)&quot;,&quot;A(b2)&quot;,&quot;A(b3)&quot;,&quot;B(a1)&quot;,&quot;B(a2)&quot;,&quot;Residuos&quot;) 
+
+ pvalue1&lt;-1-pf(Fc1,GdL[1:5],GdL[6])
+ pvalue1</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiWzFdIDguODAyMDcyZS0wMSAyLjU2OTY5OGUtMDQgMS45ODYxMzVlLTAyIDUuNDI4MDA3ZS0wMyAxLjYzMTU0NGUtMDVcbiJ9 -->
+<pre><code>[1] 8.802072e-01 2.569698e-04 1.986135e-02 5.428007e-03 1.631544e-05</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuIHB2YWx1ZTwtYyhyb3VuZChwdmFsdWUxLDYpLFwiXCIpICNQT05FIOKAnOKAnSBQQVJBIEFHUkVHQVIgTE9TIERBVE9TIEVOIEJMQU5DTyBZIFRFTkdBIExBIE1JU01BIENBTlRJREFEIERFIEVMRU1FTlRPU1xuIGRhdGEuZnJhbWUoRnVlbnRlLEdkTCxTQyxDTSxGQyxwdmFsdWUpXG5gYGAifQ== -->
+<pre class="r"><code> pvalue&lt;-c(round(pvalue1,6),&quot;&quot;) #PONE “” PARA AGREGAR LOS DATOS EN BLANCO Y TENGA LA MISMA CANTIDAD DE ELEMENTOS
+ data.frame(Fuente,GdL,SC,CM,FC,pvalue)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-frame-begin eyJtZXRhZGF0YSI6eyJjbGFzc2VzIjpbImRhdGEuZnJhbWUiXSwibmNvbCI6NiwibnJvdyI6Nn0sInJkZiI6Ikg0c0lBQUFBQUFBQUJvMVR6MnZVUUJTZVpEZlpkcUd0VUhydHVVSjN5RXpNYmhhRXRLNjBGd3RhUFJRUHluUjNxb3Rwc3VSSExaNTZFVDJLLzRONEVEeDc4ZWpmSUhyeldEeUtCeS9WbDJSZW5NYUNEVXptZmU5SDN2ZSttZXplM0hPN2UxMUNTSXUwYkhoYllCSjdkSnR4anhQU05nRVpwRTNtaS8wWTRzdEZHUGFGYW9jZ0lXWlpEdG13ck1wL3J0QU81WkVNVTdDdWxOSEthMjJ1N2JPckd1QTZjR3R3WTAwd0hkUnBjN3N5blU3eU9HMjBzOGFoU0xGYnplRkFqTE00QWVzTWxzN2UwS1lvMWhLc3hTSWUzSHYyYmZ2OXlrcnd3Ny96L2ZucXgrRHo2Z2N3MW9QVHR4dGZzNFUzRzliRDE1OStyZDhQVGw4V3o0di8xbjJwNm9LZnF1N2Q5WjBIOGNrclRVMVVVcWxZS21wVTQ1bS9HL29Sbk15aERuYzloVHFjVTgvbnZJWWVaWXk3bU51bmd5RmppQWJVYy9HWVcvajlDeFdyR1ZxS1pWc3h0Uy9CY0E0WU9nNzNCanIycm5GZncyem85OWxmN1BzT2R6Qy93MmhmOWh6dk1rVFAzNFJJSE1ybXZiTzNjaGxsVXFIVzl1U1dNczI3STdSR08yaHRvYytlSFlrd2w0ME84MG44bEdLWFFpUHpwQndjLzRGL3lIWW5JaFAwSUlHU0N3aDM0bGsyalNQNG1MbXN4TmFMamFUaFdNcWpvdm1rTjM2Y1IwOTZ3NktCdXM1RUVUTFVJV2wyMGJLTnhDeWNUMGFQcGhIS1lvVmlYNFlLTE1LUTVZeDBsa3lqRENjQmIwcXpPQk9ZMXgzSElYcXEvK3pzRHp6UFFGNWdCQUFBIn0= -->
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":["Fuente"],"name":[1],"type":["fctr"],"align":["left"]},{"label":["GdL"],"name":[2],"type":["int"],"align":["right"]},{"label":["SC"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["CM"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["FC"],"name":[5],"type":["fctr"],"align":["left"]},{"label":["pvalue"],"name":[6],"type":["fctr"],"align":["left"]}],"data":[{"1":"A(b1)","2":"1","3":"0.0012500","4":"0.00125000","5":"0.0235","6":"0.880207"},{"1":"A(b2)","2":"1","3":"1.2012500","4":"1.20125000","5":"22.5822","6":"0.000257"},{"1":"A(b3)","2":"1","3":"0.3612500","4":"0.36125000","5":"6.7911","6":"0.019861"},{"1":"B(a1)","2":"2","3":"0.8016667","4":"0.40083333","5":"7.5352","6":"0.005428"},{"1":"B(a2)","2":"2","3":"2.6716667","4":"1.33583333","5":"25.1123","6":"1.6e-05"},{"1":"Residuos","2":"15","3":"0.7979167","4":"0.05319444","5":"","6":""}],"options":{"columns":{"min":{},"max":[10],"total":[6]},"rows":{"min":[10],"max":[10],"total":[6]},"pages":{}}}
+  </script>
+</div>
+<!-- rnb-frame-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 <!-- rnb-text-end -->
 </div>
+</div>
 
-<div id="rmd-source-code">LS0tDQp0aXRsZTogIkFuYWxpc2lzIEZhY3RvcmlhbCINCm91dHB1dDogaHRtbF9ub3RlYm9vaw0KLS0tDQoNCg0KDQpgYGB7cn0NCiNpbnN0YWxsLnBhY2thZ2VzKCJEb0UuYmFzZSIpDQoNCmxpYnJhcnkoRG9FLmJhc2UpDQoNCmBgYA0KDQpgYGB7cn0NCmZhYy5kZXNpZ24obmxldmVscz1jKDIsMykscmVwbGljYXRpb25zPTQpDQoNCmBgYA0KIyBBbmFsaXNpcyBGYWN0b3JpYWwgDQoNCmBgYHtyfQ0KYWJvbm8xPC1yZWFkLnRhYmxlKCJhYm9ubzEudHh0IixoZWFkZXI9VCkNCnN0cihhYm9ubzEpDQoNCmBgYA0KDQpgYGB7cn0NCmJsb3F1ZXM8LWFzLmZhY3RvcihhYm9ubzEkYmxvcXVlcykNCnJlbmQ8LWFib25vMSRyZW5kDQpkb3NpczwtYXMuZmFjdG9yKGFib25vMSRkb3NpcykNCnRpcG88LWFzLmZhY3RvcihhYm9ubzEkYWJvbm8pDQoNCmBgYA0KDQoNCmBgYHtyfQ0KbW9kPC1sbShyZW5kfmJsb3F1ZXMrdGlwbytkb3Npcyt0aXBvKmRvc2lzKQ0KcGFyKG1mcm93PWMoMiwyKSkNCnBsb3QobW9kKQ0KDQpgYGANCg0KIyBIaXBvdGVzaXMNCg0KSDAgOiBMYSBkaXN0cmlidWNpb24gZGUgbG9zIGVyb3JlcyBzaWd1ZW4gbGEgZGlzdHJpYnVjaW9uIG5vcm1hbA0KSDEgOiBMYSBkaXN0cmlidWNpb24gZGUgbG9zIGVyb3JlcyBlcyBkaWZlcmVudGUgYSBsYSBkaXN0cmlidWNpb24gbm9ybWFsDQoNCmBgYHtyfQ0Kcmk8LXJzdGFuZGFyZChtb2QpDQpzaGFwaXJvLnRlc3QocmkpDQoNCmBgYA0KQ3VtcGxlIGVsIHN1cHVlc28gZGUgbm9ybWFsaWRhZCBwb3JxdWUgc2UgcmVjaGF6YSBsYSBoaXBvdGVzaXMgcGxhbnRlYWRhDQoNCmBgYHtyfQ0KDQpgYGANCg0K</div>
+<div id="rmd-source-code">LS0tDQp0aXRsZTogIkFuYWxpc2lzIEZhY3RvcmlhbCINCm91dHB1dDogaHRtbF9ub3RlYm9vaw0KLS0tDQoNCg0KDQpgYGB7cn0NCiNpbnN0YWxsLnBhY2thZ2VzKCJEb0UuYmFzZSIpDQoNCmxpYnJhcnkoRG9FLmJhc2UpDQoNCmBgYA0KDQpgYGB7cn0NCmZhYy5kZXNpZ24obmxldmVscz1jKDIsMykscmVwbGljYXRpb25zPTQpDQoNCmBgYA0KIyBBbmFsaXNpcyBGYWN0b3JpYWwgDQoNCmBgYHtyfQ0KYWJvbm8xPC1yZWFkLnRhYmxlKCJhYm9ubzEudHh0IixoZWFkZXI9VCkNCnN0cihhYm9ubzEpDQoNCmBgYA0KDQpgYGB7cn0NCmJsb3F1ZXM8LWFzLmZhY3RvcihhYm9ubzEkYmxvcXVlcykNCnJlbmQ8LWFib25vMSRyZW5kDQpkb3NpczwtYXMuZmFjdG9yKGFib25vMSRkb3NpcykNCnRpcG88LWFzLmZhY3RvcihhYm9ubzEkYWJvbm8pDQoNCmBgYA0KDQoNCmBgYHtyfQ0KbW9kPC1sbShyZW5kfmJsb3F1ZXMrdGlwbytkb3Npcyt0aXBvKmRvc2lzKQ0KcGFyKG1mcm93PWMoMiwyKSkNCnBsb3QobW9kKQ0KDQpgYGANCg0KIyBIaXBvdGVzaXMNCg0KSDAgOiBMYSBkaXN0cmlidWNpb24gZGUgbG9zIGVyb3JlcyBzaWd1ZW4gbGEgZGlzdHJpYnVjaW9uIG5vcm1hbA0KSDEgOiBMYSBkaXN0cmlidWNpb24gZGUgbG9zIGVyb3JlcyBlcyBkaWZlcmVudGUgYSBsYSBkaXN0cmlidWNpb24gbm9ybWFsDQoNCmBgYHtyfQ0Kcmk8LXJzdGFuZGFyZChtb2QpDQpzaGFwaXJvLnRlc3QocmkpDQoNCmBgYA0KQ3VtcGxlIGVsIHN1cHVlc28gZGUgbm9ybWFsaWRhZCBwb3JxdWUgc2UgcmVjaGF6YSBsYSBoaXBvdGVzaXMgcGxhbnRlYWRhDQpTZSBhY2VwdGEgSDANCg0KYGBge3J9DQoNCmxpYnJhcnkoY2FyKQ0KbmN2VGVzdChtb2QpDQoNCmBgYA0KU2UgYWNlcHRhIGVsIHN1cHVlc3RvIGRlIGhvbW9nZW5laWRhZCBkZSB2YXJpYW56YQ0KDQpgYGB7cn0NCmFudmE8LWFub3ZhKG1vZCkNCmFudmENCg0KYGBgDQojIyBBbmFsaXNpcyBkZSBFZmVjdG8gU2ltcGxlDQpgYGB7cn0NClNDZTwtYW52YSQiU3VtIFNxIg0KU0NFPC1TQ2VbNV0gIA0KU0NFDQoNCmBgYA0KDQpgYGB7cn0NCkNNZTwtYW52YSQiTWVhbiBTcSINCkNNRTwtQ01lWzVdDQoNCmBgYA0KDQpgYGB7cn0NCmFib25vMTwtZGF0YS5mcmFtZShyZW5kLCBkb3NpcywgdGlwbyxibG9xdWVzKQ0KYWJvbm9kMTwtYWJvbm8xW2Fib25vMSRkb3Npcz09ImIxIixdICAjSkFMQSBMT1MgREFST1MgREVMQSAgVEFCTEEgUVVFIFRJRU5FIENPTU8gRE9TSVMgYjENCmFib25vZDI8LWFib25vMVthYm9ubzEkZG9zaXM9PSJiMiIsXSAgI1VOIFBFUVVFw5FPIFNVQkVUDQphYm9ub2QzPC1hYm9ubzFbYWJvbm8xJGRvc2lzPT0iYjMiLF0NCg0KI1BMQU5URU8gTE9TIE1PREVMT1MgQ09OIExBIERBVEEgUVVFIEpBTMOJIEFSUklCQQ0KDQogbW9kZDE8LWxtKHJlbmR+YmxvcXVlcyt0aXBvLGFib25vZDEpDQogbW9kZDI8LWxtKHJlbmR+YmxvcXVlcyt0aXBvLGFib25vZDIpDQogbW9kZDM8LWxtKHJlbmR+YmxvcXVlcyt0aXBvLGFib25vZDMpDQoNCiNBSE9SQSwgQU5BTElTSVMgREUgVlJJQU5aQSBERUwgT1MgTU9ERUxPUw0KIGFudmFkMTwtYW5vdmEobW9kZDEpDQogYW52YWQyPC1hbm92YShtb2RkMikNCiBhbnZhZDM8LWFub3ZhKG1vZGQzKQ0KDQpgYGANCiMjIEFuYWxpc2lzIGRlIGxhIGRvc2lzIGQxDQpgYGB7cn0NCiBhbnZhZDENCmBgYA0KDQojIyBBbmFsaXNpcyBkZSBsYSBkb3NpcyBkMg0KYGBge3J9DQogYW52YWQyDQoNCmBgYA0KYGBge3J9DQogU0NiMTwtYW52YWQxJCJTdW0gU3EiICMgSkFMTyBTVU1BIERFIENVQURSQURPIERFIEFOVkExIA0KIFNDYjI8LWFudmFkMiQiU3VtIFNxIg0KIFNDYjM8LWFudmFkMyQiU3VtIFNxIg0KDQogU0NBYjE8LVNDYjFbMl0NCiBTQ0FiMjwtU0NiMlsyXQ0KIFNDQWIzPC1TQ2IzWzJdDQogDQogQ01iMTwtYW52YWQxJCJNZWFuIFNxIg0KIENNYjI8LWFudmFkMiQiTWVhbiBTcSINCiBDTWIzPC1hbnZhZDMkIk1lYW4gU3EiDQoNCiBDTUFiMTwtQ01iMVsyXQ0KIENNQWIyPC1DTWIyWzJdDQogQ01BYjM8LUNNYjNbMl0NCg0KIGFib25vdDE8LWFib25vMVthYm9ubzEkdGlwbz09ImExIixdDQogYWJvbm90MjwtYWJvbm8xW2Fib25vMSR0aXBvPT0iYTIiLF0NCg0KIG1vZHQxPC1sbShyZW5kfmJsb3F1ZXMrZG9zaXMsZGF0YT1hYm9ub3QxKQ0KIG1vZHQyPC1sbShyZW5kfmJsb3F1ZXMrZG9zaXMsZGF0YT1hYm9ub3QyKQ0KDQogYW52YXQxPC1hbm92YShtb2R0MSkNCiBhbnZhdDI8LWFub3ZhKG1vZHQyKQ0KDQogU0NhMTwtYW52YXQxJCJTdW0gU3EiDQogU0NhMjwtYW52YXQyJCJTdW0gU3EiDQogU0NCYTE8LVNDYTFbMl0NCiBTQ0JhMjwtU0NhMlsyXSANCg0KIENNYTE8LWFudmF0MSQiTWVhbiBTcSINCiBDTWEyPC1hbnZhdDIkIk1lYW4gU3EiDQogQ01CYTE8LUNNYTFbMl0NCiBDTUJhMjwtQ01hMlsyXQ0KDQpgYGANCg0KDQpgYGB7cn0NCiNIQUxMQSBMT1MgR1JBRE9TIERFIExJQkVSVEFEDQogR0w8LWFudmEkRGYNCiBHTA0KYGBgDQoNCmBgYHtyfQ0KIEdkTDwtYyhyZXAoR0xbMl0sMykscmVwKEdMWzNdLDIpLEdMWzVdKQ0KIFNDPC1jKFNDQWIxLFNDQWIyLFNDQWIzLFNDQmExLFNDQmEyLFNDRSkNCiBDTTwtYyhDTUFiMSxDTUFiMixDTUFiMyxDTUJhMSxDTUJhMixDTUUpDQogRmMxPC1yb3VuZChDTVsxOjVdL0NNWzZdLDQpDQogRkM8LWMoRmMxLCIiKQ0KIEZ1ZW50ZTwtYygiQShiMSkiLCJBKGIyKSIsIkEoYjMpIiwiQihhMSkiLCJCKGEyKSIsIlJlc2lkdW9zIikgDQoNCiBwdmFsdWUxPC0xLXBmKEZjMSxHZExbMTo1XSxHZExbNl0pDQogcHZhbHVlMQ0KDQoNCmBgYA0KDQpgYGB7cn0NCiBwdmFsdWU8LWMocm91bmQocHZhbHVlMSw2KSwiIikgI1BPTkUg4oCc4oCdIFBBUkEgQUdSRUdBUiBMT1MgREFUT1MgRU4gQkxBTkNPIFkgVEVOR0EgTEEgTUlTTUEgQ0FOVElEQUQgREUgRUxFTUVOVE9TDQogZGF0YS5mcmFtZShGdWVudGUsR2RMLFNDLENNLEZDLHB2YWx1ZSkNCmBgYA0KDQo=</div>
 
 
 

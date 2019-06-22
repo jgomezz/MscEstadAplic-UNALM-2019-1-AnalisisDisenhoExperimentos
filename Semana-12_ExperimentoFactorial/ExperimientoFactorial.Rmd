@@ -51,8 +51,123 @@ shapiro.test(ri)
 
 ```
 Cumple el supueso de normalidad porque se rechaza la hipotesis planteada
+Se acepta H0
 
 ```{r}
 
+library(car)
+ncvTest(mod)
+
+```
+Se acepta el supuesto de homogeneidad de varianza
+
+```{r}
+anva<-anova(mod)
+anva
+
+```
+## Analisis de Efecto Simple
+```{r}
+SCe<-anva$"Sum Sq"
+SCE<-SCe[5]  
+SCE
+
+```
+
+```{r}
+CMe<-anva$"Mean Sq"
+CME<-CMe[5]
+
+```
+
+```{r}
+abono1<-data.frame(rend, dosis, tipo,bloques)
+abonod1<-abono1[abono1$dosis=="b1",]  #JALA LOS DAROS DELA  TABLA QUE TIENE COMO DOSIS b1
+abonod2<-abono1[abono1$dosis=="b2",]  #UN PEQUEÑO SUBET
+abonod3<-abono1[abono1$dosis=="b3",]
+
+#PLANTEO LOS MODELOS CON LA DATA QUE JALÉ ARRIBA
+
+ modd1<-lm(rend~bloques+tipo,abonod1)
+ modd2<-lm(rend~bloques+tipo,abonod2)
+ modd3<-lm(rend~bloques+tipo,abonod3)
+
+#AHORA, ANALISIS DE VRIANZA DEL OS MODELOS
+ anvad1<-anova(modd1)
+ anvad2<-anova(modd2)
+ anvad3<-anova(modd3)
+
+```
+## Analisis de la dosis d1
+```{r}
+ anvad1
+```
+
+## Analisis de la dosis d2
+```{r}
+ anvad2
+
+```
+```{r}
+ SCb1<-anvad1$"Sum Sq" # JALO SUMA DE CUADRADO DE ANVA1 
+ SCb2<-anvad2$"Sum Sq"
+ SCb3<-anvad3$"Sum Sq"
+
+ SCAb1<-SCb1[2]
+ SCAb2<-SCb2[2]
+ SCAb3<-SCb3[2]
+ 
+ CMb1<-anvad1$"Mean Sq"
+ CMb2<-anvad2$"Mean Sq"
+ CMb3<-anvad3$"Mean Sq"
+
+ CMAb1<-CMb1[2]
+ CMAb2<-CMb2[2]
+ CMAb3<-CMb3[2]
+
+ abonot1<-abono1[abono1$tipo=="a1",]
+ abonot2<-abono1[abono1$tipo=="a2",]
+
+ modt1<-lm(rend~bloques+dosis,data=abonot1)
+ modt2<-lm(rend~bloques+dosis,data=abonot2)
+
+ anvat1<-anova(modt1)
+ anvat2<-anova(modt2)
+
+ SCa1<-anvat1$"Sum Sq"
+ SCa2<-anvat2$"Sum Sq"
+ SCBa1<-SCa1[2]
+ SCBa2<-SCa2[2] 
+
+ CMa1<-anvat1$"Mean Sq"
+ CMa2<-anvat2$"Mean Sq"
+ CMBa1<-CMa1[2]
+ CMBa2<-CMa2[2]
+
+```
+
+
+```{r}
+#HALLA LOS GRADOS DE LIBERTAD
+ GL<-anva$Df
+ GL
+```
+
+```{r}
+ GdL<-c(rep(GL[2],3),rep(GL[3],2),GL[5])
+ SC<-c(SCAb1,SCAb2,SCAb3,SCBa1,SCBa2,SCE)
+ CM<-c(CMAb1,CMAb2,CMAb3,CMBa1,CMBa2,CME)
+ Fc1<-round(CM[1:5]/CM[6],4)
+ FC<-c(Fc1,"")
+ Fuente<-c("A(b1)","A(b2)","A(b3)","B(a1)","B(a2)","Residuos") 
+
+ pvalue1<-1-pf(Fc1,GdL[1:5],GdL[6])
+ pvalue1
+
+```
+
+```{r}
+ pvalue<-c(round(pvalue1,6),"") #PONE “” PARA AGREGAR LOS DATOS EN BLANCO Y TENGA LA MISMA CANTIDAD DE ELEMENTOS
+ data.frame(Fuente,GdL,SC,CM,FC,pvalue)
 ```
 
