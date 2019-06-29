@@ -19,8 +19,22 @@ de riego |  1  |  2  |  3  |  4  |  5
 
 a. Presente el modelo aditivo lineal e interprete cada uno de sus componentes en términos del enunciado.
 
-\[  Y_{(i)jk}= \mu + \tau_{(i)} + \beta_j + \gamma_k + \epsilon_{(i)jk}      \]
+El modelo aditivo lineal para un Diseño Cuadrado Latino es el siguiente:
 
+\[  Y_{(i)jk}= \mu + \tau_{(i)} + \beta_j + \gamma_k + \epsilon_{(i)jk} \]   
+
+ Para todo : i, j, k = 1,...,t     
+
+ Donde:
+
+  - $Y_{(i)jk}$ es el valor o rendimiento observado en el i-ésimo tratamiento, j-ésima fila, k-ésima columna.
+  - $\mu$ es el efecto de la media general.
+  - $\tau_{(i)}$ es el efecto del i-ésimo tratamiento.
+  - $\beta_j$ es el efecto de la j-ésima fila.
+  - $\gamma_k$ es el efecto de la k-ésima columna.
+  - $\epsilon_{(i)jk}$ es el efecto del error experimental en el i-ésimo tratamiento, j-ésima fila, k-ésima columna.
+  - t es el número de tratamientos que es igual al número de filas y de columnas.
+La simbología (i) implica que no es una clasificación ordinaria de tres vías.
 
 ```{r}
 library(agricolae)
@@ -29,6 +43,6 @@ library(agricolae)
 b. Realice el diagnóstico del modelo utilizando gráfico y pruebas de hipótesis
 
 ```{r}
-tratamiento<-c("A","B","C","D")
+#tratamiento<-c("A","B","C","D")
 
 ```
