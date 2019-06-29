@@ -39,12 +39,61 @@ b. Realice el diagnóstico del modelo utilizando gráfico y pruebas de hipótesi
 
 ```{r}
 library(agricolae)
-
-#tratamiento<-c("A","B","C","D")
+garbanzo <- read.table("garbanzo.txt", header = TRUE)
+head(garbanzo)
 
 ```
 
+```{r}
+str(garbanzo)
+```
 
+
+```{r}
+garbanzo$fila<-factor(garbanzo$fila)
+garbanzo$columna<-factor(garbanzo$columna)
+garbanzo$tratamiento<-factor(garbanzo$tratamiento)
+str(garbanzo)
+```
+```{r}
+mod<-lm(rendimiento~.,data=garbanzo)
+anva<-anova(mod)
+anva
+```
+ 
+```{r}
+par(mfrow=c(2,2))
+plot(mod)
+```
+ 
+```{r}
+ri<-rstandard(mod)
+shapiro.test(ri)
+```
+```{r}
+library(car)
+ncvTest(mod)
+```
+```{r}
+library(multcomp)
+ amod<-aov(rendimiento~.,data=garbanzo)
+ comptrat<-glht(amod,linfct=mcp(tratamiento="Tukey"))
+ summary(comptrat)
+```
+```{r}
+library(agricolae)
+anva<-aov(mod)
+compd<-duncan.test(anva,"tratamiento")
+compd
+
+```
+
+ 
+ 
+g. Se desea comparar la media de los rendimientos obtenidos con la variedades A y B versus la media de los rendimientos obtenidos con las variedades C, D y E. Obtenga los contrastes ortogonales y utilice la prueba de F para probar el contraste dado
+
+\[ HO:  \mu_A + \mu_B = \mu_C + \mu_D + \mu_E \]
+\[ H1:  \mu_A + \mu_B  \not=  \mu_C + \mu_D + \mu_E \]
 
 ```{r}
 
