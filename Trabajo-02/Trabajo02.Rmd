@@ -88,13 +88,55 @@ compd
 
 ```
 
- 
- 
 g. Se desea comparar la media de los rendimientos obtenidos con la variedades A y B versus la media de los rendimientos obtenidos con las variedades C, D y E. Obtenga los contrastes ortogonales y utilice la prueba de F para probar el contraste dado
 
-\[ HO:  \mu_A + \mu_B = \mu_C + \mu_D + \mu_E \]
-\[ H1:  \mu_A + \mu_B  \not=  \mu_C + \mu_D + \mu_E \]
+\[ HO:  3\mu_A + 3\mu_B = 2\mu_C + 2\mu_D + 2\mu_E \]
+\[ H1:  3\mu_A + 3\mu_B  \not=  2\mu_C + 2\mu_D + 2\mu_E \]
+
+Matriz de Constrastes
+
+
+Coeficientes | $T_A$ | $T_B$ | $T_C$ | $T_D$ | $T_E$
+-------------|-----|-----|-----|-----|-----
+$C_{1i}$ | -3 | -3 |  2 |  2 |  2 
+$C_{2i}$ | -1 |  1 |  0 |  0 |  0 
+$C_{3i}$ |  0 |  0 |  1 | -2 |  1 
+$C_{4i}$ |  3 |  0 | -1 | -1 | -1 
+$C_{5i}$ |  0 |  3 | -1 | -1 | -1
+
+
+Constrastes Ortognales
+
+Item  | $Expresi\'on$
+------|------------------
+$Q_1$ | $-3Y_A - 3Y_B + 2Y_C + 2Y_D + 2Y_E$
+$Q_2$ | $-Y_A + Y_B$
+$Q_3$ | $Y_C - 2Y_D + Y_E$
+$Q_4$ | $3Y_A - Y_C - Y_D - Y_E$
+$Q_5$ | $3Y_B - Y_C - Y_D - Y_E$
+
+
+
+
+
 
 ```{r}
-
+summary(anva)
 ```
+
+```{r}
+yp <- sort(tapply(garbanzo$rendimiento,garbanzo$tratamiento,mean))
+yp
+```
+
+
+```{r}
+c1 <- c(-3,-3,2,2,2)
+tc <- (t(c1)%*%yp)/sqrt((119.7/4)*sum(c1^2))
+tc
+```
+```{r}
+pvalue <- 2*(1-pt(tc,12))
+pvalue
+```
+El p.valor es menor a 0.01, por lo tanto hay evidencia estadística para decir que se encontró una  diferencia altamente significa, por lo tanto se acepta la hipótesis alterna, es decir que la media de los rendimientos obtenidos con la variedades de garbanzos A y B es diferente a la media de los rendimientos obtenidos con las variedades de garbanzos C, D y E.

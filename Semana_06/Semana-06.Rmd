@@ -1,0 +1,215 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+
+
+```{r}
+gasolina <- read.table("gasolina.txt", T)
+rendimiento <- gasolina[,1]
+bloques <- as.factor(gasolina[,2])
+aditivo <- as.factor(gasolina[,3])
+mod <- lm (rendimiento~bloques+aditivo )
+anva <- aov(mod)
+summary(anva)
+
+```
+
+```{r}
+
+anva <- anova(mod)
+anva
+
+```
+```{r}
+cm <- anva$Mean
+sc <- anva$Sum
+# numero de tratamientos
+nt <-tapply(rendimiento, bloques, length )
+t <-nt[1]
+# numero de bloques
+nb <-tapply(rendimiento, aditivo, length )
+b <-nb[1]
+ER <-((sc[1]+b*(t-1)*cm[3])/(t*b-1))/cm[3]
+ER
+
+# Factor de eficiencia
+```
+```{r}
+
+install.packages("planor")
+
+
+```
+
+
+# Una posible aleatorización de los tratamientos dentro de los bloques sería:
+
+```{r}
+
+library(planor)
+Design <- data.frame(block=rep(1:5,rep(5,5)),treatment=rep(c("A","B","C","D","E"),5))
+planor.randomize(~block/UNITS, data=Design)
+
+```
+
+```{r}
+fix(planb)
+planb
+
+```
+
+## Comparaciones Múltiples
+
+```{r}
+# La media 
+mediat<-tapply(rendimiento,aditivo,mean)
+mediat
+
+```
+
+```{r}
+mediaD<-mediat[4]
+mediaE<-mediat[5]
+
+# Calculamos el error estandard
+esdmedia<-sqrt(2*(deviance(mod)/df.residual(mod))/5)
+esdmedia
+
+
+```
+
+```{r}
+tc<-(mediaD-mediaE-0)/esdmedia
+tc
+
+```
+
+```{r}
+pvalue<-2*pt(tc,df.residual(mod))
+pvalue
+
+# Se tiene evidencia para para rechazar la hipotesis plantada, entonces  la gasolina tipo D y E tienen medias diferentes
+```
+
+
+```{r}
+install.packages("multcomp")
+
+```
+
+```{r}
+vehiculo <- bloques
+tipos <- aditivo
+
+library(multcomp)
+amod<-aov(rendimiento~vehiculo+tipos)
+comptipos<-glht(amod,linfct=mcp(tipos="Tukey"))
+confint(comptipos)
+summary(comptipos)
+
+```
+Entre los que no hay diferencias
+
+## La prueba de Duncan
+
+```{r}
+
+gasolina <- read.table("gasolina.txt", T)
+str(gasolina)
+
+```
+
+```{r}
+install.packages("agricolae")
+```
+
+```{r}
+rendimiento <- gasolina[,1]
+vehiculo <- as.factor(gasolina[,2])
+tipos <- as.factor(gasolina[,3])
+
+modeg  <- lm(rendimiento~vehiculo+tipos)
+anva<-aov(modeg)
+
+library(agricolae)
+compd<-duncan.test(anva,"tipos")
+compd
+
+```
+
+```{r}
+# Para que no los agrupe
+compd<-duncan.test(anva,"tipos",group=FALSE)
+compd
+
+```
+Las prueba de T es para una sola comparación
+
+Las pruebas de Turkey son mas exigencias
+
+Las pruebas de control es Dunnett y Duncan
+
+## Pruebas
+
+```{r}
+vmedia<-tapply(rendimiento,tipos,mean)
+ci<-c(-4,1,1,1,1)
+ q<-5*ci%*%vmedia
+ tc<-q/sqrt(5*(deviance(modeg)/16)*sum(ci^2))
+ tc
+
+```
+```{r}
+pvalue<-2*(1-pt(tc,16))
+ pvalue
+
+```
+
+```{r}
+absl<-abs(ci%*%vmedia)
+absl
+
+```
+
+```{r}
+sl<-sqrt((1/5)*(deviance(modeg)/16)*sum(ci^2))
+sl
+
+```
+
+
+```{r}
+vcs<-sl*sqrt(4*qf(0.95,4,16))
+vcs
+
+```
+
+Se rechaza que  6.8 > 5.656289
+
+## Residuales
+
+```{r}
+modeg<-lm(rendimiento~vehiculo+tipos)
+par(mfrow=c(2,2))
+plot(modeg)
+
+```
+
+```{r}
+ri<-rstandard(modeg)
+ shapiro.test(ri)
+
+ # TIene nomralidad
+```
+H0 : Los errores tienen distribución normal
+H1 : Los errores NO tienen distribución normal
+
+```{r}
+library(car)
+ncvTest(modeg)
+
+
+```
+
