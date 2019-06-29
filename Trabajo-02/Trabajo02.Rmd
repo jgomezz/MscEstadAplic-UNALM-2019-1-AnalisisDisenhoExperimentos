@@ -80,6 +80,8 @@ library(multcomp)
  comptrat<-glht(amod,linfct=mcp(tratamiento="Tukey"))
  summary(comptrat)
 ```
+
+
 ```{r}
 library(agricolae)
 anva<-aov(mod)
@@ -87,6 +89,21 @@ compd<-duncan.test(anva,"tratamiento")
 compd
 
 ```
+
+f.Asumiendo que la variedad A es el testigo, realice la prueba de Dunnett
+
+```{r}
+compdunett<-glht(anva,linfct=mcp(tratamiento="Dunnett"))
+summary(compdunett)
+
+```
+Según la prueba de Duncan se ha encontrado:
+
+- No hay diferencia entre la variedad de garbanzo B y A
+- Hay diferencia altamente muy significativa entre las variedades de garbanzo C y A (***)
+- Hay diferencia muy significativa entre las variedades de garbanzo D y A (**)
+- Hay diferencia altamente muy significativa entre las variedades de garbanzo E - A (***)
+
 
 g. Se desea comparar la media de los rendimientos obtenidos con la variedades A y B versus la media de los rendimientos obtenidos con las variedades C, D y E. Obtenga los contrastes ortogonales y utilice la prueba de F para probar el contraste dado
 
@@ -114,10 +131,6 @@ $Q_2$ | $-Y_A + Y_B$
 $Q_3$ | $Y_C - 2Y_D + Y_E$
 $Q_4$ | $3Y_A - Y_C - Y_D - Y_E$
 $Q_5$ | $3Y_B - Y_C - Y_D - Y_E$
-
-
-
-
 
 
 ```{r}
