@@ -74,20 +74,21 @@ shapiro.test(ri)
 library(car)
 ncvTest(mod)
 ```
+d. Realice la prueba de Tukey. De sus conclusiones y recomendaciones en término de las variables en estudio 
+
 ```{r}
 library(multcomp)
  amod<-aov(rendimiento~.,data=garbanzo)
  comptrat<-glht(amod,linfct=mcp(tratamiento="Tukey"))
  summary(comptrat)
 ```
-
+e.Realice la prueba de Duncan. Compare con los resultados de la prueba de Tukey
 
 ```{r}
 library(agricolae)
 anva<-aov(mod)
 compd<-duncan.test(anva,"tratamiento")
 compd
-
 ```
 
 f.Asumiendo que la variedad A es el testigo, realice la prueba de Dunnett
