@@ -1774,7 +1774,7 @@ $(document).ready(function () {
 <thead>
 <tr class="header">
 <th>Niveles</th>
-<th>Fertilidad del suelo de riego</th>
+<th>Fertilidad del suelo</th>
 <th></th>
 <th></th>
 <th></th>
@@ -1840,21 +1840,14 @@ $(document).ready(function () {
 <p>Para todo : i, j, k = 1,…,t</p>
 <p>Donde:</p>
 <ul>
-<li><span class="math inline">\(Y_{(i)jk}\)</span> es el valor o rendimiento observado en el i-ésimo tratamiento, j-ésima fila, k-ésima columna.</li>
+<li><span class="math inline">\(Y_{(i)jk}\)</span> es el valor o rendimiento observado en el i-ésimo variedad de Garbanzo, j-ésima nivel de riesgo, k-ésima fertilidad del suelo.</li>
 <li><span class="math inline">\(\mu\)</span> es el efecto de la media general.</li>
-<li><span class="math inline">\(\tau_{(i)}\)</span> es el efecto del i-ésimo tratamiento.</li>
-<li><span class="math inline">\(\beta_j\)</span> es el efecto de la j-ésima fila.</li>
-<li><span class="math inline">\(\gamma_k\)</span> es el efecto de la k-ésima columna.</li>
-<li><span class="math inline">\(\epsilon_{(i)jk}\)</span> es el efecto del error experimental en el i-ésimo tratamiento, j-ésima fila, k-ésima columna.</li>
-<li>t es el número de tratamientos que es igual al número de filas y de columnas. La simbología (i) implica que no es una clasificación ordinaria de tres vías.</li>
+<li><span class="math inline">\(\tau_{(i)}\)</span> es el efecto del i-ésima variedad de garbanzo</li>
+<li><span class="math inline">\(\beta_j\)</span> es el efecto de la j-ésima nivel de riesgo</li>
+<li><span class="math inline">\(\gamma_k\)</span> es el efecto de la k-ésima fertilidad del suelo</li>
+<li><span class="math inline">\(\epsilon_{(i)jk}\)</span> es el efecto del error experimental en el i-ésimo variedad de Garbanzo, j-ésima nivel de riesgo, k-ésima fertilidad del suelo.</li>
+<li>t es el número de tratamientos que es igual al número de niveles de riego y al número de fertilidades de suelo.</li>
 </ul>
-<!-- rnb-text-end -->
-<!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubGlicmFyeShhZ3JpY29sYWUpXG5gYGAifQ== -->
-<pre class="r"><code>library(agricolae)</code></pre>
-<!-- rnb-source-end -->
-<!-- rnb-chunk-end -->
-<!-- rnb-text-begin -->
 <ol start="2" style="list-style-type: lower-alpha">
 <li>Realice el diagnóstico del modelo utilizando gráfico y pruebas de hipótesis</li>
 </ol>
@@ -1865,9 +1858,13 @@ $(document).ready(function () {
 <pre><code></code></pre>
 <!-- rnb-source-end -->
 <!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-chunk-end -->
 </div>
 
-<div id="rmd-source-code">LS0tCnRpdGxlOiAiQW7DoWxpc2lzIHkgRGlzZcOxbyBkZSBFeHBlcmltZW50b3MiIApvdXRwdXQ6IGh0bWxfbm90ZWJvb2sKLS0tCgojIyBTZWd1bmRvIFRyYWJham8gRW5jYXJnYWRvCgpTZSByZWFsaXrDsyB1biBleHBlcmltZW50byBwYXJhIG9ic2VydmFyIGVsIHJlbmRpbWllbnRvIGVuIGtpbG9ncmFtb3MgcG9yIHBhcmNlbGEgZGUgNSB2YXJpZWRhZGVzIGRlIGdhcmJhbnpvIChBLCBCLCBDLCBELCBFKSBlbiBlbCBjdWFsIHNlIHR1dm8gcXVlIHV0aWxpemFyIGVsIGRpc2XDsW8gQ3VhZHJhZG8gTGF0aW5vLiBMYXMgZmlsYXMgZnVlcm9uIGRlZmluaWRhcyBjb21vIG5pdmVsZXMgZGUgcmllZ28geSBsYXMgY29sdW1uYXMgY29tbyBmZXJ0aWxpZGFkIGRlbCBzdWVsby4gTG9zIGRhdG9zIHNlIHByZXNlbnRhbiBhIGNvbnRpbnVhY2nDs24KCgpOaXZlbGVzCSB8RmVydGlsaWRhZCBkZWwgc3VlbG8gZGUgcmllZ28KLS0tLS0tLS0tfC0tLS0tfC0tLS0tfC0tLS0tfC0tLS0tfC0tLS0tCmRlIHJpZWdvIHwgIDEgIHwgIDIgIHwgIDMgIHwgIDQgIHwgIDUgIAoxCXxCID0gNjUgfEMgPSA4MCB8QSA9IDU1IHxFID0gODMJfEQgPSA4MAoyCXxDID0gOTUJfEEgPSA2MAl8RSA9IDk0CXxEID0gOTUJfEIgPSA2MgozCXxBID0gNjMJfEUgPSA5OAl8RCA9IDc5CXxCID0gNjkgfEMgPSAxMDAKNAl8RSA9IDk3CXxEID05NAl8QiA9IDQ2CXxDID0gNzEgfEEgPSA0Mgo1CXxEID0gNzYJfEIgPSA1NAl8QyA9IDEwNnxBID0gMzYgfEUgPSA5NgoKYS4gUHJlc2VudGUgZWwgbW9kZWxvIGFkaXRpdm8gbGluZWFsIGUgaW50ZXJwcmV0ZSBjYWRhIHVubyBkZSBzdXMgY29tcG9uZW50ZXMgZW4gdMOpcm1pbm9zIGRlbCBlbnVuY2lhZG8uCgpFbCBtb2RlbG8gYWRpdGl2byBsaW5lYWwgcGFyYSB1biBEaXNlw7FvIEN1YWRyYWRvIExhdGlubyBlcyBlbCBzaWd1aWVudGU6CgpcWyAgWV97KGkpamt9PSBcbXUgKyBcdGF1X3soaSl9ICsgXGJldGFfaiArIFxnYW1tYV9rICsgXGVwc2lsb25feyhpKWprfSBcXSAgIAoKIFBhcmEgdG9kbyA6IGksIGosIGsgPSAxLC4uLix0ICAgICAKCiBEb25kZToKCiAgLSAkWV97KGkpamt9JCBlcyBlbCB2YWxvciBvIHJlbmRpbWllbnRvIG9ic2VydmFkbyBlbiBlbCBpLcOpc2ltbyB0cmF0YW1pZW50bywgai3DqXNpbWEgZmlsYSwgay3DqXNpbWEgY29sdW1uYS4KICAtICRcbXUkIGVzIGVsIGVmZWN0byBkZSBsYSBtZWRpYSBnZW5lcmFsLgogIC0gJFx0YXVfeyhpKX0kIGVzIGVsIGVmZWN0byBkZWwgaS3DqXNpbW8gdHJhdGFtaWVudG8uCiAgLSAkXGJldGFfaiQgZXMgZWwgZWZlY3RvIGRlIGxhIGotw6lzaW1hIGZpbGEuCiAgLSAkXGdhbW1hX2skIGVzIGVsIGVmZWN0byBkZSBsYSBrLcOpc2ltYSBjb2x1bW5hLgogIC0gJFxlcHNpbG9uX3soaSlqa30kIGVzIGVsIGVmZWN0byBkZWwgZXJyb3IgZXhwZXJpbWVudGFsIGVuIGVsIGktw6lzaW1vIHRyYXRhbWllbnRvLCBqLcOpc2ltYSBmaWxhLCBrLcOpc2ltYSBjb2x1bW5hLgogIC0gdCBlcyBlbCBuw7ptZXJvIGRlIHRyYXRhbWllbnRvcyBxdWUgZXMgaWd1YWwgYWwgbsO6bWVybyBkZSBmaWxhcyB5IGRlIGNvbHVtbmFzLgpMYSBzaW1ib2xvZ8OtYSAoaSkgaW1wbGljYSBxdWUgbm8gZXMgdW5hIGNsYXNpZmljYWNpw7NuIG9yZGluYXJpYSBkZSB0cmVzIHbDrWFzLgoKYGBge3J9CmxpYnJhcnkoYWdyaWNvbGFlKQpgYGAKCmIuIFJlYWxpY2UgZWwgZGlhZ27Ds3N0aWNvIGRlbCBtb2RlbG8gdXRpbGl6YW5kbyBncsOhZmljbyB5IHBydWViYXMgZGUgaGlww7N0ZXNpcwoKYGBge3J9CiN0cmF0YW1pZW50bzwtYygiQSIsIkIiLCJDIiwiRCIpCgpgYGAK</div>
+<div id="rmd-source-code">LS0tCnRpdGxlOiAiQW7DoWxpc2lzIHkgRGlzZcOxbyBkZSBFeHBlcmltZW50b3MiIApvdXRwdXQ6IGh0bWxfbm90ZWJvb2sKLS0tCgojIyBTZWd1bmRvIFRyYWJham8gRW5jYXJnYWRvCgpTZSByZWFsaXrDsyB1biBleHBlcmltZW50byBwYXJhIG9ic2VydmFyIGVsIHJlbmRpbWllbnRvIGVuIGtpbG9ncmFtb3MgcG9yIHBhcmNlbGEgZGUgNSB2YXJpZWRhZGVzIGRlIGdhcmJhbnpvIChBLCBCLCBDLCBELCBFKSBlbiBlbCBjdWFsIHNlIHR1dm8gcXVlIHV0aWxpemFyIGVsIGRpc2XDsW8gQ3VhZHJhZG8gTGF0aW5vLiBMYXMgZmlsYXMgZnVlcm9uIGRlZmluaWRhcyBjb21vIG5pdmVsZXMgZGUgcmllZ28geSBsYXMgY29sdW1uYXMgY29tbyBmZXJ0aWxpZGFkIGRlbCBzdWVsby4gTG9zIGRhdG9zIHNlIHByZXNlbnRhbiBhIGNvbnRpbnVhY2nDs24KCgpOaXZlbGVzCSB8RmVydGlsaWRhZCBkZWwgc3VlbG8gCi0tLS0tLS0tLXwtLS0tLXwtLS0tLXwtLS0tLXwtLS0tLXwtLS0tLQpkZSByaWVnbyB8ICAxICB8ICAyICB8ICAzICB8ICA0ICB8ICA1ICAKMQl8QiA9IDY1IHxDID0gODAgfEEgPSA1NSB8RSA9IDgzCXxEID0gODAKMgl8QyA9IDk1CXxBID0gNjAJfEUgPSA5NAl8RCA9IDk1CXxCID0gNjIKMwl8QSA9IDYzCXxFID0gOTgJfEQgPSA3OQl8QiA9IDY5IHxDID0gMTAwCjQJfEUgPSA5Nwl8RCA9OTQJfEIgPSA0Ngl8QyA9IDcxIHxBID0gNDIKNQl8RCA9IDc2CXxCID0gNTQJfEMgPSAxMDZ8QSA9IDM2IHxFID0gOTYKCmEuIFByZXNlbnRlIGVsIG1vZGVsbyBhZGl0aXZvIGxpbmVhbCBlIGludGVycHJldGUgY2FkYSB1bm8gZGUgc3VzIGNvbXBvbmVudGVzIGVuIHTDqXJtaW5vcyBkZWwgZW51bmNpYWRvLgoKRWwgbW9kZWxvIGFkaXRpdm8gbGluZWFsIHBhcmEgdW4gRGlzZcOxbyBDdWFkcmFkbyBMYXRpbm8gZXMgZWwgc2lndWllbnRlOgoKXFsgIFlfeyhpKWprfT0gXG11ICsgXHRhdV97KGkpfSArIFxiZXRhX2ogKyBcZ2FtbWFfayArIFxlcHNpbG9uX3soaSlqa30gXF0gICAKCiBQYXJhIHRvZG8gOiBpLCBqLCBrID0gMSwuLi4sdCAgICAgCgogRG9uZGU6CgogIC0gJFlfeyhpKWprfSQgZXMgZWwgdmFsb3IgbyByZW5kaW1pZW50byBvYnNlcnZhZG8gZW4gZWwgaS3DqXNpbW8gdmFyaWVkYWQgZGUgR2FyYmFuem8sIGotw6lzaW1hIG5pdmVsIGRlIHJpZXNnbywgay3DqXNpbWEgZmVydGlsaWRhZCBkZWwgc3VlbG8uCiAgLSAkXG11JCBlcyBlbCBlZmVjdG8gZGUgbGEgbWVkaWEgZ2VuZXJhbC4KICAtICRcdGF1X3soaSl9JCBlcyBlbCBlZmVjdG8gZGVsIGktw6lzaW1hIHZhcmllZGFkIGRlIGdhcmJhbnpvCiAgLSAkXGJldGFfaiQgZXMgZWwgZWZlY3RvIGRlIGxhIGotw6lzaW1hIG5pdmVsIGRlIHJpZXNnbwogIC0gJFxnYW1tYV9rJCBlcyBlbCBlZmVjdG8gZGUgbGEgay3DqXNpbWEgZmVydGlsaWRhZCBkZWwgc3VlbG8KICAtICRcZXBzaWxvbl97KGkpamt9JCBlcyBlbCBlZmVjdG8gZGVsIGVycm9yIGV4cGVyaW1lbnRhbCBlbiBlbCBpLcOpc2ltbyB2YXJpZWRhZCBkZSBHYXJiYW56bywgai3DqXNpbWEgbml2ZWwgZGUgcmllc2dvLCBrLcOpc2ltYSBmZXJ0aWxpZGFkIGRlbCBzdWVsby4KICAtIHQgZXMgZWwgbsO6bWVybyBkZSB0cmF0YW1pZW50b3MgcXVlIGVzIGlndWFsIGFsIG7Dum1lcm8gZGUgbml2ZWxlcyBkZSByaWVnbyB5IGFsIG7Dum1lcm8gZGUgZmVydGlsaWRhZGVzIGRlIHN1ZWxvLgoKYi4gUmVhbGljZSBlbCBkaWFnbsOzc3RpY28gZGVsIG1vZGVsbyB1dGlsaXphbmRvIGdyw6FmaWNvIHkgcHJ1ZWJhcyBkZSBoaXDDs3Rlc2lzCgpgYGB7cn0KbGlicmFyeShhZ3JpY29sYWUpCgojdHJhdGFtaWVudG88LWMoIkEiLCJCIiwiQyIsIkQiKQoKYGBgCgoKCmBgYHtyfQoKYGBgCg==</div>
 
 
 

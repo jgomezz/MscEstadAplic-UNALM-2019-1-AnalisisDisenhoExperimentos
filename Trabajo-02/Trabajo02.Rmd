@@ -8,7 +8,7 @@ output: html_notebook
 Se realizó un experimento para observar el rendimiento en kilogramos por parcela de 5 variedades de garbanzo (A, B, C, D, E) en el cual se tuvo que utilizar el diseño Cuadrado Latino. Las filas fueron definidas como niveles de riego y las columnas como fertilidad del suelo. Los datos se presentan a continuación
 
 
-Niveles	 |Fertilidad del suelo de riego
+Niveles	 |Fertilidad del suelo 
 ---------|-----|-----|-----|-----|-----
 de riego |  1  |  2  |  3  |  4  |  5  
 1	|B = 65 |C = 80 |A = 55 |E = 83	|D = 80
@@ -27,22 +27,25 @@ El modelo aditivo lineal para un Diseño Cuadrado Latino es el siguiente:
 
  Donde:
 
-  - $Y_{(i)jk}$ es el valor o rendimiento observado en el i-ésimo tratamiento, j-ésima fila, k-ésima columna.
+  - $Y_{(i)jk}$ es el valor o rendimiento observado en el i-ésimo variedad de Garbanzo, j-ésima nivel de riesgo, k-ésima fertilidad del suelo.
   - $\mu$ es el efecto de la media general.
-  - $\tau_{(i)}$ es el efecto del i-ésimo tratamiento.
-  - $\beta_j$ es el efecto de la j-ésima fila.
-  - $\gamma_k$ es el efecto de la k-ésima columna.
-  - $\epsilon_{(i)jk}$ es el efecto del error experimental en el i-ésimo tratamiento, j-ésima fila, k-ésima columna.
-  - t es el número de tratamientos que es igual al número de filas y de columnas.
-La simbología (i) implica que no es una clasificación ordinaria de tres vías.
-
-```{r}
-library(agricolae)
-```
+  - $\tau_{(i)}$ es el efecto del i-ésima variedad de garbanzo
+  - $\beta_j$ es el efecto de la j-ésima nivel de riesgo
+  - $\gamma_k$ es el efecto de la k-ésima fertilidad del suelo
+  - $\epsilon_{(i)jk}$ es el efecto del error experimental en el i-ésimo variedad de Garbanzo, j-ésima nivel de riesgo, k-ésima fertilidad del suelo.
+  - t es el número de tratamientos que es igual al número de niveles de riego y al número de fertilidades de suelo.
 
 b. Realice el diagnóstico del modelo utilizando gráfico y pruebas de hipótesis
 
 ```{r}
+library(agricolae)
+
 #tratamiento<-c("A","B","C","D")
+
+```
+
+
+
+```{r}
 
 ```
