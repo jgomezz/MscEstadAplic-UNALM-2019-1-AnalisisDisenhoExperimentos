@@ -18,7 +18,7 @@ de riego |  1  |  2  |  3  |  4  |  5
 4	|E = 97	|D =94	|B = 46	|C = 71 |A = 42
 5	|D = 76	|B = 54	|C = 106|A = 36 |E = 96
 
-a. Presente el modelo aditivo lineal e interprete cada uno de sus componentes en términos del enunciado.
+##### a. Presente el modelo aditivo lineal e interprete cada uno de sus componentes en términos del enunciado.
 
 El modelo aditivo lineal para un Diseño Cuadrado Latino es el siguiente:
 
@@ -36,7 +36,7 @@ El modelo aditivo lineal para un Diseño Cuadrado Latino es el siguiente:
   - $\epsilon_{(i)jk}$ es el efecto del error experimental en el i-ésimo variedad de Garbanzo, j-ésima nivel de riesgo, k-ésima fertilidad del suelo.
   - t es el número de tratamientos que es igual al número de niveles de riego y al número de fertilidades de suelo.
 
-b. Realice el diagnóstico del modelo utilizando gráfico y pruebas de hipótesis
+##### b. Realice el diagnóstico del modelo utilizando gráfico y pruebas de hipótesis
 
 ```{r}
 library(agricolae)
@@ -76,7 +76,7 @@ library(car)
 ncvTest(mod)
 ```
 
-d. Realice la prueba de Tukey. De sus conclusiones y recomendaciones en término de las variables en estudio 
+##### d. Realice la prueba de Tukey. De sus conclusiones y recomendaciones en término de las variables en estudio 
 
 ```{r}
 library(multcomp)
@@ -107,21 +107,52 @@ significación del 10º%
 yp <- sort(tapply(garbanzo$rendimiento,garbanzo$tratamiento,mean))
 yp
 ```
-Se ha ordenado de menor a mayor, y se muestran los que no tienen difencias significativas.
+Se ha ordenado de menor a mayor y se muestran los que no tienen difencias significativas :
 
-              ------
-                  -------
-              -----------
+ A  | B  | D  | C  | E 
+----|----|----|----|----
+51.2|59.2|84.8|90.4|93.6
+   .  |   .  |---|---|---
+---|---|     |     | 
 
-e.Realice la prueba de Duncan. Compare con los resultados de la prueba de Tukey
+Se recomienda emplear el tipo de garbanzo C y E porque no tienen diferencias significativas y se obtiene la mayor rendimiento.
+
+##### e.Realice la prueba de Duncan. Compare con los resultados de la prueba de Tukey y Ducan
 ```{r}
 library(agricolae)
 anva<-aov(mod)
-compd<-duncan.test(anva,"tratamiento")
+compd<-duncan.test(anva,"tratamiento", group=FALSE)
 compd
 ```
+Se ha encontrados diferencias altamente muy significativas entre las siguientes comparaciones de medias de rendimientos:
 
-f.Asumiendo que la variedad A es el testigo, realice la prueba de Dunnett
+  - Entre la media de los rendimientos obtenidos con los garbanzos de tipo A y C
+  - Entre la media de los rendimientos obtenidos con los garbanzos de tipo A y D
+  - Entre la media de los rendimientos obtenidos con los garbanzos de tipo A y E
+  - Entre la media de los rendimientos obtenidos con los garbanzos de tipo B y C
+  - Entre la media de los rendimientos obtenidos con los garbanzos de tipo B y E
+
+Se ha encontrados diferencias altamente significativas entre las siguientes comparaciones de medias de rendimientos:
+
+  - Entre la media de los rendimientos obtenidos con los garbanzos de tipo B y D
+
+Entre las otras comparaciones no se ha encontrados diferencias significativas a un nivel de
+significación del 10º%
+
+
+Se agrupa las medias de menor a mayor y se agrupa las que no tienen diferencias significativas
+
+ A  | B  | D  | C  | E 
+----|----|----|----|----
+51.2|59.2|84.8|90.4|93.6
+   .  |   .  |---|---|---
+---|---|     |     | 
+    
+Se recomienda emplear el tipo de garbanzo C y E porque no tienen diferencias significativas y se obtiene la mayor rendimiento.
+
+Se llega a la misma conclusión con las pruebas de Tukey y Duncan, pero se identifica que la prueba de Duncan encuentra mayores diferencias altamente muy significativa que la prueba de Tukey
+
+#### f.Asumiendo que la variedad A es el testigo, realice la prueba de Dunnett
 
 ```{r}
 compdunett<-glht(anva,linfct=mcp(tratamiento="Dunnett"))
@@ -135,7 +166,7 @@ Según la prueba de Duncan se ha encontrado:
   - Hay diferencia muy significativa entre las variedades de garbanzo D y A (**)
   - No hay diferencia entre la variedad de garbanzo B y A a un nivel de significancia del 10%
 
-g. Se desea comparar la media de los rendimientos obtenidos con la variedades A y B versus la media de los rendimientos obtenidos con las variedades C, D y E. Obtenga los contrastes ortogonales y utilice la prueba de F para probar el contraste dado
+##### g. Se desea comparar la media de los rendimientos obtenidos con la variedades A y B versus la media de los rendimientos obtenidos con las variedades C, D y E. Obtenga los contrastes ortogonales y utilice la prueba de F para probar el contraste dado
 
 \[ HO:  3\mu_A + 3\mu_B = 2\mu_C + 2\mu_D + 2\mu_E \]
 \[ H1:  3\mu_A + 3\mu_B  \not=  2\mu_C + 2\mu_D + 2\mu_E \]
@@ -172,14 +203,13 @@ yp <- sort(tapply(garbanzo$rendimiento,garbanzo$tratamiento,mean))
 yp
 ```
 
-
 ```{r}
 c1 <- c(-3,-3,2,2,2)
 tc <- (t(c1)%*%yp)/sqrt((119.7/4)*sum(c1^2))
 tc
 ```
 ```{r}
-pvalue <- 2*(1-pt(tc,12))
+pvalue <- 2*(1-pt(tc,12)) 
 pvalue
 ```
 El p.valor es menor a 0.01, por lo tanto hay evidencia estadística para decir que se encontró una  diferencia altamente significa, por lo tanto se acepta la hipótesis alterna, es decir que la media de los rendimientos obtenidos con la variedades de garbanzos A y B es diferente a la media de los rendimientos obtenidos con las variedades de garbanzos C, D y E.

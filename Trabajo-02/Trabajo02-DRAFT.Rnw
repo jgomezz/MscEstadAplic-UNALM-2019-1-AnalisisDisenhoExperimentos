@@ -1,0 +1,104 @@
+\documentclass{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage{natbib}
+\usepackage{graphicx}
+\usepackage[dvipsnames]{xcolor}
+\usepackage{actuarialangle}
+\usepackage{actuarialsymbol}
+
+\title{UNALM - Maestr\'ia en Estad\'istica Aplicada \ Trabajo No. 2}
+%% \author{Jaime G\'omez Mar\'in }
+\date{5 Junio 2019}
+
+
+\begin{document}
+
+\maketitle
+
+\SweaveOpts{concordance=TRUE}
+
+
+Se realizó un experimento para observar el rendimiento en kilogramos por parcela de 5 variedades de garbanzo (A, B, C, D, E) en el cual se tuvo que utilizar el diseño Cuadrado Latino. Las filas fueron definidas como niveles de riego y las columnas como fertilidad del suelo. Los datos se presentan a continuación
+
+
+Niveles	 |Fertilidad del suelo 
+---------|-----|-----|-----|-----|-----
+de riego |  1  |  2  |  3  |  4  |  5  
+1	|B = 65 |C = 80 |A = 55 |E = 83	|D = 80
+2	|C = 95	|A = 60	|E = 94	|D = 95	|B = 62
+3	|A = 63	|E = 98	|D = 79	|B = 69 |C = 100
+4	|E = 97	|D =94	|B = 46	|C = 71 |A = 42
+5	|D = 76	|B = 54	|C = 106|A = 36 |E = 96
+
+a. Presente el modelo aditivo lineal e interprete cada uno de sus componentes en términos del enunciado.
+
+El modelo aditivo lineal para un Diseño Cuadrado Latino es el siguiente:
+
+\[  Y_{(i)jk}= \mu + \tau_{(i)} + \beta_j + \gamma_k + \epsilon_{(i)jk} \]   
+
+ Para todo : i, j, k = 1,...,t     
+
+ Donde:
+
+  - $Y_{(i)jk}$ es el valor o rendimiento observado en el i-ésimo variedad de Garbanzo, j-ésima nivel de riesgo, k-ésima fertilidad del suelo.
+  - $\mu$ es el efecto de la media general.
+  - $\tau_{(i)}$ es el efecto del i-ésima variedad de garbanzo
+  - $\beta_j$ es el efecto de la j-ésima nivel de riesgo
+  - $\gamma_k$ es el efecto de la k-ésima fertilidad del suelo
+  - $\epsilon_{(i)jk}$ es el efecto del error experimental en el i-ésimo variedad de Garbanzo, j-ésima nivel de riesgo, k-ésima fertilidad del suelo.
+  - t es el número de tratamientos que es igual al número de niveles de riego y al número de fertilidades de suelo.
+  
+  
+<<>>=
+library(agricolae)
+garbanzo <- read.table("garbanzo.txt", header = TRUE)
+head(garbanzo)
+@
+
+<<>>=
+str(garbanzo)
+@
+
+<<>>=
+garbanzo$fila<-factor(garbanzo$fila)
+garbanzo$columna<-factor(garbanzo$columna)
+garbanzo$tratamiento<-factor(garbanzo$tratamiento)
+str(garbanzo)
+@
+
+<<>>=
+mod<-lm(rendimiento~.,data=garbanzo)
+anva<-anova(mod)
+anva
+@
+
+<<>>=
+par(mfrow=c(2,2))
+plot(mod)
+@
+
+<<>>=
+ri<-rstandard(mod)
+shapiro.test(ri)
+@
+
+<<>>=
+library(car)
+ncvTest(mod)
+@
+
+\begin{itemize}
+\item d. Realice la prueba de Tukey. De sus conclusiones y recomendaciones en término de las variables en estudio 
+\end{itemize}
+
+<<>>=
+
+@
+
+
+
+
+
+
+\end{document}
