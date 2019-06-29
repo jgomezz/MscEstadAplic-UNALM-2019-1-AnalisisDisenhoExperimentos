@@ -1,6 +1,7 @@
 ---
 title: "Análisis y Diseño de Experimentos" 
-output: pdf_document
+## output: pdf_document
+output: html_document
 ---
 
 ## Segundo Trabajo Encargado
@@ -74,6 +75,7 @@ shapiro.test(ri)
 library(car)
 ncvTest(mod)
 ```
+
 d. Realice la prueba de Tukey. De sus conclusiones y recomendaciones en término de las variables en estudio 
 
 ```{r}
@@ -82,8 +84,36 @@ library(multcomp)
  comptrat<-glht(amod,linfct=mcp(tratamiento="Tukey"))
  summary(comptrat)
 ```
-e.Realice la prueba de Duncan. Compare con los resultados de la prueba de Tukey
+Se ha encontrados diferencias altamente muy significativas entre las siguientes comparaciones de medias de rendimientos:
 
+  - Entre la media de los rendimientos obtenidos con los garbanzos de tipo C y A
+  - Entre la media de los rendimientos obtenidos con los garbanzos de tipo E y A
+
+Se ha encontrados diferencias altamente significativas entre las siguientes comparaciones de medias de rendimientos:
+
+  - Entre la media de los rendimientos obtenidos con los garbanzos de tipo D y A
+  - Entre la media de los rendimientos obtenidos con los garbanzos de tipo C y B
+  - Entre la media de los rendimientos obtenidos con los garbanzos de tipo E y B
+
+Se ha encontrados diferencias  significativas entre las siguientes comparaciones de medias de rendimientos:
+
+  - Entre la media de los rendimientos obtenidos con los garbanzos de tipo D y B
+
+Entre las otras comparaciones no se ha encontrados diferencias significativas a un nivel de
+significación del 10º%
+
+
+```{r}
+yp <- sort(tapply(garbanzo$rendimiento,garbanzo$tratamiento,mean))
+yp
+```
+Se ha ordenado de menor a mayor, y se muestran los que no tienen difencias significativas.
+
+              ------
+                  -------
+              -----------
+
+e.Realice la prueba de Duncan. Compare con los resultados de la prueba de Tukey
 ```{r}
 library(agricolae)
 anva<-aov(mod)
@@ -100,11 +130,10 @@ summary(compdunett)
 ```
 Según la prueba de Duncan se ha encontrado:
 
-- No hay diferencia entre la variedad de garbanzo B y A
-- Hay diferencia altamente muy significativa entre las variedades de garbanzo C y A (***)
-- Hay diferencia muy significativa entre las variedades de garbanzo D y A (**)
-- Hay diferencia altamente muy significativa entre las variedades de garbanzo E - A (***)
-
+  - Hay diferencia altamente muy significativa entre las variedades de garbanzo C y A (***)
+  - Hay diferencia altamente muy significativa entre las variedades de garbanzo E - A (***)
+  - Hay diferencia muy significativa entre las variedades de garbanzo D y A (**)
+  - No hay diferencia entre la variedad de garbanzo B y A a un nivel de significancia del 10%
 
 g. Se desea comparar la media de los rendimientos obtenidos con la variedades A y B versus la media de los rendimientos obtenidos con las variedades C, D y E. Obtenga los contrastes ortogonales y utilice la prueba de F para probar el contraste dado
 
