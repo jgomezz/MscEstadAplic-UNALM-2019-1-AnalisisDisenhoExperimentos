@@ -19,7 +19,7 @@ de riego |  1  |  2  |  3  |  4  |  5
 
 a. Presente el modelo aditivo lineal e interprete cada uno de sus componentes en términos del enunciado.
 
-\[  Y_{(i)jk}=    \]
+\[  Y_{(i)jk}= \mu + \tau_{(i)} + \beta_j + \gamma_k + \epsilon_{(i)jk}      \]
 
 
 ```{r}
