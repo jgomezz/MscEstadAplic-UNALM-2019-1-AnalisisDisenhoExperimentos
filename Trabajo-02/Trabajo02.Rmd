@@ -1,6 +1,6 @@
 ---
 title: "Análisis y Diseño de Experimentos" 
-output: html_notebook
+output: pdf_document
 ---
 
 ## Segundo Trabajo Encargado
