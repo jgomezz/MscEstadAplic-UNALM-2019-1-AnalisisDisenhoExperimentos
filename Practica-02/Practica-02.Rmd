@@ -12,12 +12,11 @@ knitr::opts_chunk$set(echo = TRUE)
 
 Los totales de porcentaje por combinaciones de tratamientos se dan a continuación Temperatura
 
-Tipo de Vidrio	 | baja | media | alta | total
------------------|------|-------|------|-------
-         1       |  1718|  3262 |  4158|  9138
-         2       |  1659|  3105 |  3939|  8705
-         3       |  1720|  3164 |  2360|  7242
-       Total     |  5097|  9531 | 10457| 25085
+Tipo de Vidrio|     baja    |    media    |      alta 
+--------------|-------------|-------------|-------------
+         1    |280, 290, 285|300, 310, 295|290, 285, 290
+         2    |230, 235, 240|260, 240, 235|220, 225, 230
+         3    |260, 258, 262|265, 272, 268|245, 250,240
          
 a) Realice el análisis de variancia pruebe las hipótesis correspondientes. De las conclusiones y recomendaciones adecuadas para este caso. 
 ```{r results='hide', message=FALSE, warning=FALSE}
