@@ -1,0 +1,39 @@
+---
+title: "Practica-02"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Pregunta 1
+1.- Se realiza un experimento para estudiar la influencia que tiene la temperatura de operación y tres tipos de vidrio sobre la luminosidad producida por un tubo de osciloscopio. Por cada combinación de tratamiento se hizo tres réplicas Del experimento realizado se obtuvieron los siguientes totales sobre luminosidad en lumen por combinación de tratamiento
+
+Los totales de porcentaje por combinaciones de tratamientos se dan a continuación Temperatura
+
+Tipo de Vidrio	 | baja | media | alta | total
+-----------------|------|-------|------|-------
+         1       |  1718|  3262 |  4158|  9138
+         2       |  1659|  3105 |  3939|  8705
+         3       |  1720|  3164 |  2360|  7242
+       Total     |  5097|  9531 | 10457| 25085
+         
+a) Realice el análisis de variancia pruebe las hipótesis correspondientes. De las conclusiones y recomendaciones adecuadas para este caso. 
+```{r}
+library(agricolae)
+luminosidad <- read.table("luminosidad.txt", header = TRUE)
+head(luminosidad)
+```
+```{r}
+str(luminosidad)
+```
+```{r}
+luminosidad$tipo_vidrio <- factor(luminosidad$tipo_vidrio)
+luminosidad$temperatura <- factor(luminosidad$temperatura)
+str(luminosidad)
+```
+```{r}
+mod<-lm(rendimiento~.,data=garbanzo)
+```
+

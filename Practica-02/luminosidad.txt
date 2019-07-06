@@ -1,0 +1,10 @@
+luminosidad tipo_vidrio temperatura 
+1718  1 baja 
+1659  2 baja 
+1720  3 baja 
+3262  1 media 
+3105  2 media
+3164  3 media
+4158  1 alta 
+3939  2 alta
+2360  3 alta
