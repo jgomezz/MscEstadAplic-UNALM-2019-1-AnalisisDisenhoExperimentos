@@ -20,7 +20,7 @@ Tipo de Vidrio	 | baja | media | alta | total
        Total     |  5097|  9531 | 10457| 25085
          
 a) Realice el análisis de variancia pruebe las hipótesis correspondientes. De las conclusiones y recomendaciones adecuadas para este caso. 
-```{r}
+```{r results='hide', message=FALSE, warning=FALSE}
 library(agricolae)
 luminosidad <- read.table("luminosidad.txt", header = TRUE)
 head(luminosidad)
@@ -33,7 +33,32 @@ luminosidad$tipo_vidrio <- factor(luminosidad$tipo_vidrio)
 luminosidad$temperatura <- factor(luminosidad$temperatura)
 str(luminosidad)
 ```
+```{r results='hide', message=FALSE, warning=FALSE}
+mod<-lm(luminosidad~.,data=luminosidad)
+anva<-anova(mod)
+anva
+```
+
+
+```{r results='hide', message=FALSE, warning=FALSE}
+library(car)
+ncvTest(mod)
+```
+
+
+b) Realice el diagnóstico del modelo utilizando gráficos y pruebas de hipótesis
+```{r results='hide', message=FALSE, warning=FALSE}
+par(mfrow=c(2,2))
+plot(mod)
+```
+```{r results='hide', message=FALSE, warning=FALSE}
+ri<-rstandard(mod)
+shapiro.test(ri)
+```
+
+c) Realice el análisis de efectos simples
+
 ```{r}
-mod<-lm(rendimiento~.,data=garbanzo)
+
 ```
 
