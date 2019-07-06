@@ -50,12 +50,12 @@ Se acepta $H_0$, a un nivel de significaci\'on del 10% no se ha encontrado sufic
  \[ H_0 : \alpha_i = 0 , para i = 1,2,3 \]
  \[ H_1 : al menos dos \alpha_i != 0    , para i = 1,2,3 \]
  
-Se rechaza la $H_0$, a un nivel de significacion del 10%, se ha encontrado suficientes evidencia estadistica para  rechazar la $H_0$ de que ninguna marca de maiz tenga un efecto significativo sobre el porcentaje de palomita de maiz obtenida.Por lo tanto, se puede aceptar de que existe diferencias significativas entre 
+Se rechaza la $H_0$, a un nivel de significacion del 10%, se ha encontrado suficientes evidencia estadistica para  rechazar la $H_0$ de que ninguna marca de maiz tenga un efecto significativo sobre el porcentaje de palomita de maiz obtenida.Por lo tanto, se puede aceptar de que existe diferencias significativas entre al menos dos tipos de marcas de palomita de maiz.
 
  \[ H_0 : \beta_j = 0 , para j = 1,2,3 \]
  \[ H_1 : al menos dos \beta_j != 0    , para j = 1,2,3 \]
  
- Se acepta $H_0$, a un nivel de significaci\'on del 5% se ha encontrado suficiente evidencia estadistica para rechazar la $H_0$ de que ning\'un de las temperaturas tiene un efecto significativo sobre el porcentaje de palomitas de maiz obtenida.
+Se acepta $H_0$, a un nivel de significaci\'on del 5% se ha encontrado suficiente evidencia estadistica para rechazar la $H_0$ de que ning\'un de las temperaturas tiene un efecto significativo sobre el porcentaje de palomitas de maiz obtenida.
  
 
 
