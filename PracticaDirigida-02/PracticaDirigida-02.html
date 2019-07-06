@@ -422,10 +422,16 @@ Marca  &lt;- as.factor(cancha[,2])
 Tiempo &lt;- as.factor(cancha[,3])
 #mod &lt;- lm()</code></pre>
 <p>Note that the <code>echo = FALSE</code> parameter was added to the code chunk to prevent printing of the R code that generated the plot.</p>
+<p>Efecto simple : Es la comparacion sobre una sola variable Efecto principal : Es la comparacion sobre la media de 2 variables</p>
 <p>a). Realice el análisis de variancia y pruebe la hipótesis respectiva</p>
 <p><span class="math display">\[ H_0 : (\alpha * \beta )_ = 0 , para i,j = 1,2,3 \]</span> <span class="math display">\[ H_1 : al menos dos (\alpha * \beta ) != 0    , para i,j = 1,2,3 \]</span></p>
 <p>Se acepta <span class="math inline">\(H_0\)</span>, a un nivel de significaci'on del 10% no se ha encontrado suficiente evidencia estadistica para rechazar la <span class="math inline">\(H_0\)</span> de ning'un efecto de la interaci'on entre marcas de palomitas de maiz y temperatura del horno influye sobre el porcentaje de palomitas de maiz obtenida.</p>
-<p>$ H_0 : _i = 0 , para i = 1,2,3 $ <span class="math display">\[ H_1 : al menos dos \alpha_i != 0    , para i = 1,2,3 \]</span></p>
+<p><span class="math inline">\(H_0\)</span> : <span class="math inline">\(\alpha_i = 0\)</span> , para i = 1,2,3</p>
+<p><span class="math inline">\(H_1\)</span> : al menos dos <span class="math inline">\(\alpha_i != 0\)</span> , para i = 1,2,3</p>
+<p>Se rechaza la <span class="math inline">\(H_0\)</span>, a un nivel de significacion del 10%, se ha encontrado suficientes evidencia estadistica para rechazar la <span class="math inline">\(H_0\)</span> de que ninguna marca de maiz tenga un efecto significativo sobre el porcentaje de palomita de maiz obtenida.Por lo tanto, se puede aceptar de que existe diferencias significativas entre al menos dos porcentajes de palomita de maiz producidos por dos marcas de palomita de maiz.</p>
+<p><span class="math inline">\(H_0\)</span> : <span class="math inline">\(\beta_j\)</span> = 0 , para j = 1,2,3</p>
+<p><span class="math inline">\(H_1\)</span> : al menos dos <span class="math inline">\(\beta_j != 0\)</span> , para j = 1,2,3</p>
+<p>Se acepta <span class="math inline">\(H_0\)</span>, a un nivel de significaci'on del 5% se ha encontrado suficiente evidencia estadistica para rechazar la <span class="math inline">\(H_0\)</span> de que ning'un de los tiempos de coci'on tiene un efecto significativo sobre el porcentaje de palomitas de maiz obtenida.Por lo tanto, se puede aceptar de que existe diferencias significativas entre al menos dos porcentajes de palomitas de maiz producidas entre dos tiempos distintos.</p>
 </div>
 
 
