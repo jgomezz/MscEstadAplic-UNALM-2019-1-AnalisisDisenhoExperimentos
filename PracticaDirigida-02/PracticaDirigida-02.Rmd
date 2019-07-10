@@ -11,14 +11,13 @@ knitr::opts_chunk$set(echo = TRUE)
 
 1.- Se realiza un experimento para comparar los porcentajes de palomitas de maíz que se forman (% de granos que reventaron) con tres marcas de palomitas para horno de microondas. Se utilizan tres tiempos de permanencia en el horno, con 2 réplicas. Se obtienen los siguientes resultados:  
 
-Marca|     baja    |    media    |      alta 
---------------|-------------|-------------|-------------
-         1    |280, 290, 285|300, 310, 295|290, 285, 290
-         2    |230, 235, 240|260, 240, 235|220, 225, 230
-         3    |260, 258, 262|265, 272, 268|245, 250,240
-         
+Marca |    4 min   |  4.5 min |   5.0 min 
+------|------------|----------|-------------
+  1   |    146.1   |   156.2  |   167.4
+  2   |    142.0   !   165.8  |   186.9
+  3   |    141.0   !   151.5  |   146.6
 
-
+a). Realice el análisis de variancia y pruebe la hipótesis respectiva
 
 ```{r results='hide', message=FALSE, warning=FALSE}
 cancha <- read.table("cancha.txt", T)
@@ -36,6 +35,26 @@ mod <- lm(Porcentaje ~ Marca + Tiempo + Marca*Tiempo)
 anva <- aov(mod)
 summary(anva)
 ```
+$H_0$ : $(\alpha * \beta )_ = 0$ , para i,j = 1,2,3
+
+$H_1$ : al menos dos $(\alpha * \beta ) != 0$    , para i,j = 1,2,3
+ 
+Se acepta $H_0$, a un nivel de significaci\'on del 10% no se ha encontrado suficiente evidencia estadistica para rechazar la $H_0$ de ning\'un efecto de la interaci\'on entre marcas de palomitas de maiz y el tiempo de coci\'on del horno influye sobre el porcentaje de palomitas de maiz obtenida.
+
+ $H_0$ : $\alpha_i = 0$ , para i = 1,2,3 
+ 
+ $H_1$ : al menos dos $\alpha_i != 0$    , para i = 1,2,3
+ 
+Se rechaza la $H_0$, a un nivel de significacion del 10%, se ha encontrado suficientes evidencia estadistica para  rechazar la $H_0$ de que ninguna marca de maiz tenga un efecto significativo sobre el porcentaje de palomita de maiz obtenida.Por lo tanto, se puede aceptar de que existe diferencias significativas entre al menos dos porcentajes de palomita de maiz producidos por dos marcas de palomita de maiz.
+
+  $H_0$ : $\beta_j$ = 0 , para j = 1,2,3 
+  
+  $H_1$ : al menos dos $\beta_j != 0$    , para j = 1,2,3 
+ 
+Se acepta $H_0$, a un nivel de significaci\'on del 5% se ha encontrado suficiente evidencia estadistica para rechazar la $H_0$ de que ning\'un de los tiempos de coci\'on tiene un efecto significativo sobre el porcentaje de palomitas de maiz obtenida.Por lo tanto, se puede aceptar de que existe diferencias significativas entre al menos dos porcentajes de palomitas de maiz producidas entre dos tiempos distintos.
+
+
+b) Realice el diagnostico del modelo -
 
 ```{r}
 par(mfrow=c(2,2))
@@ -57,38 +76,17 @@ shapiro.test(ri)
 ```
 #Se acepta la Ho, a un nivel de significancia de 10% (Se puede recomendar que se haga mas numero de repeticiones)
 -------
-Efecto simple : Es la comparacion sobre una sola variable
-Efecto principal : Es la comparacion sobre la media de 2 variables
-
-a). Realice el análisis de variancia y pruebe la hipótesis respectiva
-
-$H_0$ : $(\alpha * \beta )_ = 0$ , para i,j = 1,2,3
-
-$H_1$ : al menos dos $(\alpha * \beta ) != 0$    , para i,j = 1,2,3
- 
-Se acepta $H_0$, a un nivel de significaci\'on del 10% no se ha encontrado suficiente evidencia estadistica para rechazar la $H_0$ de ning\'un efecto de la interaci\'on entre marcas de palomitas de maiz y el tiempo de coci\'on del horno influye sobre el porcentaje de palomitas de maiz obtenida.
-
- $H_0$ : $\alpha_i = 0$ , para i = 1,2,3 
- 
- $H_1$ : al menos dos $\alpha_i != 0$    , para i = 1,2,3
- 
-Se rechaza la $H_0$, a un nivel de significacion del 10%, se ha encontrado suficientes evidencia estadistica para  rechazar la $H_0$ de que ninguna marca de maiz tenga un efecto significativo sobre el porcentaje de palomita de maiz obtenida.Por lo tanto, se puede aceptar de que existe diferencias significativas entre al menos dos porcentajes de palomita de maiz producidos por dos marcas de palomita de maiz.
-
-  $H_0$ : $\beta_j$ = 0 , para j = 1,2,3 
-  
-  $H_1$ : al menos dos $\beta_j != 0$    , para j = 1,2,3 
- 
-Se acepta $H_0$, a un nivel de significaci\'on del 5% se ha encontrado suficiente evidencia estadistica para rechazar la $H_0$ de que ning\'un de los tiempos de coci\'on tiene un efecto significativo sobre el porcentaje de palomitas de maiz obtenida.Por lo tanto, se puede aceptar de que existe diferencias significativas entre al menos dos porcentajes de palomitas de maiz producidas entre dos tiempos distintos.
- 
-
+Efecto principal : Es la comparacion sobre una sola variable
+Efecto simple : Es la comparacion sobre la media de 2 variables
 ```{r}
 #install.packages("car")
 library(car)
 ncvTest(mod)
 ```
 
-#Se acepta Ho. No requiere transformaciÛn aunque la variable respuesta esta en porcentaje (viene de una distribucion binomial) /
-# transformaciÛn (entre 100)
+
+#Se acepta Ho. No requiere transformacion aunque la variable respuesta esta en porcentaje (viene de una distribucion binomial)
+# transformacion (entre 100)
 
 ```{r}
 yt<-asin(Porcentaje/100)
@@ -115,17 +113,22 @@ c)	Realice el an·lisis de efecto simple asumiendo que se cumple con los supuest
 #Asumiendo que se cumplen los supuestos
 
 ```{r}
-mod<-lm(Porcentaje~Marca+Tiempo+Marca*Tiempo)
+#mod<-lm(Porcentaje~Marca+Tiempo+Marca*Tiempo)
 anva<-anova(mod)
 anva
 summary(anva)
 ```
-
 ```{r}
+SCe  <-  anva$"Sum Sq"
+SCE  <-  SCe[5]
+CMe  <-  anva$"Mean Sq"
+CME  <-  CMe[5]
 SCe<-anva$"Sum Sq"
 SCE<-SCe[4]
 SCE
+
 ```
+
 ```{r}
 CMe<-anva$"Mean Sq"
 CME<-CMe[4]
@@ -133,16 +136,66 @@ CME
 ```
 ```{r}
 str(cancha)
+```
+```{r}
 cancha
 ```
+
 
 ```{r}
 #La data se divide por tipos de marcas (b1=1, b2=2 y b3=3)
 canchap1<-cancha[1:6,]
-canchap1
 canchap2<-cancha[7:12,]
 canchap3<-cancha[13:18,]
 
+```
+
+```{r}
+Canchat1 <- cancha[cancha$tiempo=="4.0",]
+Canchat1
+```
+```{r}
+str(Canchat1)
+```
+```{r}
+Canchat1 <- cancha[cancha$tiempo=="4",]
+Canchat1
+```
+```{r}
+Canchat2 <- cancha[cancha$tiempo=="4.5",]
+Canchat2
+```
+
+
+```{r}
+Canchat3 <- cancha[cancha$tiempo=="5",]
+Canchat3
+```
+
+
+```{r}
+modt1<-lm(Porcentaje~as.factor(Marca),Canchat1)
+modt1
+modt2<-lm(Porcentaje~as.factor(Marca),Canchat2)
+modt2
+modt3<-lm(Porcentaje~as.factor(Marca),Canchat3)
+modt3
+
+```
+```{r}
+anvat1 <- anova(modt1)
+anvat2 <- anova(modt2)
+anvat3 <- anova(modt3)
+
+anvat1
+```
+```{r}
+SCMt1 <- anvat1$Sum
+SCMt1
+```
+```{r}
+SCMt1 <- anvat1$Sum[1]
+SCMt1
 ```
 
 
@@ -188,7 +241,7 @@ modt3<-lm(Porcentaje~as.factor(Marca),canchat3)
 ```{r}
 SCMt1 <- anvat1$Sum[1]
 SCMt2 <- anvat2$Sum[1]
-SCMt3 <- anvat3$Sum[1]
+#SCMt3 <- anvat3$Sum[1]
 ```
 
 
@@ -235,6 +288,23 @@ CMMt3<-CMt3[1]
 CMMt1
 
 ```
+```{r}
+SCMt2 <- anvat2$Sum[1]
+SCMt2
+SCMt3 <- anvat3$Sum[1]
+SCMt3
+
+```
+```{r}
+CMMt1 <- anvat1$Mean[1]
+CMMt2 <- anvat2$Mean[1]
+CMMt3 <- anvat3$Mean[1]
+CMMt1
+```
+
+```{r}
+canchap1
+```
 
 
 ### DESDE ACA EMPIEZO
@@ -250,15 +320,22 @@ anvaM3 <- anova(modM3)
 ```
 
 
-
 En el efecto simple se toma los grados de libertad de los residuales
 
 ```{r}
 SCTM1 <- anvaM1$Sum[1]
-SCTM2 <- anvaM2$Sum[1]
-SCTM3 <- anvaM3$Sum[1]
+SCTM1
 ```
 
+```{r}
+anvaM1
+```
+
+```{r}
+SCTM2 <- anvaM2$Sum[1]
+SCTM3 <- anvaM3$Sum[1]
+
+```
 
 
 ```{r}
