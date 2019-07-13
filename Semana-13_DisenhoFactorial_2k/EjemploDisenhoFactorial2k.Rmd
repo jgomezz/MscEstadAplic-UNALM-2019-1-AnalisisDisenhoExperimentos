@@ -75,13 +75,19 @@ AB
 
 ## Analisis de Varianza
 
-Si p_value < 0.001, la prueba resulta muy altamente significativa, se rechaza $H_{0}$
+Si p_value < 0.001, la prueba resulta muy altamente significativa, se rechaza $H_{0}$ y se denota con ***
 
+$y=\beta_{0} + \beta_{1}*x_{1} + \beta_{2}*x_{2} + \beta_{12}*x_{1}*x_{2} +\epsilon$
 
-$y=\beta_{0} + \beta_{1}*x_{1} + \beta_{2}*x_{2}$
+x_i =  -1 si el factor de i se encuentra en el nivel bajo
+
+x_i =   1 si el factor de i se encuentra en el nivel alto
+
+i= 1 factor A, i = 20 factor B
+
 
 Continuando con el ejemplo 6.1
-
+-------------------------------
 ```{r}
 y <- c(28,25,27,36,32,32,18,19,23,31,30,29)
 A <- rep(c(rep(-1,3),rep(1,3)),2)
@@ -90,6 +96,8 @@ mod <- lm(y~A+B+A*B)
 ```
 
 Otra forma de encontrar los efectos estimados
+
+
 ```{r}
 betaest <- coefficients(mod)
 summary(betaest)
@@ -99,10 +107,16 @@ Mostrar los coeficientes de regresi\'on
 betaest
 ```
 
+
 ```{r}
 efectosest <- 2*betaest[2:4]
 data.frame(efectosest)
 ```
+Reemplazando en el modelo
+
+$\hat{\imath}$ = 8.333333 - 5.000000$x_1$ + 1.666667$x_2$	
+
+
 ```{r}
 anva<-aov(mod)
 summary(anva)
@@ -111,3 +125,122 @@ summary(anva)
 
 
 Se puede concluir que ambos efectos principales: concentración de reactivo y cantidad de catalizador influyen significativamente a un nivel del 1%. En cambio, La prueba de hipótesis sobre el efecto de la interacción (concentración de reactivo y cantidad de catalizador) resultó no significativa a un nivel del 10%.
+
+Analisis de los errores de los residuales :
+------------------------------------------
+residuales studentizados
+```{r}
+mod1<-lm(y~A+B)
+CME<-deviance(mod1)/df.residual(mod1)  
+beta1<-coefficients(mod1)
+I<-rep(1,length(y))
+X<-cbind(I,A,B)
+yest<-X%*%beta1
+e<-y-yest
+e
+```
+Otra manera de ver los residuales
+```{r}
+e1 <- residuals(mod1)
+data.frame(e1)
+```
+Se obtiene los residuales studentizados
+---------------------------------------
+```{r}
+H <- X%*%solve(t(X)%*%X)%*%t(X)
+ri <- e/sqrt(CME*(1-diag(H)))
+ri
+```
+Otra forma de encontrar los residuales studentizados
+```{r}
+ri <- rstandard(mod1)
+data.frame(ri)
+```
+
+```{r}
+par(mfrow=c(2,2))
+plot(mod1)
+```
+
+```{r}
+shapiro.test(ri)
+```
+
+```{r}
+library(car)
+ncvTest(mod1)
+```
+
+
+Gráfico de variabilidad de los residuales a nivel alto del factor versus la variabilidad de los residuos a nivel bajo, para el ejemplo 6.1
+```{r}
+ei <- residuals(mod1)
+par(mfrow=c(2,1))
+plot(A,ei)
+plot(B,ei)
+
+```
+Grap 2 : La variabilidad para B- -1.0 es poco variable en la parte superior  y mas variable en la parte de abajo
+
+Prueba de variabilidad
+----------------------
+Prueba de variabilidad de los residuales a nivel alto del factor versus la variabilidad de los residuos a nivel bajo:
+
+$H_0: \sigma^2(i+)$
+
+```{r}
+dataA<-data.frame(ei,A)
+dataAn<-dataA[dataA$A==-1,]
+dataAn
+```
+```{r}
+dataAp<-dataA[dataA$A==1,]
+dataAp
+```
+Construyo la estadistica de prueba
+
+```{r}
+F<-log(var(dataAp$ei)/var(dataAn$ei)) 
+F
+```
+
+```{r}
+pvalue<-2*pnorm(F)
+pvalue
+```
+
+No hay diferencia significativas entre la variabilidad del nivel alto y bajo de A
+
+Para B 
+------
+```{r}
+dataB<-data.frame(ei,B)
+dataBn<-dataB[dataB$B==-1,]
+dataBn
+```
+```{r}
+dataBp<-dataB[dataB$B==1,]
+dataBp
+```
+
+```{r}
+F<-log(var(dataBp$ei)/var(dataBn$ei)) 
+F
+```
+
+```{r}
+pvalue<-2*(1-pnorm(F))
+pvalue
+```
+
+## Gráfica de la superficie
+
+```{r}
+mod <- function(x1,x2){16.3333+0.83333*x1-5*x2}
+x1 <- seq(15,25,0.5)
+x2 <- seq(1,2,0.05)
+z <- outer(x1,x2,mod)
+persp(x1,x2,z,theta=-40,phi=30,ticktype="detailed",xlab="concentración del
+reactivo",ylab="cantidad del catalizador", zlab="y")
+```
+
