@@ -1,10 +1,28 @@
-luminosidad tipo_vidrio temperatura 
-1718  1 baja 
-1659  2 baja 
-1720  3 baja 
-3262  1 media 
-3105  2 media
-3164  3 media
-4158  1 alta 
-3939  2 alta
-2360  3 alta
+luminosidad tipo_vidrio temperatura repeticion
+280 1 baja 1 
+290 1 baja 2
+285 1 baja 3
+300 1 media 1 
+310 1 media 2
+295 1 media 3
+290 1 alta 1 
+285 1 alta 2
+290 1 alta 3
+230 2 baja 1 
+235 2 baja 2
+240 2 baja 3
+260 2 media 1 
+240 2 media 2
+235 2 media 3
+220 2 alta 1 
+225 2 alta 2
+230 2 alta 3
+260 3 baja 1 
+258 3 baja 2
+262 3 baja 3
+265 3 media 1 
+272 3 media 2
+268 3 media 3
+245 3 alta 1 
+250 3 alta 2
+240 3 alta 3
