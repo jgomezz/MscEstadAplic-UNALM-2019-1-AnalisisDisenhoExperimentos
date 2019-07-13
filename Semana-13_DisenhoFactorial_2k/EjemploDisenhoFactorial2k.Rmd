@@ -64,4 +64,40 @@ Explicaci\'on : Pasar del nivel bajo al nivel alto de B el promedio es negativo,
 
 Si es positivo el rendimiento promedio del nivel alto de B es mayor al rendimiento promedio del nivel bajo de B.
 
+```{r}
+XAB <- data.frame(y,AB)
+XABp <- XAB[XAB$AB==1,]
+XABn <- XAB[XAB$AB==-1,]
+contrasteAB <- sum(XABp$y)-sum(XABn$y) 
+AB <- contrasteAB/(2*3)
+AB
+```
+
+## Analisis de Varianza
+
+```{r}
+y <- c(28,25,27,36,32,32,18,19,23,31,30,29)
+A <- rep(c(rep(-1,3),rep(1,3)),2)
+B <- c(rep(-1,6),rep(1,6))
+mod <- lm(y~A+B+A*B)
+```
+
+Otra forma de encontrar los efectos estimados
+```{r}
+betaest <- coefficients(mod)
+summary(betaest)
+```
+Mostrar los coeficientes de regresi\'on
+```{r}
+betaest
+```
+
+```{r}
+efectosest <- 2*betaest[2:4]
+data.frame(efectosest)
+```
+```{r}
+anva<-aov(mod)
+summary(anva)
+```
 
