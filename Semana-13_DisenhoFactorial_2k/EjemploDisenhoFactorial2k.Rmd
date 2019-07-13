@@ -243,4 +243,19 @@ z <- outer(x1,x2,mod)
 persp(x1,x2,z,theta=-40,phi=30,ticktype="detailed",xlab="concentración del
 reactivo",ylab="cantidad del catalizador", zlab="y")
 ```
+```{r}
+contour(x1,x2,z,nlevels=6,xlab="Concentración de reactivo", ylab="cantidad de
+catalizador")
+```
+
+```{r}
+A <- rep(c(-1,1),4)
+B <- rep(c(rep(-1,2),rep(1,2)),2)
+C <- c(rep(-1,4),rep(1,4))
+
+y1 <- c(-3,0,-1,2,-1,2,1,6)
+y2 <- c(-1,1,0,3,0,1,1,5)
+
+
+```
 
