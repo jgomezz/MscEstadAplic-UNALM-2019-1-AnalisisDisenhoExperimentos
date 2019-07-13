@@ -27,3 +27,41 @@ tipo<-as.factor(abono1$abono)
 mod<-lm(rend~bloques+tipo+dosis+tipo*dosis)
 ```
 
+
+# Disenho Factorial 2k
+
+```{r echo=FALSE}
+library(DoE.base)
+fac.design(nlevels=c(2,2),factor.names=list(one=c(15,25),two=c(1,2)), replications=3)
+```
+```{r}
+y   <- c(28,25,27,36,32,32,18,19,23,31,30,29)
+A   <- rep(c(rep(-1,3),rep(1,3)),2)
+B   <- c(rep(-1,6),rep(1,6))
+AB  <- A*B
+XA  <- data.frame(y,A)
+XAp <- XA[XA$A==1,]
+XAn <- XA[XA$A==-1,]
+XAp
+```
+
+```{r}
+XAn
+```
+
+```{r}
+A <- mean(XAp$y)-mean(XAn$y) 
+A
+```
+```{r} 
+XB  <- data.frame(y,B)
+XBp <- XB[XB$B==1,]
+XBn <- XB[XB$B==-1,]
+B <- mean(XBp$y)-mean(XBn$y)
+B
+```
+Explicaci\'on : Pasar del nivel bajo al nivel alto de B el promedio es negativo, Se interpreta que el rendimiento promedio obtenido con el nivel alto de B es inferior al rendimiento promedio obtenido con el nivel bajo de B es 5 unidades. 
+
+Si es positivo el rendimiento promedio del nivel alto de B es mayor al rendimiento promedio del nivel bajo de B.
+
+
