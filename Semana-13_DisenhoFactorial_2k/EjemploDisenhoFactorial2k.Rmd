@@ -253,9 +253,39 @@ A <- rep(c(-1,1),4)
 B <- rep(c(rep(-1,2),rep(1,2)),2)
 C <- c(rep(-1,4),rep(1,4))
 
+
+#
 y1 <- c(-3,0,-1,2,-1,2,1,6)
 y2 <- c(-1,1,0,3,0,1,1,5)
+y <- y1 + y2
+ym <- c(y1,y2)
 
-
+# Defino repiticiones
+A1 <- rep(A,2)
+B1 <- rep(B,2)
+C1 <- rep(A,2)
 ```
+
+Todo el modelo
+```{r}
+mod <- lm( y ~A*B*C)
+summary(mod)
+```
+
+Todo el modelo
+```{r}
+mod <- lm( ym ~A1*B1*C1)
+summary(mod)
+```
+Se muestran los efectos estimados
+```{r}
+betaest <- coefficients(mod)
+efectoest <- 2*betaest[-1]
+data.frame(betaest)
+```
+
+
+```{r}
+fac.design(nlevels=c(2,2,2),factor.names=list(one=c(10,12), two=c(25,30),three=c(200,250)), replications=2)
+``` 
 
