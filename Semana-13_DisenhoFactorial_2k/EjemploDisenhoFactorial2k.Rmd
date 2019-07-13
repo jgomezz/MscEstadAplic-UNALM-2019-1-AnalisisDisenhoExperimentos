@@ -1,0 +1,29 @@
+---
+title: "EjemploExperimentoFactorial"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Read dataset
+```{r }
+abono1<-read.table("abono1.txt",header=T)
+str(abono1)
+```
+
+## Transformation Factor
+```{r }
+rend<-abono1$rend
+bloques<-as.factor(abono1$bloques)
+dosis<-as.factor(abono1$dosis)
+tipo<-as.factor(abono1$abono)
+```
+
+
+## Define model
+```{r}
+mod<-lm(rend~bloques+tipo+dosis+tipo*dosis)
+```
+
