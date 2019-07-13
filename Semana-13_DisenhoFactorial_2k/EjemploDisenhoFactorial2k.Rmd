@@ -75,6 +75,13 @@ AB
 
 ## Analisis de Varianza
 
+Si p_value < 0.001, la prueba resulta muy altamente significativa, se rechaza $H_{0}$
+
+
+$y=\beta_{0} + \beta_{1}*x_{1} + \beta_{2}*x_{2}$
+
+Continuando con el ejemplo 6.1
+
 ```{r}
 y <- c(28,25,27,36,32,32,18,19,23,31,30,29)
 A <- rep(c(rep(-1,3),rep(1,3)),2)
@@ -101,3 +108,6 @@ anva<-aov(mod)
 summary(anva)
 ```
 
+
+
+Se puede concluir que ambos efectos principales: concentración de reactivo y cantidad de catalizador influyen significativamente a un nivel del 1%. En cambio, La prueba de hipótesis sobre el efecto de la interacción (concentración de reactivo y cantidad de catalizador) resultó no significativa a un nivel del 10%.
