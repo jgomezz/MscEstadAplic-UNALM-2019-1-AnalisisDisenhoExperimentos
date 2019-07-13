@@ -287,9 +287,82 @@ data.frame(efectoest)
 anva <- aov(mod)
 summary(anva)
 ```
+```{r}
+y<-c(-3,0,-1,2,-1,2,1,6,-1,1,0,3,0,1,1,5)
+  A<-rep(c(-1,1),8)
+  B<-rep(c(-1,-1,1,1),4)
+  C<-rep(c(rep(-1,4),rep(1,4)),2)
+  datac<-data.frame(y,C)
+  datacp<-datac[datac$C==1,]
+  datacn<-datac[datac$C==-1,]
+  ycn<-mean(datacn$y)
+  ypp<-mean(datacp$y)
+  nC<-c(-1,1)
+  ypC<-c(ycn,ypp)
+  plot(nC,ypC,type="l",xlab="C",ylab="media")
+  interaction.plot(A,B,y)
+```
+
+Analisis de residuos
+
+```{r}
+y<-c(-3,0,-1,2,-1,2,1,6,-1,1,0,3,0,1,1,5)
+  A<-rep(c(-1,1),8)
+  B<-rep(c(-1,-1,1,1),4)
+  C<-rep(c(rep(-1,4),rep(1,4)),2)
+  mod<-lm(y~A*B*C)
+  betaest<-coefficients(mod)
+  betaest
+```
+```{r}
+efectos<-2*betaest[2:8]
+efectos
+```
+
+```{r}
+par(mfrow=c(2,2))
+plot(mod1)
+```
+```{r}
+ri<-rstandard(mod1)
+shapiro.test(ri)
+
+```
+
+```{r}
+library(car)
+ncvTest(mod1)
+```
+```{r}
+A
+B
+C
+```
+```{r}
+  ei<-residuals(mod1)
+ei
+```
 
 
 ```{r}
-fac.design(nlevels=c(2,2,2),factor.names=list(one=c(10,12), two=c(25,30),three=c(200,250)), replications=2)
+  ei<-residuals(mod1)
+  par(mfrow=c(2,2))
+  plot(A,ei)
+  plot(B,ei)
+  plot(C,ei)
+  AB<-A*B
+  plot(AB,ei)
+```
+
+##Ejemplo 6.2
+
+Una sola réplica del diseño 24
+Un producto químico se produce en un recipiente a presión. Se realiza un experimento factorial en la planta piloto para estudiar los efectos que se cree influyen sobre la taza de filtración de ese producto. Los cuatro factores son temperatura (A), presión (B), concentración de los reactivos (C) y rapidez de mezclado (D). Cada factor está presente en dos niveles; en la Tabla N° 7 y la Fig. N° 7 se muestran los datos recopilados de una sola réplica del experimento 24. Los 16 ensayos se realizaron en orden aleatorio. El ingeniero de proceso está interesado en maximizar la rapidez de filtración. Las condiciones actuales del proceso dan por resultado velocidad de filtración aproximadas de 75 gal/h. Además, en el proceso se utiliza actualmente el nivel alto del factor C, concentración de formaldehído. El ingeniero desearía reducir todo lo posible esta concentración, pero ha sido incapaz de hacerlo en virtud de que ello siempre ha dado por resultado menores velocidades de filtración.
+
+Tabla N° 7: Datos del experimento del índice de filtración en la planta piloto
+
+
+```{r}
+
 ``` 
 
