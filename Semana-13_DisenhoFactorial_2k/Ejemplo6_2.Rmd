@@ -43,3 +43,5 @@ anva<-aov(mod2)
 summary(anva)
 ```
 
+Efecto pxq -- Efecto FActorial 2k con una sola replica
+

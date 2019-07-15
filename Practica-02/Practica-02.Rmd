@@ -1,9 +1,9 @@
 ---
-title: "Practica-02"
-output: html_document
+title: "Practica-02 : Diseño de Experimentos"
+author: "Jaime Gomez Main"
+output: word_document
 ---
 
-Nombre : Jaime Gomez Marin
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
@@ -11,15 +11,34 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ## Pregunta 1
 
-Los totales de porcentaje por combinaciones de tratamientos se dan a continuación Temperatura
-
 1.- Se realiza un experimento para estudiar la influencia que tiene la temperatura de operación y tres tipos de vidrio sobre la luminosidad producida por un tubo de osciloscopio. Por cada combinación de tratamiento se hizo tres réplicas Del experimento realizado se obtuvieron los siguientes totales sobre luminosidad en lumen por combinación de tratamiento
+
+
 Tipo de Vidrio|     baja    |    media    |      alta 
 --------------|-------------|-------------|-------------
          1    |280, 290, 285|300, 310, 295|290, 285, 290
          2    |230, 235, 240|260, 240, 235|220, 225, 230
          3    |260, 258, 262|265, 272, 268|245, 250,240
          
+
+#Modelo Aditivo Lineal
+
+En un DCA el modelo aditivo es el siguiente:
+
+$Y_{ijk} = \mu + \alpha_i + \beta_j + (\alpha\beta)_{ij} + \epsilon_{ijk}$
+donde ,  i=1,2,3   
+         j=1,2,3
+
+Donde:
+
+$Y_{ijk}$  : Es la luminosidad producida por un tubo de osciloscopio obtenida con el i-ésimo tipo de vidrio en la j-ésima  nivel de temperatura, k-ésima repetición.
+$\mu$      : Es el efecto de la media general.
+$\alpha_i$ : Es el efecto del i-ésimo tipo de vidrio.
+$\beta_j$  : Es el efecto del j-ésimo nivel de temperatura.
+$(\alpha\beta)_{ij}$ : es el efecto de la interacción en el i-ésimo tipo de vidrio, j-ésimo nivel de temperatura.
+$\epsilon_{ijk}$ : Es el efecto del error experimental el i-ésimo tipo de vidrio, j-ésimo nivel de temperatura, k-ésima repetición.
+
+
 a). Realice el análisis de variancia pruebe las hipótesis correspondientes. De las conclusiones y recomendaciones adecuadas para este caso. 
 ```{r results='hide', message=FALSE, warning=FALSE}
 library(agricolae)
@@ -32,8 +51,6 @@ str(luminosidad)
 ```{r}
 luminosidad$tipo_vidrio <- factor(luminosidad$tipo_vidrio)
 luminosidad$temperatura <- factor(luminosidad$temperatura)
-#luminosidad$repeticion <- factor(luminosidad$repeticion)
-
 str(luminosidad)
 ```
 ```{r results='hide', message=FALSE, warning=FALSE}
@@ -42,11 +59,10 @@ anva<-anova(mod)
 anva
 ```
 
-$H_0$ : $(\alpha * \beta )_ = 0$ , para i,j = 1,2,3
 
-$H_1$ : al menos dos $(\alpha * \beta ) != 0$    , para i,j = 1,2,3
- 
-Se acepta $H_0$, no se ha encontrado suficiente evidencia estadistica para rechazar la $H_0$ de que ning\'un efecto de la interaci\'on entre el tipo de vidrio y la temperatura de operaci\'on del foco influye sobre la luminicidad producida por un tubo de osciloscopio.
+
+
+## Hipotesis del efecto principal de tipo de vidrio
 
 
  $H_0$ : $\alpha_i = 0$ , para i = 1,2,3 
@@ -55,11 +71,21 @@ Se acepta $H_0$, no se ha encontrado suficiente evidencia estadistica para recha
  
 Se rechaza la $H_0$, a un nivel de significacion del 0.1%, se ha encontrado suficientes evidencia estadistica para  rechazar la $H_0$ de que el tipo de vidrio tenga un efecto significativo sobre la luminicidad producida por un tubo de osciloscopio.Por lo tanto, se puede aceptar de que existe diferencias significativas entre al menos dos lumnicidad producida por un tubo de osciloscopio entre dos tipos de vidrios.
 
+## Hipotesis del efecto principal de nivel de temperatura
+
   $H_0$ : $\beta_j$ = 0 , para j = 1,2,3 
   
   $H_1$ : al menos dos $\beta_j != 0$    , para j = 1,2,3 
  
 Se acepta $H_0$, a un nivel de significaci\'on del 0.1% se ha encontrado suficiente evidencia estadistica para rechazar la $H_0$ de que ning\'un de las temperatura de operaci\'on de un tubo de osciloscopio tiene un efecto significativo sobre la luminicidad producida por un tubo de osciloscopio.Por lo tanto, se puede aceptar de que existe diferencias muy altamente significativas entre al menos dos lumnicidades producida por un tubo de osciloscopio entre dos temperatura de operaci\'on de un tubo de osciloscopio.
+
+## Hipotesis del efecto de interacci\'on entre el tipo de vidrio y el nivel de temperatura
+
+$H_0$ : $(\alpha * \beta )_ = 0$ , para i,j = 1,2,3
+
+$H_1$ : al menos dos $(\alpha * \beta ) != 0$    , para i,j = 1,2,3
+ 
+Se acepta $H_0$, no se ha encontrado suficiente evidencia estadistica para rechazar la $H_0$ de que ning\'un efecto de la interaci\'on entre el tipo de vidrio y la temperatura de operaci\'on del foco influye sobre la luminicidad producida por un tubo de osciloscopio.
 
 b).- Realice el diagnóstico del modelo
 
@@ -67,28 +93,37 @@ b).- Realice el diagnóstico del modelo
 par(mfrow=c(2,2))
 plot(mod)
 ```
-Hay valores 
-Grafico 1: 
-Grafico 2:
-Grafico 3: Fuerte decreciente (nopodria cumplirse el supuesto de variabilidad)
-Grafico 4:
+##Analisis de los gráficos
 
-Prueba de Shapiro
+###Grafico 1: 
+Se puede observar que la regresión no paramétrica de la luminosidad producida por un tubo de osciloscopio  sobre los residuales  decrece  ligeramente de 200 a 250, luego crece de 250 a 270 , para luego mantenerse contaste hasta el final, los valores de los residuales de la regresión no paramétrica van de aproximadamente de -1 a 0, casi coincide con la recta horizontal que pasa por el origen, esto indica que posiblemente no pueda afectar la linealidad del modelo.
+
+###Grafico 2:
+Se observa que los cuantiles de los residuales estandarizados casi se sobreponen a la recta que contiene los cuantiles de la distribución normal estándar, pero al inicio y al final se observan valores alejados, esto estaría indicando que posiblemente cumpla con el supuesto de distribución normal de los errores, pero para verificarlo se realizará la prueba de normalidad de los errores. Existe un posible outlier en la observaci\'on 13 y 5
+
+###Grafico 3: 
+En el gráfico de la regresión no paramétrica de los valores predichos de la luminosidad producida por un tubo de osciloscopio sobre la raíz cuadrada de los valores absolutos de los residuales estandarizados, se puede observar que los valores predichos se mantiene casi constante desde 200 a 245,luego los valores predichos disminuyen entre los 245 y 270, para luego crecer de manera constante hasta los  00  los  aumenta los valores predichos, la variabilidad de los residuales aumenta al inicio hasta 240, luego decrece ligeramente hasta el valor de 265. Luego crece de manera constante hasta los 300. Esto quizás podría afectar el cumplimiento del supuesto de homogeneidad de variancia, entonces se tendrá que verificar mediante prueba de hipótesis. Tambien se verifica que las observaciones 5 y 13 podrisa ser outliers. 
+
+###Grafico 4:
+se observa que los residuales estandarizados tres observaciones (5,13,15) sobrepasan los límites ±1 , se podrian tratar de outlier . 
+Se realizarán las pruebas respectivas para saber que está ocurriendo.
+
+## Prueba de Shapiro
+
 $H_0$: La distribucion de los errores es la distribucion normal
 $H_1$: La distribucion de los errores es diferente a la distribucion normal
 ```{r}
 ri<-rstandard(mod)
 shapiro.test(ri)
 ```
-Se acepta la $H_0$, a un nivel de significancia de 10% (Se puede recomendar que se haga mas numero de repeticiones)
+A un nivel de significación del 5% no se ha encontrado suficiente evidencia estadistica para rechazar la hipótesis planteada de que la distribuciòn de los errores no tienen distribución normal. Se acepta el supuesto de normalidad.
 
 ```{r results='hide', message=FALSE, warning=FALSE}
 library(car)
 ncvTest(mod)
 ```
-### No se distribuye normalmente (altera normalidad)
-### Cumple con el supuesto de homogeneidad de variancia
-
+No se distribuye normalmente (altera normalidad)
+Cumple con el supuesto de homogeneidad de variancia
 
 c) Realice el análisis de efecto simple asumiendo que se cumple con los supuestos
 
@@ -114,35 +149,16 @@ SCE
 head(luminosidad)
 ```
 
-#La data se divide por tipos de vidrio (tipo_vidrio=1, tipo_vidrio=2 y tipo_vidrio=3)
+La data se divide por tipos de vidrio (tipo_vidrio=1, tipo_vidrio=2 y tipo_vidrio=3)
 ```{r}
 lumninosidad_x_tipo_vidrio_1 <- luminosidad[luminosidad$tipo_vidrio=="1",]
-lumninosidad_x_tipo_vidrio_1
-```
-
-```{r}
 lumninosidad_x_tipo_vidrio_2 <- luminosidad[luminosidad$tipo_vidrio=="2",]
-lumninosidad_x_tipo_vidrio_2
-```
-
-```{r}
 lumninosidad_x_tipo_vidrio_3 <- luminosidad[luminosidad$tipo_vidrio=="3",]
-lumninosidad_x_tipo_vidrio_3
-```
-```{r}
-lumninosidad_x_temp_baja <- luminosidad[luminosidad$temperatura=="baja",]
-lumninosidad_x_temp_baja
+lumninosidad_x_temp_baja     <- luminosidad[luminosidad$temperatura=="baja",]
+lumninosidad_x_temp_media    <- luminosidad[luminosidad$temperatura=="media",]
+lumninosidad_x_temp_alta     <- luminosidad[luminosidad$temperatura=="alta",]
 ```
 
-```{r}
-lumninosidad_x_temp_media <- luminosidad[luminosidad$temperatura=="media",]
-lumninosidad_x_temp_media
-```
-
-```{r}
-lumninosidad_x_temp_alta <- luminosidad[luminosidad$temperatura=="alta",]
-lumninosidad_x_temp_alta
-```
 ```{r}
 mod_tipo_vidrio_1 <- lm(luminosidad ~ as.factor(temperatura),lumninosidad_x_tipo_vidrio_1)
 mod_tipo_vidrio_2 <- lm(luminosidad ~ as.factor(temperatura),lumninosidad_x_tipo_vidrio_2)
@@ -209,21 +225,47 @@ data.frame(Fuente, GL, SC, CM, Fc, pvalue)
 
 d) Para una temperatura alta realice la prueba de Tukey para comparar las medias de luminosidad producidos entre los tipos de vidrios. De sus conclusiones y recomendaciones en términos de las variables en estudios.
 ```{r}
-aov_temp_alta<-aov(mod_temp_alta)
-tHSD <- TukeyHSD(aov_temp_alta)
+aova<-aov(mod)
+tHSD <- TukeyHSD(aova,"tipo_vidrio:temperatura")
 print(tHSD)
 ```
+
+$`tipo_vidrio:temperatura`
+                         diff        lwr        upr     p adj
+2:alta-1:alta   -6.333333e+01 -81.376868 -45.289798 0.0000000
+3:alta-1:alta   -4.333333e+01 -61.376868 -25.289798 0.0000035
+3:alta-2:alta    2.000000e+01   1.956465  38.043535 0.0234454
+
+
+Se ha encontrados diferencias altamente muy significativas entre los siguientes tipos de vidrio cuando la tempertura es alta:
+
+  - Entre la media de los tipos de vidrio de nivel 2, 1
+  - Entre la media de los tipos de vidrio de nivel 3, 1
+  - Entre la media de los tipos de vidrio de nivel 3, 2
+
 
 e) Para una temperatura alta realice la prueba de Duncan para comparar las medias de luminosidad producidos entre los tipos de vidrios. De sus conclusiones y recomendaciones en términos de las variables en estudios.  Compare con lo obtenido en d)
 
 ```{r}
-#aov_temp_alta <- aov(mod_temp_alta)
+aov_temp_alta <- aov(mod_temp_alta)
 summary(aov_temp_alta)
 ```
 ```{r}
-comp <- duncan.test(aov_temp_alta,"as.factor(tipo_vidrio)")
+comp <- duncan.test(aov_temp_alta,"as.factor(tipo_vidrio)", group=FALSE)
 comp
 ```
+Se ha encontrados diferencias altamente muy significativas cuando la temperatura es alta entre las siguientes comparaciones:
+
+  - Entre la media del tipo de vidrio 1 y 2
+  - Entre la media del tipo de vidrio 1 y 3 
+
+
+Se ha encontrados diferencias altamente significativas cuando la temperatura es alta entre las siguientes comparaciones:
+
+  - Entre la media del tipo de vidrio 2 y 3 
+  
+
+Comparandose con los resultado de d) , son casi similares, solo cambia en el nivel de significancia entre los tipos de vidrios 2 y 3 para ambos metodos
 
 f) Para tipo de vidrio tres, se desea comparar la media de luminosidad de b2 versus (b1 y b3)
 ¿Qué supuestos se deben cumplir para poder realizar esta comparación? Asumiendo que se cumple estos supuestos, utilice la prueba de T para realizar esta comparación.
@@ -253,7 +295,7 @@ $Q_{1}$ = $Y_{baja}$ - 2$Y_{media}$ + $Y_{alta}$
 ```{r}
 aov_tipo_vidrio_3 <- aov(mod_tipo_vidrio_3)
 summary(aov_tipo_vidrio_3)
-#summary(mod_tipo_vidrio_3)
+
 ```
 ```{r}
 yp<-sort(tapply(lumninosidad_x_tipo_vidrio_3$luminosidad,lumninosidad_x_tipo_vidrio_3$temperatura,mean))
