@@ -54,7 +54,7 @@ En la Fig. se presenta la gráfica de probabilidad normal de estos efectos. Todo
 qq <- qqnorm(Estimados,type="n")
 Efectos <- names(Estimados)
 text(qq$x, qq$y, labels = Efectos)
-Estimados1 <- Estimados[-c(1,3,4,6,8)]
+Estimados1 <- Estimados[-c(1,3,4,6,8)] # Son los que mas contribuyen
 qqline(Estimados1)
 ```
 Al tener los efectos que mas contribuyen 

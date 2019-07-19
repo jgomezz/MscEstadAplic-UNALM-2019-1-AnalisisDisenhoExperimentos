@@ -1,0 +1,131 @@
+---
+title: "Examen Final de Análisis y Diseños de Experimentos"
+output: html_document
+---
+
+#### El tequila es una bebida que está sujeta a una norma oficial mexicana, y conforme a ésta se debe cumplir con ciertas especificaciones físico-químicas. En un laboratorio de investigación, mediante un diseño factorial 25 no replicado, se estudió la influencia de diversos factores sobre la producción de alcoholes superiores en la etapa de fermentación. Los factores estudiados y los niveles fueron: tipo de cepa, A(1, 2), temperatura, B(30, 35°C), fuente de nitrógeno, C(NH4)2SO4 y urea-, relación carbono/nitrógeno, D(62/1, 188/1) y porcentaje de inóculo, E(5 y 10%). En la siguiente tabla se muestran los resultados obtenidos en cuanto a alcohol isoamílico (mg/L), que es par te de los alcoholes superiores
+
+  (1)=21.4     d=42.5     e=32.9     de=54.0
+    a=16.8    ad=21.0    ae=17.5    ade=21.8
+    b=29.3    bd=79.1    be=30.0    bde=79.9
+   ab=12.7   abd=20.0   abe=24.1   abde=31.5
+    c=27.5    cd=48.6    ce=26.7    cde=47.9
+   ac=22.9   acd=27.1   ace=11.4   acde=15.6
+   bc=35.4   bcd=85.2   bce=23.9   bcde=73.8
+  abc=18.8  abcd=26.1  abce=18.0  abcde=25.4
+
+y<-c(21.4, 16.8, 29.3, 12.7, 27.5, 22.9, 35.4, 18.8, 42.5, 21.0, 79.1, 20.0, 48.6, 27.1, 85.2, 26.1, 32.9, 17.5, 30.0, 24.1, 26.7, 11.4, 23.9, 18.0, 54.0, 21.8, 79.9, 31.5, 47.9, 15.6, 73.8, 25.4)
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+options(scipen=999)
+
+# function
+printmat <- function(msg, mat) {
+  out <- capture.output(mat)
+  sprintf("%s: %s", msg, out)
+}
+```
+
+#### a). Estime los efectos y grafique en gráfico de probabilidad normal. De acuerdo a los resultados obtenidos, presente el cuadro de ANVA más conveniente, analice y dé sus conclusiones en término de enunciado. (5 puntos)
+```{r}
+#
+y<-c(21.4, 16.8, 29.3, 12.7, 27.5, 22.9, 35.4, 18.8, 42.5, 21.0, 79.1, 20.0, 48.6, 27.1, 85.2, 26.1, 32.9, 17.5, 30.0, 24.1, 26.7, 11.4, 23.9, 18.0, 54.0, 21.8, 79.9, 31.5, 47.9, 15.6, 73.8, 25.4)
+
+#
+A <- rep(c(rep(-1, 1) , rep(1, 1)) , 16)
+B <- rep(c(rep(-1, 2) , rep(1, 2)) ,  8)
+C <- rep(c(rep(-1, 4) , rep(1, 4)) ,  4)
+D <- rep(c(rep(-1, 8) , rep(1, 8)) ,  2)
+E <- rep(c(rep(-1,16) , rep(1,16)) ,  1)
+#
+printmat("y ",y)
+printmat("A ",A)
+printmat("B ",B)
+printmat("C ",C)
+printmat("D ",D)
+printmat("E ",E)
+```
+```{r}
+# length(A)
+# length(y)
+mod <- lm(y~A*B*C*D*E)
+Estimados <- 2*coefficients(mod)[-1]  # Se retira la columna del intercepto
+# Estimados
+round(Estimados, 0)
+```
+
+Hay que buscar los estimados que mas aportan al modelo
+```{r}
+# data.frame(Estimados)
+data.frame(round(Estimados, 0))
+```
+Quienes mas aportan son: 1,2,4,6,9,10,14,17,20
+
+```{r}
+qq <- qqnorm(Estimados,type="n")
+Efectos <- names(Estimados)
+text(qq$x, qq$y, labels = Efectos)
+Estimados1 <- Estimados[-c(1,2,4,6,9,10,14,17,20)] # SON LOS VALORES QUE MAS APORTAN AL MODELO
+# Estimados1 <- Estimados
+qqline(Estimados1)
+```
+```{r}
+mod1  <- lm(y ~ A + B + D + A*B + A*D + B*D + C*E + A*B*D + A*B*E)
+anva1 <- aov(mod1)
+summary(anva1)
+```
+
+
+Los efectos que tienen una influencia altamente significativa sobre la producción de alcohol isoamílico  son: A = tipo de cepa, B = temperatura, C = fuente de nitrógeno y urea, D= relación carbono/nitrógeno,  E = porcentaje de inóculo; y entre las interacciones:
+
+- A = tipo de cepa  con B = temperatura
+
+- A = tipo de cepa  con D= relación carbono/nitrógeno.
+
+- A = tipo de cepa con E = porcentaje de inóculo.
+
+- B = temperatura con D= relación carbono/nitrógeno
+
+- B = temperatura con E = porcentaje de inóculo
+
+- C = fuente de nitrógeno y urea con E = porcentaje de inóculo.
+
+- D= relación carbono/nitrógeno con E = porcentaje de inóculo.
+
+- Y la triple interacciones entre
+
+- A = tipo de cepa  con B = temperatura y con D = relación carbono/nitrógeno
+
+- A = tipo de cepa  con B = temperatura y con E = porcentaje de inóculo
+
+No se encontró diferencias significativas 
+
+- entre A = tipo de cepa  con E = porcentaje de inóculo
+
+- entre B = temperatura con E = porcentaje de inóculo
+
+```{r}
+# mod3 <- lm( y ~ A + B + C + D + E + A*E + B*E + B*C + C*D + C*E + C*D + C*E + C*D*E)
+par(mfrow=c(2,2))
+plot(mod1)
+```
+```{r}
+ri1<-rstandard(mod1)
+shapiro.test(ri1)
+```
+
+```{r}
+library(car)
+ncvTest(mod1)
+```
+
+#### b). Suponga que en este experimento, en lugar de que se haya realizado una réplica completa, debido a limitaciones experimentales de en un solo día solo se puede realizar ocho corrida, razón por la cual se tuvo que confundir las siguientes interacciones ACD y BCE para ,formar los bloques que se deben realizar.
+
+##### b.1) Muestre el plan experimental distribuyendo las combinaciones de tratamiento en sus respectivos bloques.   Deduzca la interacción generalizada. (5 puntos)
+
+##### b.2) Obtenga el cuadro de ANVA más conveniente para analizar estos resultados. Realice las pruebas de hipótesis sobre los efectos que son significativos. Concluya en término de enunciados.  (5 puntos)
+
+#### c). Suponga que se desea realizar solo una fracción del diseño 25con generadores D=AB y E=AC, genere la estructura de alias, obtenga la fracción a realizar y analice la fracción obtenida. Compare con las conclusiones obtenidas en (a) y (b) (5 puntos)
+
+
