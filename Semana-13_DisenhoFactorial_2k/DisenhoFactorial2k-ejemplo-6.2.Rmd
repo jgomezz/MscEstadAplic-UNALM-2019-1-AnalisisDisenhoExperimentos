@@ -5,6 +5,12 @@ output: html_document
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
+
+printmat <- function(msg, mat) {
+  out <- capture.output(mat)
+  sprintf("%s: %s", msg, out)
+}
+
 ```
 
 ##Ejemplo 6.2
@@ -15,28 +21,43 @@ Un producto químico se produce en un recipiente a presión. Se realiza un exp
 Tabla N° 7: Datos del experimento del índice de filtración en la planta piloto
 
 ```{r cars}
-  y<-c(45,71,48,65,68,60,80,65,43,100,45,104,75,86,70,96)
-  A<-rep(c(-1,1),8)
-  B<-rep(c(-1,-1,1,1),4)
-  C<-rep(c(rep(-1,4),rep(1,4)),2)
-  D<-c(rep(-1,8),rep(1,8))
-  mod<-lm(y~A*B*C*D)
-  Estimados<-2*(coefficients(mod)[2:16])
-  SC<-(8*Estimados)^2/16
-  SCTotal<-sum(SC)
-  Contribucion<-round((SC/SCTotal)*100,4)
-  data.frame(Estimados,SC, Contribucion)
+  y <- c(45,71,48,65,68,60,80,65,43,100,45,104,75,86,70,96)
+  printmat("y ",y)
+  A <- rep(c(-1,1),8)
+  printmat("A ",A)
+  B <- rep(c(-1,-1,1,1),4)
+  printmat("B ",B)
+  C <- rep(c(rep(-1,4),rep(1,4)),2)
+  printmat("C ",C)
+  D <- c(rep(-1,8),rep(1,8))
+  printmat("D ",D)
+```
+Efectos estimados y sumas de cuadrados del ejemplo 6-2
+```{r }
+mod <- lm(y~A*B*C*D)
+coefficients(mod)
 ```
 
+```{r }
+Estimados <- 2*(coefficients(mod)[2:16]) # No se considera el interceptor
+Estimados
+```
+```{r }
+SC <- (8*Estimados)^2/16
+SCTotal <- sum(SC)
+Contribucion <- round((SC/SCTotal)*100,4)
+data.frame(Estimados,SC, Contribucion)
+```
+En la Fig. se presenta la gráfica de probabilidad normal de estos efectos. Todos los efectos que se ubican en la línea son despreciables, mientras que los efectos grandes están alejados de ésta. Los efectos importantes que se descubren en este análisis son los efectos principales de A, C y D y las interacciones AC y AD.
+
 ```{r pressure, echo=FALSE}
-qq<-qqnorm(Estimados,type="n")
-Efectos<-names(Estimados)
+qq <- qqnorm(Estimados,type="n")
+Efectos <- names(Estimados)
 text(qq$x, qq$y, labels = Efectos)
-Estimados1<-Estimados[-c(1,3,4,6,8)] 
+Estimados1 <- Estimados[-c(1,3,4,6,8)]
 qqline(Estimados1)
 ```
 Al tener los efectos que mas contribuyen 
-
 ```{r}
 mod2<-lm(y~A*C*D)
 anva<-aov(mod2)

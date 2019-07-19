@@ -212,7 +212,7 @@ $ H_1: \sigma^2(i+) \neq \sigma^2(i+) $ , para  i= A, B
    
 
 ```{r}
-dataA <- data.frame(ei,A)
+dataA  <- data.frame(ei,A)
 dataAn <- dataA[dataA$A == -1,]
 dataAn
 ```
