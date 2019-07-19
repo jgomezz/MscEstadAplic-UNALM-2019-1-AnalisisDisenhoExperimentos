@@ -1,5 +1,5 @@
 ---
-title: "Ejemplo6_2"
+title: "DisenhoFactorial2k-ejemplo-6.2"
 output: html_document
 ---
 
@@ -15,7 +15,7 @@ Un producto químico se produce en un recipiente a presión. Se realiza un exp
 Tabla N° 7: Datos del experimento del índice de filtración en la planta piloto
 
 ```{r cars}
-y<-c(45,71,48,65,68,60,80,65,43,100,45,104,75,86,70,96)
+  y<-c(45,71,48,65,68,60,80,65,43,100,45,104,75,86,70,96)
   A<-rep(c(-1,1),8)
   B<-rep(c(-1,-1,1,1),4)
   C<-rep(c(rep(-1,4),rep(1,4)),2)

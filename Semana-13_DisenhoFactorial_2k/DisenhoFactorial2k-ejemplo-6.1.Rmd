@@ -1,5 +1,5 @@
 ---
-title: "EjemploExperimentoFactorial"
+title: "DisenhoFactorial2k-ejemplo-6.1"
 output: html_document
 ---
 
@@ -29,6 +29,7 @@ mod<-lm(rend~bloques+tipo+dosis+tipo*dosis)
 
 
 # Disenho Factorial 2k
+Ejercicio: Considere una investigación llevada a cabo para estudiar el efecto que tienen la concentración de un reactivo y la presencia de un catalizador sobre el tiempo de reacción de un proceso químico. Sea la concentración del reactivo el factor A con dos niveles de interés, 15 y 25%. El catalizador constituye el factor B; el nivel alto (o superior) denota el uso de dos sacos de catalizador y el nivel bajo (o inferior) denota el uso de sólo un saco. El experimento se realiza ("réplica" o "repite") tres veces, y los datos son como sigue:
 
 ```{r echo=FALSE}
 library(DoE.base)
@@ -37,16 +38,20 @@ fac.design(nlevels=c(2,2),factor.names=list(one=c(15,25),two=c(1,2)), replicatio
 ```{r}
 y   <- c(28,25,27,36,32,32,18,19,23,31,30,29)
 A   <- rep(c(rep(-1,3),rep(1,3)),2)
+A
 B   <- c(rep(-1,6),rep(1,6))
+B
 AB  <- A*B
-XA  <- data.frame(y,A)
-XAp <- XA[XA$A==1,]
-XAn <- XA[XA$A==-1,]
-XAp
+AB
 ```
 
 ```{r}
+XA  <- data.frame(y,A)
+XA
+XAn <- XA[XA$A==-1,]
 XAn
+XAp <- XA[XA$A==1,]
+XAp
 ```
 
 ```{r}
@@ -55,19 +60,26 @@ A
 ```
 ```{r} 
 XB  <- data.frame(y,B)
+XB
 XBp <- XB[XB$B==1,]
+XBp
 XBn <- XB[XB$B==-1,]
+XBn
+```
+```{r}
 B <- mean(XBp$y)-mean(XBn$y)
 B
 ```
+
 Explicaci\'on : Pasar del nivel bajo al nivel alto de B el promedio es negativo, Se interpreta que el rendimiento promedio obtenido con el nivel alto de B es inferior al rendimiento promedio obtenido con el nivel bajo de B es 5 unidades. 
 
 Si es positivo el rendimiento promedio del nivel alto de B es mayor al rendimiento promedio del nivel bajo de B.
 
 ```{r}
 XAB <- data.frame(y,AB)
-XABp <- XAB[XAB$AB==1,]
-XABn <- XAB[XAB$AB==-1,]
+XABp <- XAB[XAB$AB == 1,]
+XABn <- XAB[XAB$AB == -1,]
+
 contrasteAB <- sum(XABp$y)-sum(XABn$y) 
 AB <- contrasteAB/(2*3)
 AB
@@ -77,11 +89,12 @@ AB
 
 Si p_value < 0.001, la prueba resulta muy altamente significativa, se rechaza $H_{0}$ y se denota con ***
 
-$y=\beta_{0} + \beta_{1}*x_{1} + \beta_{2}*x_{2} + \beta_{12}*x_{1}*x_{2} +\epsilon$
+$$y=\beta_{0} + \beta_{1}*x_{1} + \beta_{2}*x_{2} + \beta_{12}*x_{1}*x_{2} +\epsilon$$
 
-x_i =  -1 si el factor de i se encuentra en el nivel bajo
 
-x_i =   1 si el factor de i se encuentra en el nivel alto
+$x_i$ =  -1 si el factor de i se encuentra en el nivel bajo
+
+$x_i$ =   1 si el factor de i se encuentra en el nivel alto
 
 i= 1 factor A, i = 20 factor B
 
@@ -93,10 +106,10 @@ y <- c(28,25,27,36,32,32,18,19,23,31,30,29)
 A <- rep(c(rep(-1,3),rep(1,3)),2)
 B <- c(rep(-1,6),rep(1,6))
 mod <- lm(y~A+B+A*B)
+summary(mod)
 ```
 
 Otra forma de encontrar los efectos estimados
-
 
 ```{r}
 betaest <- coefficients(mod)
@@ -107,36 +120,34 @@ Mostrar los coeficientes de regresi\'on
 betaest
 ```
 
-
 ```{r}
 efectosest <- 2*betaest[2:4]
+# efectosest
 data.frame(efectosest)
 ```
 Reemplazando en el modelo
 
-$\hat{\imath}$ = 8.333333 - 5.000000$x_1$ + 1.666667$x_2$	
-
-
+$$\hat{y} = 8.333333 - 5.000000.x_1 + 1.666667.x_2$$
 ```{r}
 anva<-aov(mod)
 summary(anva)
 ```
 
-
-
 Se puede concluir que ambos efectos principales: concentración de reactivo y cantidad de catalizador influyen significativamente a un nivel del 1%. En cambio, La prueba de hipótesis sobre el efecto de la interacción (concentración de reactivo y cantidad de catalizador) resultó no significativa a un nivel del 10%.
 
-Analisis de los errores de los residuales :
-------------------------------------------
-residuales studentizados
+## Analisis de los errores de los residuales :
+
+Residuales 
 ```{r}
-mod1<-lm(y~A+B)
-CME<-deviance(mod1)/df.residual(mod1)  
-beta1<-coefficients(mod1)
-I<-rep(1,length(y))
-X<-cbind(I,A,B)
-yest<-X%*%beta1
-e<-y-yest
+mod1 <- lm(y~A+B)
+CME <- deviance(mod1)/df.residual(mod1)  
+
+beta1 <- coefficients(mod1)
+I <- rep(1,length(y))
+X <- cbind(I,A,B)
+
+yest <- X%*%beta1
+e <- y-yest
 e
 ```
 Otra manera de ver los residuales
@@ -144,33 +155,44 @@ Otra manera de ver los residuales
 e1 <- residuals(mod1)
 data.frame(e1)
 ```
-Se obtiene los residuales studentizados
+Se obtiene los residuales estudentizados
 ---------------------------------------
 ```{r}
-H <- X%*%solve(t(X)%*%X)%*%t(X)
+H  <- X%*%solve(t(X)%*%X)%*%t(X)
 ri <- e/sqrt(CME*(1-diag(H)))
 ri
 ```
-Otra forma de encontrar los residuales studentizados
+Otra forma de encontrar los residuales estudentizados
 ```{r}
 ri <- rstandard(mod1)
 data.frame(ri)
 ```
 
+Grafico de los residuos y residuos estudentizdos
 ```{r}
 par(mfrow=c(2,2))
 plot(mod1)
 ```
+$H_0$ : la muestra x1, ..., xn proviene de una población normalmente distribuida.
+$H_1$ : la muestra x1, ..., xn no proviene de una población normalmente distribuida.
 
 ```{r}
 shapiro.test(ri)
 ```
+A un nivel de significación del 10% se ha encontrado suficiente evidencia para afirmar que los errores no se distribuyen normalmente
 
-```{r}
+```{r, message=FALSE}
 library(car)
 ncvTest(mod1)
 ```
 
+Prueba de variancia constante de errores Breusch-Pagan.
+-------------------------------------------------------
+
+Test de Breusch-Pagan:
+
+$H_0$ : Existe homogeneidad de variancia de los errores 
+$H_1$ : No existe homogeneidad de variancia de los errores
 
 Gráfico de variabilidad de los residuales a nivel alto del factor versus la variabilidad de los residuos a nivel bajo, para el ejemplo 6.1
 ```{r}
@@ -178,7 +200,6 @@ ei <- residuals(mod1)
 par(mfrow=c(2,1))
 plot(A,ei)
 plot(B,ei)
-
 ```
 Grap 2 : La variabilidad para B- -1.0 es poco variable en la parte superior  y mas variable en la parte de abajo
 
@@ -186,26 +207,28 @@ Prueba de variabilidad
 ----------------------
 Prueba de variabilidad de los residuales a nivel alto del factor versus la variabilidad de los residuos a nivel bajo:
 
-$H_0: \sigma^2(i+)$
+$ H_0: \sigma^2(i+) = \sigma^2(i+) $
+$ H_1: \sigma^2(i+) \neq \sigma^2(i+) $ , para  i= A, B
+   
 
 ```{r}
-dataA<-data.frame(ei,A)
-dataAn<-dataA[dataA$A==-1,]
+dataA <- data.frame(ei,A)
+dataAn <- dataA[dataA$A == -1,]
 dataAn
 ```
 ```{r}
-dataAp<-dataA[dataA$A==1,]
+dataAp <- dataA[dataA$A == 1,]
 dataAp
 ```
 Construyo la estadistica de prueba
 
 ```{r}
-F<-log(var(dataAp$ei)/var(dataAn$ei)) 
+F <- log(var(dataAp$ei)/var(dataAn$ei)) 
 F
 ```
 
 ```{r}
-pvalue<-2*pnorm(F)
+pvalue <- 2*pnorm(F)
 pvalue
 ```
 
@@ -214,17 +237,17 @@ No hay diferencia significativas entre la variabilidad del nivel alto y bajo de 
 Para B 
 ------
 ```{r}
-dataB<-data.frame(ei,B)
-dataBn<-dataB[dataB$B==-1,]
+dataB <- data.frame(ei,B)
+dataBn <- dataB[dataB$B == -1,]
 dataBn
 ```
 ```{r}
-dataBp<-dataB[dataB$B==1,]
+dataBp <- dataB[dataB$B == 1,]
 dataBp
 ```
 
 ```{r}
-F<-log(var(dataBp$ei)/var(dataBn$ei)) 
+F <- log(var(dataBp$ei)/var(dataBn$ei)) 
 F
 ```
 
@@ -233,13 +256,20 @@ pvalue<-2*(1-pnorm(F))
 pvalue
 ```
 
+No hay diferencia significativas entre la variabilidad del nivel alto y bajo de B
+
 ## Gráfica de la superficie
 
 ```{r}
-mod <- function(x1,x2){16.3333+0.83333*x1-5*x2}
+mod <- function(x1,x2){
+  16.3333 + 0.83333*x1 - 5*x2
+}
+
 x1 <- seq(15,25,0.5)
 x2 <- seq(1,2,0.05)
+
 z <- outer(x1,x2,mod)
+
 persp(x1,x2,z,theta=-40,phi=30,ticktype="detailed",xlab="concentración del
 reactivo",ylab="cantidad del catalizador", zlab="y")
 ```
@@ -249,32 +279,45 @@ catalizador")
 ```
 
 ```{r}
-A <- rep(c(-1,1),4)
-B <- rep(c(rep(-1,2),rep(1,2)),2)
-C <- c(rep(-1,4),rep(1,4))
+printmat <- function(msg, mat) {
+  out <- capture.output(mat)
+  sprintf("%s: %s", msg, out)
+}
 
+
+A <- rep(c(-1,1),4)
+printmat("A ",A)
+B <- rep(c(rep(-1,2),rep(1,2)),2)
+printmat("B ",B)
+C <- c(rep(-1,4),rep(1,4))
+printmat("C ",C)
 
 #
 y1 <- c(-3,0,-1,2,-1,2,1,6)
 y2 <- c(-1,1,0,3,0,1,1,5)
 y <- y1 + y2
+printmat("y ",y)
+
 ym <- c(y1,y2)
+printmat("ym",ym)
 
 # Defino repiticiones
 A1 <- rep(A,2)
+printmat("A1",A1)
 B1 <- rep(B,2)
+printmat("B1",B1)
 C1 <- rep(C,2)
+printmat("C1",C1)
 ```
 
 Todo el modelo
 ```{r}
-mod <- lm( y ~A*B*C)
+mod <- lm( y ~ A*B*C)
 summary(mod)
 ```
-
 Todo el modelo
 ```{r}
-mod <- lm( ym ~A1*B1*C1)
+mod <- lm( ym ~ A1*B1*C1)
 summary(mod)
 ```
 Se muestran los efectos estimados
@@ -288,34 +331,62 @@ anva <- aov(mod)
 summary(anva)
 ```
 ```{r}
-y<-c(-3,0,-1,2,-1,2,1,6,-1,1,0,3,0,1,1,5)
-  A<-rep(c(-1,1),8)
-  B<-rep(c(-1,-1,1,1),4)
-  C<-rep(c(rep(-1,4),rep(1,4)),2)
-  datac<-data.frame(y,C)
-  datacp<-datac[datac$C==1,]
-  datacn<-datac[datac$C==-1,]
-  ycn<-mean(datacn$y)
-  ypp<-mean(datacp$y)
-  nC<-c(-1,1)
-  ypC<-c(ycn,ypp)
-  plot(nC,ypC,type="l",xlab="C",ylab="media")
-  interaction.plot(A,B,y)
+y <- c(-3,0,-1,2,-1,2,1,6,-1,1,0,3,0,1,1,5)
+printmat("y ",y)
+
+A <- rep(c(-1,1),8)
+printmat("A ",A)
+
+B <- rep(c(-1,-1,1,1),4)
+printmat("B ",B)
+
+C <- rep(c(rep(-1,4),rep(1,4)),2)
+printmat("C ",C)
+```
+```{r}
+datac  <- data.frame(y,C)
+datacp <- datac[datac$C == 1,]
+printmat("datacp ",datacp)
 ```
 
+
+```{r}
+datacn <- datac[datac$C == -1,]
+printmat("datacn ",datacn)
+```
+
+```{r}
+ycn <- mean(datacn$y)
+ypp <- mean(datacp$y)
+nC  <- c(-1,1)
+ypC <-c(ycn,ypp)
+ypC
+```
+```{r}
+plot(nC,ypC,type="l",xlab="C",ylab="media")
+```
+```{r}
+interaction.plot(A,B,y)
+```
 Analisis de residuos
 
 ```{r}
-y<-c(-3,0,-1,2,-1,2,1,6,-1,1,0,3,0,1,1,5)
-  A<-rep(c(-1,1),8)
-  B<-rep(c(-1,-1,1,1),4)
-  C<-rep(c(rep(-1,4),rep(1,4)),2)
-  mod<-lm(y~A*B*C)
-  betaest<-coefficients(mod)
-  betaest
+y <- c(-3,0,-1,2,-1,2,1,6,-1,1,0,3,0,1,1,5)
+printmat("y ",y)
+A <- rep(c(-1,1),8)
+printmat("A ",A)
+B <- rep(c(-1,-1,1,1),4)
+printmat("B ",B)
+C <- rep(c(rep(-1,4),rep(1,4)),2)
+printmat("C ",C)
 ```
 ```{r}
-efectos<-2*betaest[2:8]
+mod1 <- lm(y ~ A*B*C)
+betaest <- coefficients(mod1)
+betaest
+```
+```{r}
+efectos <- 2*betaest[2:8]
 efectos
 ```
 
@@ -326,9 +397,7 @@ plot(mod1)
 ```{r}
 ri<-rstandard(mod1)
 shapiro.test(ri)
-
 ```
-
 ```{r}
 library(car)
 ncvTest(mod1)
@@ -339,30 +408,18 @@ B
 C
 ```
 ```{r}
-  ei<-residuals(mod1)
+ei<-residuals(mod1)
 ei
 ```
-
-
 ```{r}
-  ei<-residuals(mod1)
-  par(mfrow=c(2,2))
-  plot(A,ei)
-  plot(B,ei)
-  plot(C,ei)
-  AB<-A*B
-  plot(AB,ei)
+par(mfrow=c(2,2))
+plot(A,ei)
+plot(B,ei)
+plot(C,ei)
 ```
 
-##Ejemplo 6.2
-
-Una sola réplica del diseño 24
-Un producto químico se produce en un recipiente a presión. Se realiza un experimento factorial en la planta piloto para estudiar los efectos que se cree influyen sobre la taza de filtración de ese producto. Los cuatro factores son temperatura (A), presión (B), concentración de los reactivos (C) y rapidez de mezclado (D). Cada factor está presente en dos niveles; en la Tabla N° 7 y la Fig. N° 7 se muestran los datos recopilados de una sola réplica del experimento 24. Los 16 ensayos se realizaron en orden aleatorio. El ingeniero de proceso está interesado en maximizar la rapidez de filtración. Las condiciones actuales del proceso dan por resultado velocidad de filtración aproximadas de 75 gal/h. Además, en el proceso se utiliza actualmente el nivel alto del factor C, concentración de formaldehído. El ingeniero desearía reducir todo lo posible esta concentración, pero ha sido incapaz de hacerlo en virtud de que ello siempre ha dado por resultado menores velocidades de filtración.
-
-Tabla N° 7: Datos del experimento del índice de filtración en la planta piloto
-
-
 ```{r}
-
-``` 
+AB <- A*B
+plot(AB,ei)
+```
 
