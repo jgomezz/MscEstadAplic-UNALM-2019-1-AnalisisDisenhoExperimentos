@@ -1,0 +1,700 @@
+\documentclass[]{article}
+\usepackage{lmodern}
+\usepackage{amssymb,amsmath}
+\usepackage{ifxetex,ifluatex}
+\usepackage{fixltx2e} % provides \textsubscript
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+\else % if luatex or xelatex
+  \ifxetex
+    \usepackage{mathspec}
+  \else
+    \usepackage{fontspec}
+  \fi
+  \defaultfontfeatures{Ligatures=TeX,Scale=MatchLowercase}
+\fi
+% use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+% use microtype if available
+\IfFileExists{microtype.sty}{%
+\usepackage{microtype}
+\UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\usepackage[margin=1in]{geometry}
+\usepackage{hyperref}
+\hypersetup{unicode=true,
+            pdftitle={Examen Final de Análisis y Diseños de Experimentos},
+            pdfauthor={Jaime Gomez Marin},
+            pdfborder={0 0 0},
+            breaklinks=true}
+\urlstyle{same}  % don't use monospace font for urls
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{248,248,248}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.77,0.63,0.00}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\BuiltInTok}[1]{#1}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ImportTok}[1]{#1}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\usepackage{graphicx,grffile}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+\IfFileExists{parskip.sty}{%
+\usepackage{parskip}
+}{% else
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{6pt plus 2pt minus 1pt}
+}
+\setlength{\emergencystretch}{3em}  % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{0}
+% Redefines (sub)paragraphs to behave more like sections
+\ifx\paragraph\undefined\else
+\let\oldparagraph\paragraph
+\renewcommand{\paragraph}[1]{\oldparagraph{#1}\mbox{}}
+\fi
+\ifx\subparagraph\undefined\else
+\let\oldsubparagraph\subparagraph
+\renewcommand{\subparagraph}[1]{\oldsubparagraph{#1}\mbox{}}
+\fi
+
+%%% Use protect on footnotes to avoid problems with footnotes in titles
+\let\rmarkdownfootnote\footnote%
+\def\footnote{\protect\rmarkdownfootnote}
+
+%%% Change title format to be more compact
+\usepackage{titling}
+
+% Create subtitle command for use in maketitle
+\providecommand{\subtitle}[1]{
+  \posttitle{
+    \begin{center}\large#1\end{center}
+    }
+}
+
+\setlength{\droptitle}{-2em}
+
+  \title{Examen Final de Análisis y Diseños de Experimentos}
+    \pretitle{\vspace{\droptitle}\centering\huge}
+  \posttitle{\par}
+    \author{Jaime Gomez Marin}
+    \preauthor{\centering\large\emph}
+  \postauthor{\par}
+    \date{}
+    \predate{}\postdate{}
+  
+
+\begin{document}
+\maketitle
+
+\hypertarget{en-un-articulo-de-solid-state-technology-diseno-ortogonal-para-optimizacion-de-procesos-y-su-aplicacion-en-el-grabado-quimico-con-plasma-se-describe-la-aplicacion-de-disenos-factoriales-en-el-desarrollo-de-un-proceso-de-grabado-quimico-con-nitruros-en-un-dispositivo-de-grabado-quimico-con-plasma-para-una-sola-oblea-el-proceso-usa-c2f6-como-gas-de-reaccion.-cuatro-factores-son-de-interes-el-entrehierro-anodo-catodo-a-la-presion-en-la-camara-del-reactor-b-el-flujo-del-gas-c2f6-c-y-la-potencia-aplicada-al-catodo-d.-la-respuesta-de-interes-es-la-rapidez-de-grabado-para-el-nitruro-de-silicio.-se-corre-una-sola-replica-de-un-diseno-24-los-datos-se-muestran-enseguida}{%
+\paragraph{1.- En un artículo de Solid State Technology (``Diseño
+ortogonal para optimización de procesos y su aplicación en el grabado
+químico con plasma'') se describe la aplicación de diseños factoriales
+en el desarrollo de un proceso de grabado químico con nitruros en un
+dispositivo de grabado químico con plasma para una sola oblea El proceso
+usa C2F6 como gas de reacción. Cuatro factores son de interés: el
+entrehierro ánodo-cátodo (A), la presión en la cámara del reactor (B),
+el flujo del gas C2F6 (C) y la potencia aplicada al cátodo (D). La
+respuesta de interés es la rapidez de grabado para el nitruro de
+silicio. Se corre una sola réplica de un diseño 24; los datos se
+muestran
+enseguida:}\label{en-un-articulo-de-solid-state-technology-diseno-ortogonal-para-optimizacion-de-procesos-y-su-aplicacion-en-el-grabado-quimico-con-plasma-se-describe-la-aplicacion-de-disenos-factoriales-en-el-desarrollo-de-un-proceso-de-grabado-quimico-con-nitruros-en-un-dispositivo-de-grabado-quimico-con-plasma-para-una-sola-oblea-el-proceso-usa-c2f6-como-gas-de-reaccion.-cuatro-factores-son-de-interes-el-entrehierro-anodo-catodo-a-la-presion-en-la-camara-del-reactor-b-el-flujo-del-gas-c2f6-c-y-la-potencia-aplicada-al-catodo-d.-la-respuesta-de-interes-es-la-rapidez-de-grabado-para-el-nitruro-de-silicio.-se-corre-una-sola-replica-de-un-diseno-24-los-datos-se-muestran-enseguida}}
+
+\begin{verbatim}
+       | (-) bajo   1 | (+) alto
+\end{verbatim}
+
+----------\textbar{}-------\textbar{}----------------- A (cm) \textbar{}
+0.80 \textbar{} 1.20 B (mTorr) \textbar{} 450 \textbar{} 550 C (SCCM)
+\textbar{} 125 \textbar{} 200 D (W) \textbar{} 275 \textbar{} 325
+
+\begin{enumerate}
+\def\labelenumi{(\arabic{enumi})}
+\tightlist
+\item
+  550 a = 669 b = 604 ab = 650 c = 633 ac = 642 bc = 601 abc = 635 d =
+  1037 ad = 749 bd = 1052 abd = 868 cd = 1075 acd = 860 bcd = 1063 abcd
+  = 759
+\end{enumerate}
+
+y=c(550,669,604,650,633,642,601,635,1037,749,1052,868,1075,860,1063,759)
+
+\hypertarget{a.estimar-los-efectos-de-los-factores-y-obtenga-una-grafica-de-probabilidad-normal-de-los-efectos-estimados-de-estos-factores.-que-efectos-parecen-ser-grande-6-puntos}{%
+\paragraph{a).Estimar los efectos de los factores y obtenga una gráfica
+de probabilidad normal de los efectos estimados de estos factores. ¿Que
+efectos parecen ser grande? ( 6
+puntos)}\label{a.estimar-los-efectos-de-los-factores-y-obtenga-una-grafica-de-probabilidad-normal-de-los-efectos-estimados-de-estos-factores.-que-efectos-parecen-ser-grande-6-puntos}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{#}
+\NormalTok{y=}\KeywordTok{c}\NormalTok{(}\DecValTok{550}\NormalTok{,}\DecValTok{669}\NormalTok{,}\DecValTok{604}\NormalTok{,}\DecValTok{650}\NormalTok{,}\DecValTok{633}\NormalTok{,}\DecValTok{642}\NormalTok{,}\DecValTok{601}\NormalTok{,}\DecValTok{635}\NormalTok{,}\DecValTok{1037}\NormalTok{,}\DecValTok{749}\NormalTok{,}\DecValTok{1052}\NormalTok{,}\DecValTok{868}\NormalTok{,}\DecValTok{1075}\NormalTok{,}\DecValTok{860}\NormalTok{,}\DecValTok{1063}\NormalTok{,}\DecValTok{759}\NormalTok{)}
+
+\CommentTok{#}
+\NormalTok{A <-}\StringTok{ }\KeywordTok{rep}\NormalTok{(}\KeywordTok{c}\NormalTok{(}\KeywordTok{rep}\NormalTok{(}\OperatorTok{-}\DecValTok{1}\NormalTok{, }\DecValTok{1}\NormalTok{) , }\KeywordTok{rep}\NormalTok{(}\DecValTok{1}\NormalTok{, }\DecValTok{1}\NormalTok{)) , }\DecValTok{8}\NormalTok{)}
+\NormalTok{B <-}\StringTok{ }\KeywordTok{rep}\NormalTok{(}\KeywordTok{c}\NormalTok{(}\KeywordTok{rep}\NormalTok{(}\OperatorTok{-}\DecValTok{1}\NormalTok{, }\DecValTok{2}\NormalTok{) , }\KeywordTok{rep}\NormalTok{(}\DecValTok{1}\NormalTok{, }\DecValTok{2}\NormalTok{)) , }\DecValTok{4}\NormalTok{)}
+\NormalTok{C <-}\StringTok{ }\KeywordTok{rep}\NormalTok{(}\KeywordTok{c}\NormalTok{(}\KeywordTok{rep}\NormalTok{(}\OperatorTok{-}\DecValTok{1}\NormalTok{, }\DecValTok{4}\NormalTok{) , }\KeywordTok{rep}\NormalTok{(}\DecValTok{1}\NormalTok{, }\DecValTok{4}\NormalTok{)) , }\DecValTok{2}\NormalTok{)}
+\NormalTok{D <-}\StringTok{ }\KeywordTok{rep}\NormalTok{(}\KeywordTok{c}\NormalTok{(}\KeywordTok{rep}\NormalTok{(}\OperatorTok{-}\DecValTok{1}\NormalTok{, }\DecValTok{8}\NormalTok{) , }\KeywordTok{rep}\NormalTok{(}\DecValTok{1}\NormalTok{, }\DecValTok{8}\NormalTok{)) , }\DecValTok{1}\NormalTok{)}
+
+\CommentTok{#}
+\KeywordTok{printmat}\NormalTok{(}\StringTok{"y "}\NormalTok{,y)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "y :  [1]  550  669  604  650  633  642  601  635 1037  749 1052  868 1075  860"
+## [2] "y : [15] 1063  759"
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{printmat}\NormalTok{(}\StringTok{"A "}\NormalTok{,A)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "A :  [1] -1  1 -1  1 -1  1 -1  1 -1  1 -1  1 -1  1 -1  1"
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{printmat}\NormalTok{(}\StringTok{"B "}\NormalTok{,B)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "B :  [1] -1 -1  1  1 -1 -1  1  1 -1 -1  1  1 -1 -1  1  1"
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{printmat}\NormalTok{(}\StringTok{"C "}\NormalTok{,C)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "C :  [1] -1 -1 -1 -1  1  1  1  1 -1 -1 -1 -1  1  1  1  1"
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{printmat}\NormalTok{(}\StringTok{"D "}\NormalTok{,D)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "D :  [1] -1 -1 -1 -1 -1 -1 -1 -1  1  1  1  1  1  1  1  1"
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{mod <-}\StringTok{ }\KeywordTok{lm}\NormalTok{(y}\OperatorTok{~}\NormalTok{A}\OperatorTok{*}\NormalTok{B}\OperatorTok{*}\NormalTok{C}\OperatorTok{*}\NormalTok{D)}
+\NormalTok{Estimados <-}\StringTok{ }\DecValTok{2}\OperatorTok{*}\KeywordTok{coefficients}\NormalTok{(mod)[}\OperatorTok{-}\DecValTok{1}\NormalTok{]  }\CommentTok{# Se retira la columna del intercepto}
+\CommentTok{# Estimados}
+\KeywordTok{round}\NormalTok{(Estimados, }\DecValTok{0}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##       A       B       C       D     A:B     A:C     B:C     A:D     B:D 
+##     -98       2      11     310      -4     -21     -40    -150       3 
+##     C:D   A:B:C   A:B:D   A:C:D   B:C:D A:B:C:D 
+##       2     -12       8       9     -22     -36
+\end{verbatim}
+
+Hay que buscar los estimados que mas aportan al modelo
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{data.frame}\NormalTok{(}\KeywordTok{round}\NormalTok{(Estimados, }\DecValTok{0}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##         round.Estimados..0.
+## A                       -98
+## B                         2
+## C                        11
+## D                       310
+## A:B                      -4
+## A:C                     -21
+## B:C                     -40
+## A:D                    -150
+## B:D                       3
+## C:D                       2
+## A:B:C                   -12
+## A:B:D                     8
+## A:C:D                     9
+## B:C:D                   -22
+## A:B:C:D                 -36
+\end{verbatim}
+
+Quienes mas aportan son: 1,4,6,7,8,14,15
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{qq <-}\StringTok{ }\KeywordTok{qqnorm}\NormalTok{(Estimados,}\DataTypeTok{type=}\StringTok{"n"}\NormalTok{)}
+\NormalTok{Efectos <-}\StringTok{ }\KeywordTok{names}\NormalTok{(Estimados)}
+\KeywordTok{text}\NormalTok{(qq}\OperatorTok{$}\NormalTok{x, qq}\OperatorTok{$}\NormalTok{y, }\DataTypeTok{labels =}\NormalTok{ Efectos)}
+\NormalTok{Estimados1 <-}\StringTok{ }\NormalTok{Estimados[}\OperatorTok{-}\KeywordTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{,}\DecValTok{4}\NormalTok{,}\DecValTok{6}\NormalTok{,}\DecValTok{7}\NormalTok{,}\DecValTok{8}\NormalTok{,}\DecValTok{14}\NormalTok{,}\DecValTok{15}\NormalTok{)] }\CommentTok{# SON LOS VALORES QUE MAS APORTAN AL MODELO}
+\CommentTok{# Estimados1 <- Estimados}
+\KeywordTok{qqline}\NormalTok{(Estimados1)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{efade2019i_files/figure-latex/unnamed-chunk-4-1.pdf} De
+la grafica se puede apreciar que los siguiente efectos son los mas
+grandes en orden de influencia:
+
+\begin{itemize}
+\tightlist
+\item
+  D : La potencia aplicada al cátodo
+\item
+  A*D : El entrehierro ánodo-cátodo y la potencia aplicada al cátodo
+\item
+  A : El entrehierro ánodo-cátodo
+\item
+  B*C : La presión en la cámara del reacto y el flujo del gas C2F6
+\end{itemize}
+
+Hay mas efectos como: A\emph{B}C + B\emph{C}D , pero los anteriores
+tiene un mayor efecto.
+
+\hypertarget{b.--realice-el-analisis-de-varianza-para-confirmar-los-resultados-obtenidos-en-a-obtenga-la-ecuacion-de-regresion-estimada-4-puntos}{%
+\paragraph{b).- Realice el análisis de varianza para confirmar los
+resultados obtenidos en (a), Obtenga la ecuación de regresión estimada
+(4
+puntos)}\label{b.--realice-el-analisis-de-varianza-para-confirmar-los-resultados-obtenidos-en-a-obtenga-la-ecuacion-de-regresion-estimada-4-puntos}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# Con la información de los efectos detectados en el apartado anterior procedemos a  construimos nuestro modelo}
+\NormalTok{mod1  <-}\StringTok{ }\KeywordTok{lm}\NormalTok{(y }\OperatorTok{~}\StringTok{ }\NormalTok{A }\OperatorTok{+}\StringTok{ }\NormalTok{D }\OperatorTok{+}\StringTok{ }\NormalTok{A}\OperatorTok{*}\NormalTok{D }\OperatorTok{+}\StringTok{ }\NormalTok{B}\OperatorTok{*}\NormalTok{C }\OperatorTok{+}\StringTok{ }\NormalTok{A}\OperatorTok{*}\NormalTok{C }\OperatorTok{+}\StringTok{ }\NormalTok{A}\OperatorTok{*}\NormalTok{B}\OperatorTok{*}\NormalTok{C }\OperatorTok{+}\StringTok{ }\NormalTok{B}\OperatorTok{*}\NormalTok{C}\OperatorTok{*}\NormalTok{D )}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# Realizamos nuestro analisis de varianza}
+\NormalTok{anva1 <-}\StringTok{ }\KeywordTok{aov}\NormalTok{(mod1)}
+\KeywordTok{summary}\NormalTok{(anva1)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##             Df Sum Sq Mean Sq F value   Pr(>F)    
+## A            1  38318   38318  19.510 0.021540 *  
+## D            1 384090  384090 195.559 0.000792 ***
+## B            1     18      18   0.009 0.929648    
+## C            1    495     495   0.252 0.650161    
+## A:D          1  89850   89850  45.747 0.006603 ** 
+## B:C          1   6440    6440   3.279 0.167858    
+## A:C          1   1785    1785   0.909 0.410748    
+## A:B          1     68      68   0.035 0.864199    
+## D:B          1     39      39   0.020 0.896786    
+## D:C          1     11      11   0.005 0.946156    
+## A:B:C        1    564     564   0.287 0.629211    
+## D:B:C        1   1871    1871   0.952 0.401085    
+## Residuals    3   5892    1964                     
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+\end{verbatim}
+
+\[ y = \beta_0 + \beta_1x_1 +\beta_2x_2 + \beta_3x_3 + \beta_4x_4 + \beta_{14}x_1x_4 + \beta_{23}x_2x_3 + \beta_{13}x_1x_3 + \beta_{12}x_1x_2 + \beta_{42}x_4x_2 +\beta_{43}x_4x_3 + \beta_{123}x_1x_2x_3 + \beta_{423}x_4x_2x_3  \]
+Donde:
+
+\(x_i\) = 1, si el nivel del factor de i se encuentra alto
+
+\(x_i\) = 0, si el nivel del factor de i se encuentra bajo
+
+i = 1 , representa el factor de A
+
+i = 2 , representa el factor de B
+
+i = 3 , representa el factor de C
+
+i = 4 , representa el factor de D
+
+De los cuatro factores son de interés: el entrehierro ánodo-cátodo (A),
+la presión en la cámara del reactor (B), el flujo del gas C2F6 (C) y la
+potencia aplicada al cátodo (D) se ha llegado a las siguientes
+conclusiones
+
+a).- Los efectos que tiene influenciencia altamente muy significativa
+sobre la rapidez de grabado para el nitruro de silicio son:
+
+\begin{itemize}
+\tightlist
+\item
+  D = La potencia aplicada al catodo
+\end{itemize}
+
+b).- Los efectos que tiene influenciencia muy significativa sobre la
+rapidez de grabado para el nitruro de silicio son:
+
+\begin{itemize}
+\tightlist
+\item
+  entre A = El entrehierro ánodo-cátodo con D = La potencia aplicada al
+  catodo
+\end{itemize}
+
+c).- Los efectos que tiene influenciencia significativa sobre la rapidez
+de grabado para el nitruro de silicio son:
+
+\begin{itemize}
+\tightlist
+\item
+  A = El entrehierro ánodo-cátodo
+\end{itemize}
+
+d).- No se encontró diferencias significativas
+
+\begin{itemize}
+\item
+  B = la presión en la cámara del reactor
+\item
+  C = el flujo del gas C2F6
+\item
+  entre B = la presión en la cámara del reactor con C = el flujo del gas
+  C2F6
+\item
+  entre A = El entrehierro ánodo-cátodo con C = el flujo del gas C2F6
+\item
+  entre A = El entrehierro ánodo-cátodo con B = la presión en la cámara
+  del reactor
+\item
+  entre D = La potencia aplicada al catodo con C = el flujo del gas C2F6
+\item
+  entre A = El entrehierro ánodo-cátodo , B = la presión en la cámara
+  del reactor y C = el flujo del gas C2F6
+\item
+  entre D = La potencia aplicada al catodo , B = la presión en la cámara
+  del reactor y C = el flujo del gas C2F6
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# Obtenemos los parametros}
+\KeywordTok{coefficients}\NormalTok{(mod1)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## (Intercept)           A           D           B           C         A:D 
+##    777.9375    -48.9375    154.9375      1.0625      5.5625    -74.9375 
+##         B:C         A:C         A:B         D:B         D:C       A:B:C 
+##    -20.0625    -10.5625     -2.0625      1.5625      0.8125     -5.9375 
+##       D:B:C 
+##    -10.8125
+\end{verbatim}
+
+Del analisis de varianza se detecto que los efectos mas importantes son
+de A, D y A:D
+
+\[ y =  -48.9375x_1 + 154.9375x_4 + -74.9375x_1x_4 \]
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{par}\NormalTok{(}\DataTypeTok{mfrow=}\KeywordTok{c}\NormalTok{(}\DecValTok{2}\NormalTok{,}\DecValTok{2}\NormalTok{))}
+\KeywordTok{plot}\NormalTok{(mod1)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## hat values (leverages) are all = 0.8125
+##  and there are no factor predictors; no plot no. 5
+\end{verbatim}
+
+\includegraphics{efade2019i_files/figure-latex/unnamed-chunk-8-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{ri1<-}\KeywordTok{rstandard}\NormalTok{(mod1)}
+\KeywordTok{shapiro.test}\NormalTok{(ri1)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+##  Shapiro-Wilk normality test
+## 
+## data:  ri1
+## W = 0.87299, p-value = 0.03022
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{library}\NormalTok{(car)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Loading required package: carData
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{ncvTest}\NormalTok{(mod1)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Non-constant Variance Score Test 
+## Variance formula: ~ fitted.values 
+## Chisquare = 0.005323703, Df = 1, p = 0.94183
+\end{verbatim}
+
+\#\#Analisis Factorial 2x4
+
+\hypertarget{un-telefono-inteligente-es-un-telefono-movil-que-ofrece-una-capacidad-de-computo-y-conectividad-mas-avanzadas-que-un-telefono-con-funciones-basica-contemporaneo.-los-datos-siguientes-son-las-calificaciones-de-seis-telefonos-inteligentes-de-cada-uno-de-los-cuatro-proveedores-tres-de-los-cuales-cuestan-150-o-mas-otros-tres-cuestan-menos-de-150.-las-calificaciones-tienen-un-valor-maximo-de-100-y-un-minimo-de-0.}{%
+\paragraph{2.)- Un teléfono inteligente es un teléfono móvil que ofrece
+una capacidad de cómputo y conectividad más avanzadas que un ``teléfono
+con funciones'' básica contemporáneo. Los datos siguientes son las
+calificaciones de seis teléfonos inteligentes de cada uno de los cuatro
+proveedores, tres de los cuales cuestan \$ 150 o más, otros tres cuestan
+menos de \$ 150. Las calificaciones tienen un valor máximo de 100 y un
+mínimo de
+0.}\label{un-telefono-inteligente-es-un-telefono-movil-que-ofrece-una-capacidad-de-computo-y-conectividad-mas-avanzadas-que-un-telefono-con-funciones-basica-contemporaneo.-los-datos-siguientes-son-las-calificaciones-de-seis-telefonos-inteligentes-de-cada-uno-de-los-cuatro-proveedores-tres-de-los-cuales-cuestan-150-o-mas-otros-tres-cuestan-menos-de-150.-las-calificaciones-tienen-un-valor-maximo-de-100-y-un-minimo-de-0.}}
+
+\begin{verbatim}
+Proveedor           
+"AT&T((b1)" "Sprint
+\end{verbatim}
+
+(b2)" ``T-Mobile (b3)'' ``Verizon (b4)'' Costo ￼ \$150 76 74 72 75 (a1)
+74 69 71 73 69 68 71 73 Costo \textless{} \$150 69 69 71 72 (a2) 67 64
+71 71 64 60 70 70
+
+Datos en archivo teléfono.txt \#\#\#\# a).- Realice el Análisis de
+Variancia, Pruebe la hipótesis correspondientes y de las conclusiones y
+recomendaciones correspondiente. (4 puntos)
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{telefono<-}\KeywordTok{read.table}\NormalTok{(}\StringTok{"telefono.txt"}\NormalTok{,T)}
+\KeywordTok{str}\NormalTok{(telefono)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 'data.frame':    24 obs. of  3 variables:
+##  $ calificaciones: int  76 74 69 69 67 64 74 69 68 69 ...
+##  $ costo         : Factor w/ 2 levels "a1","a2": 1 1 1 2 2 2 1 1 1 2 ...
+##  $ proveedor     : Factor w/ 4 levels "b1","b2","b3",..: 1 1 1 1 1 1 2 2 2 2 ...
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{Calificación<}\OperatorTok{-}\NormalTok{telefono[,}\DecValTok{1}\NormalTok{]}
+\NormalTok{Costo<-}\KeywordTok{as.factor}\NormalTok{(telefono[,}\DecValTok{2}\NormalTok{])}
+\NormalTok{Proveedor<-}\KeywordTok{as.factor}\NormalTok{(telefono[,}\DecValTok{3}\NormalTok{])}
+\NormalTok{mod<-}\KeywordTok{lm}\NormalTok{(Calificación~Costo}\OperatorTok{*}\NormalTok{Proveedor)}
+\NormalTok{anva<-}\KeywordTok{aov}\NormalTok{(mod)}
+\KeywordTok{summary}\NormalTok{(anva)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##                 Df Sum Sq Mean Sq F value  Pr(>F)   
+## Costo            1  92.04   92.04  13.893 0.00183 **
+## Proveedor        3  81.12   27.04   4.082 0.02490 * 
+## Costo:Proveedor  3  33.46   11.15   1.683 0.21053   
+## Residuals       16 106.00    6.63                   
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+\end{verbatim}
+
+\hypertarget{hipotesis-del-efecto-principal-de-costo}{%
+\subsection{Hipotesis del efecto principal de
+Costo}\label{hipotesis-del-efecto-principal-de-costo}}
+
+\(H_0\) : \(\alpha_i = 0\) , para i = 1,2,3
+
+\(H_1\) : al menos dos \(\alpha_i != 0\) , para i = 1,2,3
+
+Se rechaza la \(H_0\), a un nivel de significacion del 1\%, se ha
+encontrado suficientes evidencia estadistica para rechazar la \(H_0\) de
+que las categorias de los Costos tenga un efecto significativo sobre la
+Calificación del teléfono.Por lo tanto, se puede aceptar de que existe
+diferencias significativas entre al menos dos categorias de costos de
+teléfono tienen un efecto significativo sobre su calificación
+
+\hypertarget{hipotesis-del-efecto-principal-de-proveedor}{%
+\subsection{Hipotesis del efecto principal de
+Proveedor}\label{hipotesis-del-efecto-principal-de-proveedor}}
+
+\(H_0\) : \(\beta_j\) = 0 , para j = 1,2,3
+
+\(H_1\) : al menos dos \(\beta_j != 0\) , para j = 1,2,3
+
+Se rechaza la \(H_0\), a un nivel de significacion del 5\%, se ha
+encontrado suficientes evidencia estadistica para rechazar la \(H_0\) de
+que las proveedores tenga un efecto significativo sobre la calificación
+del teléfono.Por lo tanto, se puede aceptar de que existe diferencias
+significativas entre al menos dos proveedores tienen un efecto
+significativo sobre la calificación del teléfono.
+
+\hypertarget{hipotesis-del-efecto-de-interaccion-entre-el-costo-y-el-proveedor}{%
+\subsection{Hipotesis del efecto de interacción entre el Costo y el
+Proveedor}\label{hipotesis-del-efecto-de-interaccion-entre-el-costo-y-el-proveedor}}
+
+\(H_0\) : \((\alpha * \beta )_ = 0\) , para i,j = 1,2,3
+
+\(H_1\) : al menos dos \((\alpha * \beta ) != 0\) , para i,j = 1,2,3
+
+Se acepta \(H_0\), a un nivel de significacion del 10\%, no se ha
+encontrado suficiente evidencia estadistica para rechazar la \(H_0\) ,es
+decir que no existe ning'un efecto de la interaci'on entre la categoria
+del costo y el proveedor influyan sobre la calificación del teléfono.
+
+\hypertarget{b.--teniendo-en-cuenta-los-resultados-obtenido-en-a-realice-la-prueba-de-tukey-correspondiente}{%
+\paragraph{b).- Teniendo en cuenta los resultados obtenido en (a),
+realice la prueba de Tukey
+correspondiente}\label{b.--teniendo-en-cuenta-los-resultados-obtenido-en-a-realice-la-prueba-de-tukey-correspondiente}}
+
+(6 puntos)
+
+De la parte a, se ha visto que la categoria de costo y los proveedores
+tiene efecto sobre la calificación del teléfono, se procedera a realizar
+la prueba de Tukey para la Cada uno de ellos
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{library}\NormalTok{(multcomp)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{tHSD <-}\StringTok{ }\KeywordTok{TukeyHSD}\NormalTok{(anva)}
+\KeywordTok{summary}\NormalTok{(tHSD)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##                 Length Class  Mode   
+## Costo             4    -none- numeric
+## Proveedor        24    -none- numeric
+## Costo:Proveedor 112    -none- numeric
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{tHSD}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##   Tukey multiple comparisons of means
+##     95% family-wise confidence level
+## 
+## Fit: aov(formula = mod)
+## 
+## $Costo
+##            diff       lwr       upr     p adj
+## a2-a1 -3.916667 -6.144249 -1.689084 0.0018334
+## 
+## $Proveedor
+##            diff        lwr      upr     p adj
+## b2-b1 -2.500000 -6.7516077 1.751608 0.3643388
+## b3-b1  1.166667 -3.0849410 5.418274 0.8601187
+## b4-b1  2.500000 -1.7516077 6.751608 0.3643388
+## b3-b2  3.666667 -0.5849410 7.918274 0.1039730
+## b4-b2  5.000000  0.7483923 9.251608 0.0185696
+## b4-b3  1.333333 -2.9182743 5.584941 0.8063964
+## 
+## $`Costo:Proveedor`
+##                   diff         lwr        upr     p adj
+## a2:b1-a1:b1 -6.3333333 -13.6093432  0.9426765 0.1129895
+## a1:b2-a1:b1 -2.6666667  -9.9426765  4.6093432 0.8976115
+## a2:b2-a1:b1 -8.6666667 -15.9426765 -1.3906568 0.0140595
+## a1:b3-a1:b1 -1.6666667  -8.9426765  5.6093432 0.9911124
+## a2:b3-a1:b1 -2.3333333  -9.6093432  4.9426765 0.9451981
+## a1:b4-a1:b1  0.6666667  -6.6093432  7.9426765 0.9999756
+## a2:b4-a1:b1 -2.0000000  -9.2760099  5.2760099 0.9752592
+## a1:b2-a2:b1  3.6666667  -3.6093432 10.9426765 0.6614247
+## a2:b2-a2:b1 -2.3333333  -9.6093432  4.9426765 0.9451981
+## a1:b3-a2:b1  4.6666667  -2.6093432 11.9426765 0.3896498
+## a2:b3-a2:b1  4.0000000  -3.2760099 11.2760099 0.5673822
+## a1:b4-a2:b1  7.0000000  -0.2760099 14.2760099 0.0638225
+## a2:b4-a2:b1  4.3333333  -2.9426765 11.6093432 0.4752993
+## a2:b2-a1:b2 -6.0000000 -13.2760099  1.2760099 0.1484555
+## a1:b3-a1:b2  1.0000000  -6.2760099  8.2760099 0.9996326
+## a2:b3-a1:b2  0.3333333  -6.9426765  7.6093432 0.9999998
+## a1:b4-a1:b2  3.3333333  -3.9426765 10.6093432 0.7517157
+## a2:b4-a1:b2  0.6666667  -6.6093432  7.9426765 0.9999756
+## a1:b3-a2:b2  7.0000000  -0.2760099 14.2760099 0.0638225
+## a2:b3-a2:b2  6.3333333  -0.9426765 13.6093432 0.1129895
+## a1:b4-a2:b2  9.3333333   2.0573235 16.6093432 0.0075749
+## a2:b4-a2:b2  6.6666667  -0.6093432 13.9426765 0.0852319
+## a2:b3-a1:b3 -0.6666667  -7.9426765  6.6093432 0.9999756
+## a1:b4-a1:b3  2.3333333  -4.9426765  9.6093432 0.9451981
+## a2:b4-a1:b3 -0.3333333  -7.6093432  6.9426765 0.9999998
+## a1:b4-a2:b3  3.0000000  -4.2760099 10.2760099 0.8321663
+## a2:b4-a2:b3  0.3333333  -6.9426765  7.6093432 0.9999998
+## a2:b4-a1:b4 -2.6666667  -9.9426765  4.6093432 0.8976115
+\end{verbatim}
+
+\$Costo diff lwr upr p adj a2-a1 -3.916667 -6.144249 -1.689084 0.0018334
+
+A un nivel de significación del 0.1\%, se a encontrados suficiente
+evidencia para afirmar que la media de la calificación de un teléfono
+que cuesta menos de 150 dolares es diferente a la media de la
+calificación de un teléfono que cuesta mas de 150 dolares.
+
+\$Proveedor diff lwr upr p adj
+
+b4-b2 5.000000 0.7483923 9.251608 0.0185696
+
+A un nivel de significación del 1\%, se a encontrados suficiente
+evidencia para afirmar que la media de la calificaciòn de un teléfono
+del proveedor Verizon es diferente a la media de la calificación de un
+teléfono del proveedor Sprint
+
+Para los otros casos no existe diferencias significativa
+
+
+\end{document}

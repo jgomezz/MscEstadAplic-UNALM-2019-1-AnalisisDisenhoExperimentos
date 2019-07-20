@@ -1,0 +1,264 @@
+---
+title: "Examen Final de Análisis y Diseños de Experimentos"
+author: ' Jaime Gomez Marin'
+output:
+  html_document:
+    df_print: paged
+  pdf_document: default
+  word_document: default
+---
+
+
+
+#### 1.- En un artículo de Solid State Technology (“Diseño ortogonal para optimización de procesos y su aplicación en el grabado químico con plasma”) se describe la aplicación de diseños factoriales en el desarrollo de un proceso de grabado químico con nitruros en un dispositivo de grabado químico con plasma para una sola oblea El proceso usa C2F6 como gas de reacción. Cuatro factores son de interés: el entrehierro ánodo-cátodo (A), la presión en la cámara del reactor (B), el flujo del gas C2F6 (C) y la potencia aplicada al cátodo (D). La respuesta de interés es la rapidez de grabado para el nitruro de silicio. Se corre una sola réplica de un diseño 24; los datos se muestran enseguida:
+
+           | (-) bajo	1 | (+) alto
+----------|-------|-----------------
+A (cm)    |	0.80 |	1.20
+B (mTorr)	| 450	 | 550
+C (SCCM)	| 125	 | 200
+D (W)	    | 275	 | 325
+
+(1) 550   a = 669  b = 604  ab = 650  c = 633   ac = 642   bc = 601  abc = 635  d = 1037  ad = 749
+bd = 1052  abd = 868  cd = 1075 acd = 860  bcd = 1063 abcd = 759
+
+y=c(550,669,604,650,633,642,601,635,1037,749,1052,868,1075,860,1063,759)
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+options(scipen=999)
+
+# function
+printmat <- function(msg, mat) {
+  out <- capture.output(mat)
+  sprintf("%s: %s", msg, out)
+}
+```
+
+#### a).Estimar los efectos de los factores y obtenga una gráfica de probabilidad normal de los efectos estimados de estos factores. ¿Que efectos parecen ser grande? ( 6 puntos)
+
+```{r}
+#
+y=c(550,669,604,650,633,642,601,635,1037,749,1052,868,1075,860,1063,759)
+
+#
+A <- rep(c(rep(-1, 1) , rep(1, 1)) , 8)
+B <- rep(c(rep(-1, 2) , rep(1, 2)) , 4)
+C <- rep(c(rep(-1, 4) , rep(1, 4)) , 2)
+D <- rep(c(rep(-1, 8) , rep(1, 8)) , 1)
+
+#
+printmat("y ",y)
+printmat("A ",A)
+printmat("B ",B)
+printmat("C ",C)
+printmat("D ",D)
+```
+
+```{r}
+mod <- lm(y~A*B*C*D)
+Estimados <- 2*coefficients(mod)[-1]  # Se retira la columna del intercepto
+# Estimados
+round(Estimados, 0)
+```
+
+Hay que buscar los estimados que mas aportan al modelo
+```{r}
+data.frame(round(Estimados, 0))
+```
+Quienes mas aportan son: 1,4,6,7,8,14,15  
+
+```{r}
+qq <- qqnorm(Estimados,type="n")
+Efectos <- names(Estimados)
+text(qq$x, qq$y, labels = Efectos)
+Estimados1 <- Estimados[-c(1,4,6,7,8,14,15)] # SON LOS VALORES QUE MAS APORTAN AL MODELO
+# Estimados1 <- Estimados
+qqline(Estimados1)
+```
+De la grafica se puede apreciar que los siguiente efectos son los mas grandes en orden de influencia:
+
+- D : La potencia aplicada al cátodo
+- A*D : El entrehierro ánodo-cátodo y la potencia aplicada al cátodo
+- A : El entrehierro ánodo-cátodo 
+- B*C : La presión en la cámara del reacto y el flujo del gas C2F6
+
+Hay mas efectos como: A*B*C + B*C*D  , pero los anteriores tiene un mayor efecto.
+
+#### b).-  Realice el análisis de varianza para confirmar los resultados obtenidos en (a), Obtenga la ecuación de regresión estimada  (4 puntos)
+
+```{r}
+# Con la información de los efectos detectados en el apartado anterior procedemos a  construimos nuestro modelo
+mod1  <- lm(y ~ A + D + A*D + B*C + A*C + A*B*C + B*C*D )
+```
+
+
+```{r}
+# Realizamos nuestro analisis de varianza
+anva1 <- aov(mod1)
+summary(anva1)
+```
+$$ y = \beta_0 + \beta_1x_1 +\beta_2x_2 + \beta_3x_3 + \beta_4x_4 + \beta_{14}x_1x_4 + \beta_{23}x_2x_3 + \beta_{13}x_1x_3 + \beta_{12}x_1x_2 + \beta_{42}x_4x_2 +\beta_{43}x_4x_3 + \beta_{123}x_1x_2x_3 + \beta_{423}x_4x_2x_3  $$
+Donde:
+
+$x_i$ = 1, si el nivel del factor de i se encuentra alto
+
+$x_i$ = 0, si el nivel del factor de i se encuentra bajo
+
+i = 1 , representa el factor de A
+
+i = 2 , representa el factor de B
+
+i = 3 , representa el factor de C
+
+i = 4 , representa el factor de D
+
+De los cuatro factores son de interés: el entrehierro ánodo-cátodo (A), la presión en la cámara del reactor (B), el flujo del gas C2F6 (C) y la potencia aplicada al cátodo (D) se ha llegado a las siguientes conclusiones
+
+a).- Los efectos que tiene influenciencia altamente muy significativa sobre la rapidez de grabado para el nitruro de silicio son:
+
+- D = La potencia aplicada al catodo
+
+b).- Los efectos que tiene influenciencia muy significativa sobre la rapidez de grabado para el nitruro de silicio son:
+
+- entre A = El entrehierro ánodo-cátodo con D = La potencia aplicada al catodo
+
+c).- Los efectos que tiene influenciencia significativa sobre la rapidez de grabado para el nitruro de silicio son:
+
+- A = El entrehierro ánodo-cátodo
+
+d).- No se encontró diferencias significativas 
+
+- B = la presión en la cámara del reactor
+
+- C = el flujo del gas C2F6
+
+- entre B = la presión en la cámara del reactor con  C = el flujo del gas C2F6
+
+- entre A = El entrehierro ánodo-cátodo con  C = el flujo del gas C2F6
+
+- entre A = El entrehierro ánodo-cátodo con  B = la presión en la cámara del reactor
+
+- entre D = La potencia aplicada al catodo con  C = el flujo del gas C2F6
+
+- entre A = El entrehierro ánodo-cátodo , B = la presión en la cámara del reactor y  C = el flujo del gas C2F6
+
+- entre D = La potencia aplicada al catodo , B = la presión en la cámara del reactor y  C = el flujo del gas C2F6
+
+
+```{r}
+# Obtenemos los parametros
+coefficients(mod1)
+```
+Del analisis de varianza se detecto que los efectos mas importantes son de A, D y A:D
+
+$$ y =  -48.9375x_1 + 154.9375x_4 + -74.9375x_1x_4 $$
+
+```{r}
+par(mfrow=c(2,2))
+plot(mod1)
+```
+```{r}
+ri1<-rstandard(mod1)
+shapiro.test(ri1)
+```
+
+```{r}
+library(car)
+ncvTest(mod1)
+```
+
+
+##Analisis Factorial 2x4
+
+#### 2.)- Un teléfono inteligente es un teléfono móvil que ofrece una capacidad de cómputo y conectividad más avanzadas que un "teléfono con funciones" básica contemporáneo. Los datos siguientes son las calificaciones de seis teléfonos inteligentes de cada uno de los cuatro proveedores, tres de los cuales cuestan $ 150 o más, otros tres cuestan menos de $ 150. Las calificaciones tienen un valor máximo de 100 y un mínimo de 0.
+
+	Proveedor			
+	"AT&T((b1)"	"Sprint
+(b2)"	"T-Mobile
+(b3)"	"Verizon
+(b4)"
+Costo ￼ $150	76	74	72	75
+(a1)	74	69	71	73
+	69	68	71	73
+Costo  < $150	69	69	71	72
+(a2)	67	64	71	71
+	64	60	70	70
+				
+Datos en archivo teléfono.txt
+#### a).- Realice el Análisis de Variancia, Pruebe la hipótesis correspondientes y de las conclusiones y recomendaciones correspondiente. (4 puntos)
+
+```{r}
+telefono<-read.table("telefono.txt",T)
+str(telefono)
+```
+
+
+```{r}
+Calificación<-telefono[,1]
+Costo<-as.factor(telefono[,2])
+Proveedor<-as.factor(telefono[,3])
+mod<-lm(Calificación~Costo*Proveedor)
+anva<-aov(mod)
+summary(anva)
+```
+
+## Hipotesis del efecto principal de Costo
+
+
+ $H_0$ : $\alpha_i = 0$ , para i = 1,2,3 
+ 
+ $H_1$ : al menos dos $\alpha_i != 0$    , para i = 1,2,3
+ 
+Se rechaza la $H_0$, a un nivel de significacion del 1%, se ha encontrado suficientes evidencia estadistica para  rechazar la $H_0$ de que las categorias de los Costos tenga un efecto significativo sobre la Calificación del teléfono.Por lo tanto, se puede aceptar de que existe diferencias significativas entre al menos dos categorias de costos de teléfono tienen un efecto significativo sobre su calificación
+
+## Hipotesis del efecto principal de Proveedor
+
+  $H_0$ : $\beta_j$ = 0 , para j = 1,2,3 
+  
+  $H_1$ : al menos dos $\beta_j != 0$    , para j = 1,2,3 
+ 
+Se rechaza la $H_0$, a un nivel de significacion del 5%, se ha encontrado suficientes evidencia estadistica para  rechazar la $H_0$ de que las proveedores tenga un efecto significativo sobre la calificación del teléfono.Por lo tanto, se puede aceptar de que existe diferencias significativas entre al menos dos proveedores tienen un efecto significativo sobre la calificación del teléfono.
+
+## Hipotesis del efecto de interacción entre el Costo y el Proveedor
+
+$H_0$ : $(\alpha * \beta )_ = 0$ , para i,j = 1,2,3
+
+$H_1$ : al menos dos $(\alpha * \beta ) != 0$    , para i,j = 1,2,3
+ 
+Se acepta $H_0$, a un nivel de significacion del 10%, no se ha encontrado suficiente evidencia estadistica para rechazar la $H_0$ ,es decir que no existe ning\'un efecto de la interaci\'on entre la categoria del costo y el proveedor influyan sobre la calificación del teléfono.
+
+#### b).- Teniendo en cuenta los resultados obtenido en (a), realice la prueba de Tukey correspondiente
+(6 puntos)	
+
+De la parte a, se ha visto que la categoria de costo y los proveedores tiene efecto sobre la calificación del teléfono, se procedera a realizar la prueba de Tukey para la Cada uno de ellos
+
+```{r , message=FALSE}
+library(multcomp)
+```
+
+```{r}
+tHSD <- TukeyHSD(anva)
+summary(tHSD)
+```
+```{r}
+tHSD
+```
+
+
+
+$Costo
+           diff       lwr       upr     p adj
+a2-a1 -3.916667 -6.144249 -1.689084 0.0018334
+
+A un nivel de significación del 0.1%, se a encontrados suficiente evidencia para afirmar que la media de la calificación de un teléfono que cuesta menos de 150 dolares es diferente a la media de la calificación de un teléfono que cuesta mas de 150 dolares.  
+  
+
+$Proveedor
+           diff        lwr      upr     p adj
+
+b4-b2  5.000000  0.7483923 9.251608 0.0185696
+
+A un nivel de significación del 1%, se a encontrados suficiente evidencia para afirmar que la media de la calificaciòn de un teléfono del proveedor Verizon es diferente a la media de la calificación de un teléfono del proveedor Sprint
+
+Para los otros casos no existe diferencias significativa

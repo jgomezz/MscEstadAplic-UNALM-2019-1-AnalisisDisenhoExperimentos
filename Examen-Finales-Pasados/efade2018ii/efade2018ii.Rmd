@@ -124,6 +124,36 @@ ncvTest(mod1)
 
 ##### b.1) Muestre el plan experimental distribuyendo las combinaciones de tratamiento en sus respectivos bloques.   Deduzca la interacción generalizada. (5 puntos)
 
+```{r}
+#
+A <- rep(c(rep(-1, 1) , rep(1, 1)) , 16)
+B <- rep(c(rep(-1, 2) , rep(1, 2)) ,  8)
+C <- rep(c(rep(-1, 4) , rep(1, 4)) ,  4)
+D <- rep(c(rep(-1, 8) , rep(1, 8)) ,  2)
+E <- rep(c(rep(-1,16) , rep(1,16)) ,  1)
+
+#
+ACD <- A*C*D
+BCE <- B*C*E
+
+#
+printmat("A ",A)
+printmat("B ",B)
+printmat("C ",C)
+printmat("D ",D)
+printmat("E ",E)
+printmat("ACD",ACD)
+printmat("BCE",BCE)
+
+```
+```{r}
+data.frame(A,B,C,D,E,ACD,BCE)
+```
+```{r}
+tequila1<-read.table("tequila1.txt",T)
+```
+
+
 ##### b.2) Obtenga el cuadro de ANVA más conveniente para analizar estos resultados. Realice las pruebas de hipótesis sobre los efectos que son significativos. Concluya en término de enunciados.  (5 puntos)
 
 #### c). Suponga que se desea realizar solo una fracción del diseño 25con generadores D=AB y E=AC, genere la estructura de alias, obtenga la fracción a realizar y analice la fracción obtenida. Compare con las conclusiones obtenidas en (a) y (b) (5 puntos)
